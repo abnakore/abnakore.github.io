@@ -1,0 +1,42 @@
+{
+    "finished": [
+        {
+            "name": "My Portfolio",
+            "desc": "...",
+            "image_src": "./images/my_portfolio.png",
+            "link": ""
+        },
+        {
+            "name": "NERA",
+            "desc": "A platform that gives a real-time currency float rates for over 100 currencies worldwide.",
+            "image_src": "./images/nera_web.png",
+            "link": "https://www.nera.ng"
+        },
+        {
+            "name": "Are You A Math Whiz?",
+            "desc": "A math tutor Game that help kids master their simple arithmetics.",
+            "image_src": "./images/math_whiz.png",
+            "link": ""
+        },
+        {
+            "name": "Kamal Portfolio",
+            "desc": "A civil engineer portfolio website.",
+            "image_src": "./images/kamal_portfolio.png",
+            "link": "https://kamalnakore.com.ng"
+        }
+    ],
+    "ongoing": [
+        {
+            "name": "NAFT",
+            "desc": "A platform that unites family by exploring their heritage through a captivating family tree experience.",
+            "image_src": "./images/NAFT.png",
+            "link": ""
+        },
+        {
+            "name": "Nakore Collection",
+            "desc": "An E-commerce platform",
+            "image_src": "./images/NC.png",
+            "link": ""
+        }
+    ]
+}

@@ -1,0 +1,72 @@
+{
+    "languages": [
+        {
+            "name": "Scratch",
+            "level": 90
+        },
+        {
+            "name": "C",
+            "level": 85
+        },
+        {
+            "name": "Python",
+            "level": 90
+        },
+        {
+            "name": "HTML",
+            "level": 85
+        },
+        {
+            "name": "CSS",
+            "level": 80
+        },
+        {
+            "name": "javaScript",
+            "level": 75
+        }
+    ],
+    "domains": [
+        {
+            "name": "Frontend Development",
+            "level": 80
+        },
+        {
+            "name": "Backend Development",
+            "level": 90
+        },
+        {
+            "name": "Software Development",
+            "level": 75
+        },
+        {
+            "name": "Mobile App Development",
+            "level": 80
+        },
+        {
+            "name": "Game Development",
+            "level": 75
+        },
+        {
+            "name": "Cryptography",
+            "level": 90
+        }
+    ],
+    "frameworks": [
+        {
+            "name": "React Js",
+            "level": 80
+        },
+        {
+            "name": "Django",
+            "level": 90
+        },
+        {
+            "name": "Kivy / KivyMD",
+            "level": 80
+        },
+        {
+            "name": "PyGame",
+            "level": 82
+        }
+    ]
+}

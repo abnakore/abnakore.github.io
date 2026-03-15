@@ -93,6 +93,27 @@ span {
     }
 }
 
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    49% {
+
+        opacity: 1;
+    }
+
+    50% {
+
+        opacity: 0;
+    }
+
+    100% {
+
+        opacity: 0;
+    }
+}
+
 // scale-up-ver-top //
 .scale-up-ver-top {
     -webkit-animation: scale-up-ver-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -425,6 +446,17 @@ section {
             margin-top: 1.5rem;
             color: $text-color;
         }
+
+
+        span.cursor {
+            font-weight: 100;
+            padding-left: 0;
+
+            &.blink {
+                animation: blink 1s infinite ease-in;
+            }
+        }
+
 
         .social-media {
             a {
@@ -950,6 +982,7 @@ section {
                 text-align: center;
                 padding: 0.4rem;
                 transition: .5s ease;
+                transform: translateY(100%);
 
                 h4 {
                     font-size: 3rem;
@@ -981,6 +1014,12 @@ section {
         }
 
         .portfolio-box:hover {
+
+            .portfolio-layer {
+                transform: translateY(0);
+                backdrop-filter: blur(2px);
+            }
+
             img {
                 transform: scale(1.1);
             }
