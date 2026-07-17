@@ -3,7 +3,32 @@ import Layout from '../components/layout/Layout';
 import SectionTag from '../components/ui/SectionTag';
 import { projects } from '../data/projects';
 import { useMode } from '../hooks/useMode';
+import { useTypewriter } from '../hooks/useTypewriter';
 import ScrollReveal from '../components/ui/ScrollReveal';
+
+function StatusBadge({ status, isTerminal }: { status: string; isTerminal: boolean }) {
+  const isShipped = status === 'shipped';
+  return (
+    <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
+      isTerminal
+        ? 'font-mono'
+        : ''
+    }`}>
+      <span className={`w-2 h-2 rounded-full ${
+        isShipped
+          ? isTerminal ? 'bg-t-green' : 'bg-green-500'
+          : isTerminal ? 'bg-t-accent' : 'bg-amber-500'
+      }`} />
+      <span className={
+        isTerminal
+          ? isShipped ? 'text-t-green' : 'text-t-accent'
+          : isShipped ? 'text-green-600' : 'text-amber-600'
+      }>
+        {isShipped ? 'Completed' : 'In progress'}
+      </span>
+    </span>
+  );
+}
 
 function DetailSection({ title, children, isTerminal, delay = 0 }: { title: string; children: React.ReactNode; isTerminal: boolean; delay?: number }) {
   return (
@@ -43,7 +68,7 @@ function TechStackTable({ stacks, isTerminal }: { stacks: { category: string; it
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {stacks.map((s) => (
         <div key={s.category} className="group bg-b-bg rounded-xl p-4 border border-transparent transition-all duration-300 hover:border-b-accent/15 hover:shadow-[0_4px_20px_rgba(79,70,229,0.06)] hover:-translate-y-0.5">
-          <div className="text-xs font-semibold text-b-accent mb-2 uppercase tracking-wider group-hover:text-b-accent/80 transition-colors">{s.category}</div>
+          <div className="text-xs font-semibold text-b-accent mb-2 uppercase tracking-wider">{s.category}</div>
           <div className="flex flex-wrap gap-1.5">
             {s.items.map((item) => (
               <span key={item} className="text-[12px] font-medium bg-white text-b-sub px-2.5 py-1 rounded-full shadow-sm transition-all duration-200 hover:bg-b-accent/10 hover:text-b-accent">
@@ -66,7 +91,7 @@ function ScreenshotPlaceholder({ label, description, isTerminal, gradient }: { l
           <svg className={`w-8 h-8 mx-auto mb-2 ${isTerminal ? 'text-t-dim/40' : 'text-white/60'} group-hover:scale-110 group-hover:opacity-100 transition-all duration-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          <span className={`text-xs ${isTerminal ? 'font-mono text-t-dim/60 group-hover:text-t-dim' : 'font-semibold text-white/70 group-hover:text-white'} transition-colors duration-300`}>
+          <span className={`text-xs ${isTerminal ? 'font-mono text-t-dim/60' : 'font-semibold text-white/70'}`}>
             {label}
           </span>
         </div>
@@ -87,6 +112,7 @@ export default function ProjectDetailPage() {
   if (!project) return <Navigate to="/404" replace />;
 
   const hasCaseStudy = project.caseStudy !== undefined;
+  const typedRole = useTypewriter(project.role ? `> ${project.role}` : '', 40, 300);
 
   return (
     <Layout>
@@ -100,7 +126,7 @@ export default function ProjectDetailPage() {
                 isTerminal ? 'font-mono text-t-accent' : 'text-b-accent'
               } transition-all duration-200`}
             >
-              <svg className={`w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
               <span className={`${isTerminal ? 'group-hover:text-t-accent/80' : 'group-hover:text-b-accent/80'} transition-colors`}>
@@ -111,15 +137,16 @@ export default function ProjectDetailPage() {
 
           {/* Hero Section */}
           <ScrollReveal variant="fadeUp" delay={0.05}>
-            <div className={`mb-8 transition-all duration-300 ${
+            <div className={`mb-8 ${
               isTerminal
-                ? 'border border-transparent rounded-2xl p-8 md:p-10 hover:border-t-border/50 hover:shadow-[0_0_20px_rgba(255,176,0,0.03)]'
-                : 'bg-b-bg rounded-2xl p-8 md:p-10 hover:shadow-[0_8px_30px_rgba(79,70,229,0.06)] transition-shadow duration-300'
+                ? 'border border-transparent rounded-2xl p-8 md:p-10 hover:border-t-border/50 hover:shadow-[0_0_20px_rgba(255,176,0,0.03)] transition-all duration-300'
+                : 'bg-b-bg rounded-2xl p-8 md:p-10'
             }`}>
               <div className="flex items-center gap-3 flex-wrap mb-3">
                 <SectionTag>
                   {isTerminal ? project.fileName : project.status === 'shipped' ? 'Shipped' : 'In progress'}
                 </SectionTag>
+                <StatusBadge status={project.status} isTerminal={isTerminal} />
                 {project.timeline && (
                   <span className={`text-xs ${isTerminal ? 'font-mono text-t-dim' : 'font-semibold text-b-sub'}`}>
                     {project.timeline}
@@ -132,8 +159,18 @@ export default function ProjectDetailPage() {
               </h1>
 
               {project.role && (
-                <p className={`text-sm mt-2 ${isTerminal ? 'font-mono text-t-accent/70' : 'text-b-accent font-semibold'}`}>
-                  {project.role}
+                <p className={`text-sm mt-2 min-h-[1.25rem] ${isTerminal ? 'font-mono text-t-accent/70' : 'text-b-accent font-semibold'}`}>
+                  {isTerminal ? (
+                    <span>
+                      {typedRole}
+                      <span className="animate-blink text-t-accent">_</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="text-b-accent/50 font-mono text-xs">{'>'}</span>
+                      {project.role}
+                    </span>
+                  )}
                 </p>
               )}
 
@@ -213,28 +250,16 @@ export default function ProjectDetailPage() {
 
               {/* Problem */}
               <DetailSection title={isTerminal ? 'Problem' : 'The Problem'} isTerminal={isTerminal} delay={0.1}>
-                <div className={`p-5 rounded-xl transition-all duration-300 ${
-                  isTerminal
-                    ? 'border border-transparent hover:border-t-border/50 hover:shadow-[0_0_15px_rgba(255,176,0,0.03)]'
-                    : 'bg-b-bg/50 hover:bg-b-bg hover:shadow-[0_4px_20px_rgba(79,70,229,0.04)]'
-                }`}>
-                  <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
-                    {project.caseStudy!.problem}
-                  </p>
-                </div>
+                <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
+                  {project.caseStudy!.problem}
+                </p>
               </DetailSection>
 
               {/* Approach / Role */}
               <DetailSection title={isTerminal ? 'Approach' : 'My Approach & Role'} isTerminal={isTerminal} delay={0.15}>
-                <div className={`p-5 rounded-xl transition-all duration-300 ${
-                  isTerminal
-                    ? 'border border-transparent hover:border-t-border/50 hover:shadow-[0_0_15px_rgba(255,176,0,0.03)]'
-                    : 'bg-b-bg/50 hover:bg-b-bg hover:shadow-[0_4px_20px_rgba(79,70,229,0.04)]'
-                }`}>
-                  <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
-                    {project.caseStudy!.approach}
-                  </p>
-                </div>
+                <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
+                  {project.caseStudy!.approach}
+                </p>
               </DetailSection>
 
               {/* Tech Stack */}
@@ -262,24 +287,14 @@ export default function ProjectDetailPage() {
               {/* Challenges */}
               {project.caseStudy!.challenges && project.caseStudy!.challenges.length > 0 && (
                 <DetailSection title={isTerminal ? 'Challenges' : 'Challenges & Solutions'} isTerminal={isTerminal} delay={0.3}>
-                  <div className={`p-5 rounded-xl transition-all duration-300 ${
-                    isTerminal
-                      ? 'border border-transparent hover:border-t-border/50'
-                      : 'bg-b-bg/50 hover:bg-b-bg hover:shadow-[0_4px_20px_rgba(79,70,229,0.04)]'
-                  }`}>
-                    <ul className="space-y-3">
-                      {project.caseStudy!.challenges.map((c, i) => (
-                        <li key={i} className={`flex gap-3 text-sm leading-relaxed group/challenge ${isTerminal ? 'font-mono text-t-dim' : 'text-b-sub'}`}>
-                          <span className={`mt-0.5 shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 transition-all duration-300 ${
-                            isTerminal
-                              ? 'bg-t-accent/50 group-hover/challenge:bg-t-accent'
-                              : 'bg-b-accent group-hover/challenge:bg-b-accent2 group-hover/challenge:scale-125'
-                          }`} />
-                          <span className="transition-colors duration-200 group-hover/challenge:text-b-ink">{c}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ul className="space-y-3">
+                    {project.caseStudy!.challenges.map((c, i) => (
+                      <li key={i} className={`flex gap-3 text-sm leading-relaxed ${isTerminal ? 'font-mono text-t-dim' : 'text-b-sub'}`}>
+                        <span className={`mt-0.5 shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 ${isTerminal ? 'bg-t-accent/50' : 'bg-b-accent'}`} />
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
                 </DetailSection>
               )}
 
@@ -325,7 +340,7 @@ export default function ProjectDetailPage() {
                   isTerminal ? 'font-mono text-t-accent' : 'text-b-accent'
                 } transition-all duration-200`}
               >
-                <svg className={`w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
                 <span className={`${isTerminal ? 'group-hover:text-t-accent/80' : 'group-hover:text-b-accent/80'} transition-colors`}>
