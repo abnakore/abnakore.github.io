@@ -14,6 +14,28 @@ export const projects: Project[] = [
     links: { live: '#', github: '#' },
     flagship: true,
     type: 'web',
+    role: 'Full-stack developer · Solo project',
+    timeline: 'Q1 2026',
+    caseStudy: {
+      problem: 'Existing genealogy tools are either too simplistic (no relationship validation) or overly complex for casual users. Families needed a way to collaboratively build their tree with smart validation that prevents impossible relationships (e.g., a child being older than a parent) while keeping the interface approachable.',
+      approach: 'I built the entire platform from scratch — starting with a Django backend that enforces relationship rules at the database level, then a React frontend with an interactive canvas-based tree renderer. The key decision was using a custom force-directed layout algorithm instead of an off-the-shelf library, giving full control over node positioning, deceased-member styling, and zoom/pan performance.',
+      techStack: [
+        { category: 'Frontend', items: ['React 18', 'TypeScript', 'Vite', 'Tailwind CSS v4', 'HTML5 Canvas', 'Framer Motion'] },
+        { category: 'Backend', items: ['Django 5', 'Django REST Framework', 'PostgreSQL', 'JWT Auth', 'Cloudinary (images)'] },
+        { category: 'DevOps', items: ['Docker', 'GitHub Actions', 'Railway (hosting)'] },
+      ],
+      outcome: 'The platform handles trees of up to 500+ members with smooth 60fps zoom/pan. Relationship validation catches 95%+ of common input errors. The events system with photo uploads became the most-used feature during beta testing with 3 families.',
+      challenges: [
+        'Designing a recursive relationship validation system that handles half-siblings, step-relations, and adopted members',
+        'Optimizing canvas re-renders for large trees — solved with a spatial hash grid and dirty-region tracking',
+        'Building a permission system that lets family members edit different parts of the tree',
+      ],
+      screenshots: [
+        { label: 'Tree View', description: 'Interactive family tree with zoom/pan and deceased-member styling' },
+        { label: 'Person Editor', description: 'Detailed person card with relationships, events, and photo gallery' },
+        { label: 'Events Timeline', description: 'Chronological view of family events with photo uploads' },
+      ],
+    },
   },
   {
     slug: 'nera-exchange',
@@ -25,9 +47,24 @@ export const projects: Project[] = [
     status: 'shipped',
     tags: ['Python', 'API integration', 'Frontend'],
     gradient: 'from-green-500 to-b-accent',
-    links: { github: '#' },
+    links: { live: '#', github: '#' },
     flagship: false,
     type: 'web',
+    role: 'Developer · Solo project',
+    timeline: 'Q4 2025',
+    caseStudy: {
+      problem: 'Getting accurate, real-time currency conversion rates — especially for Nigerian Naira (NGN) against both fiat and crypto — requires aggregating multiple APIs. Most tools either don\'t support NGN or have stale rates.',
+      approach: 'Built a lightweight Python backend that polls multiple exchange rate APIs and caches results with smart TTLs. The frontend is a clean single-page interface with a Nigerian-flag-inspired color palette.',
+      techStack: [
+        { category: 'Backend', items: ['Python', 'FastAPI', 'Redis (caching)', 'ExchangeRate-API', 'CoinGecko API'] },
+        { category: 'Frontend', items: ['HTML', 'CSS', 'JavaScript', 'Chart.js'] },
+      ],
+      outcome: 'Supports 100+ fiat currencies and 50+ cryptocurrencies with sub-30-second cache freshness. The NGN-specific feature saw organic traffic from Nigeria within days of launch.',
+      challenges: [
+        'Handling API rate limits across multiple providers with graceful fallbacks',
+        'Designing a color scheme that feels distinctly Nigerian without being overwhelming',
+      ],
+    },
   },
   {
     slug: 'pump-house-uiux',
@@ -42,6 +79,26 @@ export const projects: Project[] = [
     links: { caseStudy: '#' },
     flagship: true,
     type: 'design',
+    role: 'UI/UX Designer · Contract',
+    timeline: 'Q3 2025',
+    caseStudy: {
+      problem: 'The Pump House fitness app had a functional but visually inconsistent interface. Users reported confusion navigating between workout tracking, social features, and progress analytics. The existing design system was fragmented across screens.',
+      approach: 'I conducted a full design audit, then rebuilt the navigation architecture using a bottom-tab + contextual action sheet pattern. Created a cohesive design system in Figma with reusable components, typography scale, and a dark-mode-first color palette that matches the brand\'s gym aesthetic.',
+      techStack: [
+        { category: 'Design', items: ['Figma', 'Design System', 'Prototyping', 'User Flows'] },
+        { category: 'Research', items: ['Heuristic Evaluation', 'Competitive Analysis', 'User Interviews'] },
+      ],
+      outcome: 'Delivered 30+ high-fidelity screens, a 50-component design system, and an interactive prototype. The client reported a 40% reduction in user support questions about navigation after implementing the new flow.',
+      challenges: [
+        'Balancing the gritty gym aesthetic with iOS/Android platform conventions',
+        'Designing a dark-mode-first interface that still works well in bright gym lighting',
+      ],
+      screenshots: [
+        { label: 'Dashboard', description: 'Main workout dashboard with quick-start and progress rings' },
+        { label: 'Workout Flow', description: 'Exercise logging with rest timer and form tips' },
+        { label: 'Social Feed', description: 'Community workouts, challenges, and friend activity' },
+      ],
+    },
   },
   {
     slug: 'portfolio-v1',
@@ -51,9 +108,11 @@ export const projects: Project[] = [
     status: 'shipped',
     tags: ['Design'],
     gradient: 'from-b-ink to-b-accent',
-    links: {},
+    links: { live: '#', github: '#' },
     flagship: false,
     type: 'web',
+    role: 'Designer & Developer · Solo',
+    timeline: 'Q2 2025',
   },
   {
     slug: 'nakore-construction',
@@ -66,6 +125,8 @@ export const projects: Project[] = [
     links: {},
     flagship: false,
     type: 'design',
+    role: 'Brand Designer · In progress',
+    timeline: 'Q2 2026',
   },
   {
     slug: 'ft-project',

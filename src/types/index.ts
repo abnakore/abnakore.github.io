@@ -2,6 +2,15 @@ export type Mode = 'terminal' | 'bento';
 
 export type ProjectType = 'web' | 'mobile' | 'desktop' | 'design' | 'other';
 
+export interface ProjectCaseStudy {
+  problem: string;
+  approach: string;
+  techStack: { category: string; items: string[] }[];
+  outcome: string;
+  challenges?: string[];
+  screenshots?: { label: string; description: string }[];
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -14,6 +23,9 @@ export interface Project {
   gradient: string;
   flagship?: boolean;
   type?: ProjectType;
+  caseStudy?: ProjectCaseStudy;
+  role?: string;
+  timeline?: string;
 }
 
 export interface SkillGroup {
