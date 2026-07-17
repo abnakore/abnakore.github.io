@@ -12,9 +12,9 @@ export interface Project {
   gradient: string;
 }
 
-export interface SkillBar {
-  label: string;
-  value: number;
+export interface SkillGroup {
+  category: string;
+  items: { label: string; value: number }[];
 }
 
 export interface Service {
