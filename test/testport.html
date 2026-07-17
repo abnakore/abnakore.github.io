@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdullahi Nakore — Full-Stack Developer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.4.1/tailwind.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12161c;
+    --panel:#181d26;
+    --panel-2:#1f2530;
+    --line:#2a3140;
+    --text:#e7e9ee;
+    --muted:#9aa3b2;
+    --amber:#e0a458;
+    --amber-soft:#e0a45822;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    margin:0;
+  }
+  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif}
+  .accent{color:var(--amber)}
+  .node-grid{
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse 60% 60% at 70% 30%, black 20%, transparent 75%);
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .card:hover{border-color:#3a4356; transform:translateY(-2px);}
+  .tag{
+    font-size:.72rem;
+    letter-spacing:.02em;
+    padding:3px 9px;
+    border-radius:999px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--muted);
+  }
+  .btn-primary{
+    background:var(--amber);
+    color:#161006;
+    font-weight:600;
+  }
+  .btn-primary:hover{background:#eab873}
+  .btn-outline{
+    border:1px solid var(--line);
+    color:var(--text);
+  }
+  .btn-outline:hover{border-color:var(--amber); color:var(--amber);}
+  .filter-btn{
+    font-size:.85rem;
+    color:var(--muted);
+    border:1px solid var(--line);
+    padding:6px 14px;
+    border-radius:999px;
+    transition:.2s ease;
+  }
+  .filter-btn.active{
+    background:var(--amber-soft);
+    border-color:var(--amber);
+    color:var(--amber);
+  }
+  .conn-line{
+    position:absolute; left:50%; top:0; bottom:0; width:1px;
+    background:linear-gradient(var(--line), transparent);
+  }
+  ::selection{background:var(--amber-soft); color:var(--amber)}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--amber); outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="fixed top-0 w-full z-50 backdrop-blur bg-[#12161cee] border-b border-[var(--line)]">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#top" class="display font-semibold text-lg">A. Nakore</a>
+    <nav class="hidden md:flex gap-8 text-sm text-[var(--muted)]">
+      <a href="#work" class="hover:text-[var(--text)]">Work</a>
+      <a href="#experience" class="hover:text-[var(--text)]">Experience</a>
+      <a href="#about" class="hover:text-[var(--text)]">About</a>
+      <a href="#contact" class="hover:text-[var(--text)]">Contact</a>
+    </nav>
+    <a href="#contact" class="btn-primary text-sm px-4 py-2 rounded-full">Let's talk</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="relative pt-40 pb-28 px-6 overflow-hidden">
+  <div class="absolute inset-0 node-grid pointer-events-none"></div>
+  <div class="max-w-6xl mx-auto relative">
+    <p class="tag inline-block mb-6">Software Engineering · Bayero University, Kano</p>
+    <h1 class="display text-5xl md:text-7xl font-semibold leading-[1.05] max-w-3xl">
+      I build <span class="accent">data-driven</span> web, mobile & desktop products.
+    </h1>
+    <p class="mt-6 text-lg text-[var(--muted)] max-w-xl leading-relaxed">
+      Full-stack developer specializing in dashboards, structured data systems, and clean interfaces —
+      from React/TypeScript frontends to Django/DRF backends. SIWES-trained at NCAIR (NITDA), Abuja.
+    </p>
+    <div class="mt-9 flex flex-wrap gap-4">
+      <a href="#work" class="btn-primary px-6 py-3 rounded-full text-sm">View Projects</a>
+      <a href="#contact" class="btn-outline px-6 py-3 rounded-full text-sm">Hire Me</a>
+    </div>
+  </div>
+</section>
+
+<!-- FLAGSHIP PROJECTS -->
+<section id="work" class="py-24 px-6 border-t border-[var(--line)]">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-baseline justify-between mb-12 flex-wrap gap-3">
+      <h2 class="display text-3xl font-semibold">Selected Work</h2>
+      <p class="text-sm text-[var(--muted)]">Full case studies below, more projects further down</p>
+    </div>
+
+    <!-- Flagship 1: Family Tree App -->
+    <div class="card rounded-2xl p-8 md:p-10 mb-8 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <p class="tag mb-4">Web App · Flagship</p>
+        <h3 class="display text-2xl font-semibold mb-3">Family Tree Web Application</h3>
+        <p class="text-[var(--muted)] leading-relaxed mb-5">
+          A full-stack genealogy platform with interactive tree visualization (zoom/pan), relationship-rule
+          validation, deceased-member styling, tag management, and a complete events system with photo uploads —
+          built on a custom family-themed Tailwind v4 design system.
+        </p>
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="tag">React 18</span><span class="tag">TypeScript</span><span class="tag">Vite</span>
+          <span class="tag">Django</span><span class="tag">DRF</span><span class="tag">Tailwind v4</span>
+        </div>
+        <div class="flex gap-4 text-sm">
+          <a href="#" class="accent hover:underline">Live demo →</a>
+          <a href="#" class="text-[var(--muted)] hover:text-[var(--text)]">GitHub →</a>
+        </div>
+      </div>
+      <div class="aspect-video rounded-xl bg-[var(--panel-2)] border border-[var(--line)] flex items-center justify-center text-[var(--muted)] text-sm">
+        [ project screenshot / demo GIF ]
+      </div>
+    </div>
+
+    <!-- Flagship 2: Pump House -->
+    <div class="card rounded-2xl p-8 md:p-10 mb-14 grid md:grid-cols-2 gap-8 items-center">
+      <div class="md:order-2">
+        <p class="tag mb-4">UI/UX Design · Flagship</p>
+        <h3 class="display text-2xl font-semibold mb-3">Pump House — Fitness App Design</h3>
+        <p class="text-[var(--muted)] leading-relaxed mb-5">
+          Complete UI/UX design specification for a mobile fitness app: navigation architecture, high-fidelity
+          screen mockups, and a cohesive design system matching the app's existing visual identity.
+        </p>
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="tag">Figma</span><span class="tag">UI/UX</span><span class="tag">Design Systems</span>
+        </div>
+        <div class="flex gap-4 text-sm">
+          <a href="#" class="accent hover:underline">View mockups →</a>
+        </div>
+      </div>
+      <div class="aspect-video rounded-xl bg-[var(--panel-2)] border border-[var(--line)] flex items-center justify-center text-[var(--muted)] text-sm md:order-1">
+        [ project screenshot / demo GIF ]
+      </div>
+    </div>
+
+    <!-- MORE PROJECTS w/ filter -->
+    <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+      <h3 class="display text-xl font-semibold">More Projects</h3>
+      <div class="flex gap-2 flex-wrap" id="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="mobile">Mobile</button>
+        <button class="filter-btn" data-filter="desktop">Desktop</button>
+      </div>
+    </div>
+
+    <div id="project-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Example cards — duplicate this block per project and edit -->
+      <div class="project-card card rounded-xl p-6" data-type="web">
+        <p class="tag mb-3">Web</p>
+        <h4 class="font-semibold mb-2">[ Project Name ]</h4>
+        <p class="text-sm text-[var(--muted)] mb-4">One-line description of the problem it solves.</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="tag">Stack</span><span class="tag">Tag</span>
+        </div>
+        <a href="#" class="text-sm accent hover:underline">GitHub →</a>
+      </div>
+      <div class="project-card card rounded-xl p-6" data-type="mobile">
+        <p class="tag mb-3">Mobile</p>
+        <h4 class="font-semibold mb-2">[ Mobile App Name ]</h4>
+        <p class="text-sm text-[var(--muted)] mb-4">One-line description of the problem it solves.</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="tag">Stack</span><span class="tag">Tag</span>
+        </div>
+        <a href="#" class="text-sm accent hover:underline">GitHub →</a>
+      </div>
+      <div class="project-card card rounded-xl p-6" data-type="desktop">
+        <p class="tag mb-3">Desktop</p>
+        <h4 class="font-semibold mb-2">[ Desktop App Name ]</h4>
+        <p class="text-sm text-[var(--muted)] mb-4">One-line description of the problem it solves.</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="tag">Stack</span><span class="tag">Tag</span>
+        </div>
+        <a href="#" class="text-sm accent hover:underline">GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="py-24 px-6 border-t border-[var(--line)]">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="display text-3xl font-semibold mb-12">Experience</h2>
+    <div class="relative pl-8">
+      <div class="conn-line" style="left:0"></div>
+      <div class="relative mb-10 pl-6" style="border-left:1px solid var(--line)">
+        <div class="absolute w-2.5 h-2.5 rounded-full bg-[var(--amber)]" style="left:-5px; top:6px"></div>
+        <p class="text-sm text-[var(--muted)] mb-1">SIWES Industrial Training</p>
+        <h3 class="font-semibold text-lg mb-2">National Centre for Artificial Intelligence & Robotics (NCAIR), NITDA — Abuja</h3>
+        <p class="text-[var(--muted)] text-sm leading-relaxed">
+          Trained across UI/UX, Python, data science, and embedded systems tracks. Delivered projects including
+          data analytics tooling and applied ML workflows.
+        </p>
+      </div>
+      <div class="relative pl-6" style="border-left:1px solid var(--line)">
+        <div class="absolute w-2.5 h-2.5 rounded-full bg-[var(--amber)]" style="left:-5px; top:6px"></div>
+        <p class="text-sm text-[var(--muted)] mb-1">Technical Training</p>
+        <h3 class="font-semibold text-lg mb-2">Karama Computer Training Institute (KCTI) — Kano</h3>
+        <p class="text-[var(--muted)] text-sm leading-relaxed">
+          Hardware maintenance, web development (HTML/CSS/PHP), Python, C++, MySQL, networking, and graphics design.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-24 px-6 border-t border-[var(--line)]">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
+    <div>
+      <h2 class="display text-3xl font-semibold mb-6">About</h2>
+      <p class="text-[var(--muted)] leading-relaxed mb-4">
+        Final-year Software Engineering student at Bayero University, Kano, Faculty of Computing. I care about
+        building things that are structurally sound — clean data models, intentional interfaces, and systems that
+        hold up under real use.
+      </p>
+      <p class="text-[var(--muted)] leading-relaxed">
+        Comfortable moving across the stack: React/TypeScript on the frontend, Django/DRF on the backend, with a
+        working design sensibility from hands-on UI/UX and graphics work.
+      </p>
+    </div>
+    <div>
+      <h3 class="text-sm text-[var(--muted)] mb-4 tracking-wide uppercase">Frontend</h3>
+      <div class="flex flex-wrap gap-2 mb-8">
+        <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">Tailwind CSS</span>
+      </div>
+      <h3 class="text-sm text-[var(--muted)] mb-4 tracking-wide uppercase">Backend</h3>
+      <div class="flex flex-wrap gap-2 mb-8">
+        <span class="tag">Django</span><span class="tag">Django REST Framework</span><span class="tag">Python</span>
+      </div>
+      <h3 class="text-sm text-[var(--muted)] mb-4 tracking-wide uppercase">Design & Tools</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="tag">Figma</span><span class="tag">UI/UX Design</span><span class="tag">Graphics Design</span><span class="tag">Git</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24 px-6 border-t border-[var(--line)]">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
+    <div class="card rounded-2xl p-8">
+      <h3 class="display text-xl font-semibold mb-2">Freelance / Short-term projects</h3>
+      <p class="text-[var(--muted)] text-sm mb-6">Web, mobile, or dashboard work — quick to scope and start.</p>
+      <a href="mailto:you@example.com" class="btn-primary inline-block px-5 py-2.5 rounded-full text-sm">Email me</a>
+    </div>
+    <div class="card rounded-2xl p-8">
+      <h3 class="display text-xl font-semibold mb-2">Job opportunities</h3>
+      <p class="text-[var(--muted)] text-sm mb-6">Full-time, internship, or contract roles.</p>
+      <a href="#" class="btn-outline inline-block px-5 py-2.5 rounded-full text-sm">View résumé / LinkedIn</a>
+    </div>
+  </div>
+  <p class="text-center text-[var(--muted)] text-sm mt-16">© 2026 Abdullahi Nakore</p>
+</section>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.project-card');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.type === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

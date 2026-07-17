@@ -1,5 +1,7 @@
 export type Mode = 'terminal' | 'bento';
 
+export type ProjectType = 'web' | 'mobile' | 'desktop' | 'design' | 'other';
+
 export interface Project {
   slug: string;
   title: string;
@@ -10,6 +12,8 @@ export interface Project {
   status: 'shipped' | 'in-progress';
   links?: { live?: string; github?: string; caseStudy?: string };
   gradient: string;
+  flagship?: boolean;
+  type?: ProjectType;
 }
 
 export interface SkillGroup {

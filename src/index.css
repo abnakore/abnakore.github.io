@@ -2,27 +2,27 @@
 
 @theme {
   /* Terminal / Dev-Core mode */
-  --color-t-bg: #0B0B09;
+  --color-t-bg: #0b0b09;
   --color-t-panel: #111008;
-  --color-t-border: #2A2A20;
-  --color-t-accent: #FFB000;
-  --color-t-text: #F3EFDF;
-  --color-t-dim: #8A8574;
-  --color-t-green: #7FBF7F;
+  --color-t-border: #2a2a20;
+  --color-t-accent: #ffb000;
+  --color-t-text: #f3efdf;
+  --color-t-dim: #8a8574;
+  --color-t-green: #7fbf7f;
 
   /* Bento Grid mode */
-  --color-b-bg: #F3F1FB;
-  --color-b-panel: #FFFFFF;
+  --color-b-bg: #f3f1fb;
+  --color-b-panel: #ffffff;
   --color-b-ink: #181425;
-  --color-b-sub: #57516F;
-  --color-b-accent: #4F46E5;
-  --color-b-accent2: #FF6B4A;
+  --color-b-sub: #57516f;
+  --color-b-accent: #4f46e5;
+  --color-b-accent2: #ff6b4a;
 
   /* Fonts — make sure these are loaded, see index.html */
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-plex: 'IBM Plex Sans', sans-serif;
-  --font-sora: 'Sora', sans-serif;
-  --font-inter: 'Inter', sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-plex: "IBM Plex Sans", sans-serif;
+  --font-sora: "Sora", sans-serif;
+  --font-inter: "Inter", sans-serif;
 }
 
 html {
@@ -34,8 +34,60 @@ body {
 }
 
 @keyframes blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 .animate-blink {
   animation: blink 1s step-end infinite;
+}
+
+/* ── Project card hover glow ── */
+@keyframes cardGlow {
+  0%, 100% { box-shadow: 0 0 0px rgba(79, 70, 229, 0); }
+  50% { box-shadow: 0 0 24px rgba(79, 70, 229, 0.08); }
+}
+.project-card-glow {
+  animation: cardGlow 3s ease-in-out infinite;
+}
+
+/* ── Filter button active pulse ── */
+@keyframes filterPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.filter-btn-active {
+  animation: filterPulse 0.3s ease-out;
+}
+
+/* ── Flagship card image shimmer ── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.flagship-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ── Terminal mode scan line effect ── */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+.terminal-scanline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 50%, rgba(255,176,0,0.015) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  border-radius: inherit;
 }

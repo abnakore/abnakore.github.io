@@ -11,7 +11,9 @@ export const projects: Project[] = [
     status: 'shipped',
     tags: ['React 18', 'TypeScript', 'Vite', 'Django', 'DRF', 'Tailwind v4'],
     gradient: 'from-b-accent to-purple-500',
-    links: {},
+    links: { live: '#', github: '#' },
+    flagship: true,
+    type: 'web',
   },
   {
     slug: 'nera-exchange',
@@ -23,7 +25,9 @@ export const projects: Project[] = [
     status: 'shipped',
     tags: ['Python', 'API integration', 'Frontend'],
     gradient: 'from-green-500 to-b-accent',
-    links: {},
+    links: { github: '#' },
+    flagship: false,
+    type: 'web',
   },
   {
     slug: 'pump-house-uiux',
@@ -35,7 +39,9 @@ export const projects: Project[] = [
     status: 'shipped',
     tags: ['Figma', 'UI/UX', 'Mobile Design'],
     gradient: 'from-b-accent2 to-purple-500',
-    links: {},
+    links: { caseStudy: '#' },
+    flagship: true,
+    type: 'design',
   },
   {
     slug: 'portfolio-v1',
@@ -46,6 +52,8 @@ export const projects: Project[] = [
     tags: ['Design'],
     gradient: 'from-b-ink to-b-accent',
     links: {},
+    flagship: false,
+    type: 'web',
   },
   {
     slug: 'nakore-construction',
@@ -56,6 +64,8 @@ export const projects: Project[] = [
     tags: ['Branding'],
     gradient: 'from-gray-300 to-gray-400',
     links: {},
+    flagship: false,
+    type: 'design',
   },
   {
     slug: 'ft-project',
@@ -66,8 +76,11 @@ export const projects: Project[] = [
     tags: [],
     gradient: 'from-gray-300 to-gray-400',
     links: {},
+    flagship: false,
+    type: 'other',
   },
 ];
 
 export const shippedProjects = projects.filter((p) => p.status === 'shipped');
 export const ongoingProjects = projects.filter((p) => p.status === 'in-progress');
+export const flagshipProjects = projects.filter((p) => p.flagship);
