@@ -1,18 +1,30 @@
-import { motion } from 'framer-motion';
-import { useMode } from '../../hooks/useMode';
-import { useTypewriter } from '../../hooks/useTypewriter';
-import Button from '../ui/Button';
-import SectionTag from '../ui/SectionTag';
-import WaveDivider from '../layout/WaveDivider';
+import { motion } from "framer-motion";
+import { useMode } from "../../hooks/useMode";
+import { useTypewriter } from "../../hooks/useTypewriter";
+import { useTypewriterMulti } from "../../hooks/useTypewriterMulti";
+import Button from "../ui/Button";
+import SectionTag from "../ui/SectionTag";
+import WaveDivider from "../layout/WaveDivider";
+
+const roles = [
+  "full-stack developer",
+  "mobile app developer",
+  "UI/UX designer",
+  "CS student",
+];
 
 export default function Hero() {
   const { mode } = useMode();
-  const isTerminal = mode === 'terminal';
-  const typed = useTypewriter('Abdullahi Nakore', 55, 400);
+  const isTerminal = mode === "terminal";
+  const typed = useTypewriter("Abdullahi Nakore", 55, 400);
+  const typedRole = useTypewriterMulti(roles, 50, 25, 2000, 400);
 
   return (
-    <section id="hero" className={`relative pt-32 px-[6vw] pb-24 ${!isTerminal ? 'bg-white' : ''}`}>
-      <div className="max-w-[1180px] mx-auto">
+    <section
+      id="hero"
+      className={`relative min-h-screen flex items-center px-[6vw] py-32 md:py-36 ${!isTerminal ? "bg-white" : ""}`}
+    >
+      <div className="max-w-[1180px] mx-auto w-full">
         {isTerminal ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -31,16 +43,31 @@ export default function Hero() {
               </div>
               <h1 className="text-3xl md:text-5xl font-extrabold text-t-text tracking-tight">
                 {typed}
-                <span className="inline-block w-[0.5ch] bg-t-accent animate-blink ml-0.5">&nbsp;</span>
+                <span className="inline-block w-[0.5ch] bg-t-accent animate-blink ml-0.5">
+                  &nbsp;
+                </span>
               </h1>
-              <div className="text-t-green mt-3 mb-5">&gt; full-stack developer · UI/UX designer · CS student</div>
+              <div className="text-t-green mt-3 mb-5 min-h-[1.5em]">
+                {">"} {typedRole}
+                <span className="inline-block w-[0.4ch] bg-t-green animate-blink ml-0.5">
+                  &nbsp;
+                </span>
+              </div>
               <p className="text-t-dim text-[14.5px] leading-relaxed max-w-xl">
-                300-level Software Engineering student at Bayero University Kano. I build full-stack
-                products with React, TypeScript, Django &amp; DRF — and design the screens they live in.
-                Trained at NITDA&apos;s NCAIR across data science, embedded systems, and UI/UX.
+                300-level Software Engineering student at Bayero University
+                Kano. I build full-stack products with React, TypeScript, Django
+                & DRF — and design the screens they live in. Trained at NITDA's
+                NCAIR across data science, embedded systems, and UI/UX.
               </p>
               <div className="flex flex-wrap gap-2.5 mt-6">
-                {['react', 'typescript', 'django', 'python', 'figma', 'tailwind'].map((t) => (
+                {[
+                  "react",
+                  "typescript",
+                  "django",
+                  "python",
+                  "figma",
+                  "tailwind",
+                ].map((t) => (
                   <span
                     key={t}
                     className="text-xs border border-t-accent/35 text-t-accent px-2.5 py-1.5 rounded-md hover:bg-t-accent/10 hover:-translate-y-0.5 transition-all"
@@ -50,24 +77,38 @@ export default function Hero() {
                 ))}
               </div>
               <div className="flex flex-wrap gap-3.5 mt-8">
-                <Button href="#projects" variant="primary">./view-projects</Button>
-                <Button to="/contact" variant="ghost">$ contact --now</Button>
+                <Button href="#projects" variant="primary">
+                  ./view-projects
+                </Button>
+                <Button to="/contact" variant="ghost">
+                  $ contact --now
+                </Button>
               </div>
             </div>
           </motion.div>
         ) : (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <SectionTag>Available for work</SectionTag>
             <h1 className="font-sora font-extrabold text-4xl md:text-6xl tracking-tight leading-[1.06] mt-4 text-b-ink">
-              Building software with <span className="text-b-accent2">craft</span> &amp; clarity.
+              Building software with{" "}
+              <span className="text-b-accent2">craft</span> & clarity.
             </h1>
             <p className="text-b-sub text-[16.5px] leading-relaxed max-w-lg mt-4">
-              Abdullahi Nakore — full-stack developer and UI/UX designer based in Nigeria. I like clean
-              systems, tidy code, and interfaces that don&apos;t need instructions.
+              Abdullahi Nakore — full-stack developer and UI/UX designer based
+              in Nigeria. I like clean systems, tidy code, and interfaces that
+              don't need instructions.
             </p>
             <div className="flex flex-wrap gap-3.5 mt-7">
-              <Button href="#projects" variant="primary">View my work</Button>
-              <Button to="/contact" variant="ghost">Get in touch</Button>
+              <Button href="#projects" variant="primary">
+                View my work
+              </Button>
+              <Button to="/contact" variant="ghost">
+                Get in touch
+              </Button>
             </div>
           </motion.div>
         )}
