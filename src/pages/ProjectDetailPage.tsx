@@ -24,11 +24,11 @@ function TechStackTable({ stacks, isTerminal }: { stacks: { category: string; it
     return (
       <div className="space-y-3">
         {stacks.map((s) => (
-          <div key={s.category} className="border border-t-border rounded-lg p-4">
+          <div key={s.category} className="group border border-t-border rounded-lg p-4 transition-all duration-300 hover:border-t-accent/30 hover:shadow-[0_0_15px_rgba(255,176,0,0.04)]">
             <div className="font-mono text-t-accent text-xs mb-2"># {s.category}</div>
             <div className="flex flex-wrap gap-2">
               {s.items.map((item) => (
-                <span key={item} className="font-mono text-[12px] border border-t-border bg-t-panel text-t-dim px-2.5 py-1 rounded-md">
+                <span key={item} className="font-mono text-[12px] border border-t-border bg-t-panel text-t-dim px-2.5 py-1 rounded-md transition-all duration-200 hover:border-t-accent/30 hover:text-t-text">
                   {item}
                 </span>
               ))}
@@ -42,11 +42,11 @@ function TechStackTable({ stacks, isTerminal }: { stacks: { category: string; it
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {stacks.map((s) => (
-        <div key={s.category} className="bg-b-bg rounded-xl p-4 border border-transparent hover:border-b-accent/10 transition-colors duration-300">
-          <div className="text-xs font-semibold text-b-accent mb-2 uppercase tracking-wider">{s.category}</div>
+        <div key={s.category} className="group bg-b-bg rounded-xl p-4 border border-transparent transition-all duration-300 hover:border-b-accent/15 hover:shadow-[0_4px_20px_rgba(79,70,229,0.06)] hover:-translate-y-0.5">
+          <div className="text-xs font-semibold text-b-accent mb-2 uppercase tracking-wider group-hover:text-b-accent/80 transition-colors">{s.category}</div>
           <div className="flex flex-wrap gap-1.5">
             {s.items.map((item) => (
-              <span key={item} className="text-[12px] font-medium bg-white text-b-sub px-2.5 py-1 rounded-full shadow-sm">
+              <span key={item} className="text-[12px] font-medium bg-white text-b-sub px-2.5 py-1 rounded-full shadow-sm transition-all duration-200 hover:bg-b-accent/10 hover:text-b-accent">
                 {item}
               </span>
             ))}
@@ -59,14 +59,14 @@ function TechStackTable({ stacks, isTerminal }: { stacks: { category: string; it
 
 function ScreenshotPlaceholder({ label, description, isTerminal, gradient }: { label: string; description: string; isTerminal: boolean; gradient: string }) {
   return (
-    <div className={`group relative ${isTerminal ? 'border border-t-border rounded-xl overflow-hidden' : 'rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(24,20,37,0.06)]'}`}>
+    <div className={`group relative ${isTerminal ? 'border border-t-border rounded-xl overflow-hidden transition-all duration-300 hover:border-t-accent/30 hover:shadow-[0_0_15px_rgba(255,176,0,0.04)]' : 'rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(24,20,37,0.06)] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(79,70,229,0.10)] hover:-translate-y-0.5'}`}>
       <div className={`aspect-video bg-gradient-to-br ${gradient} relative flex items-center justify-center`}>
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
         <div className="text-center relative z-10">
-          <svg className={`w-8 h-8 mx-auto mb-2 ${isTerminal ? 'text-t-dim/40' : 'text-white/60'} group-hover:scale-110 transition-transform duration-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className={`w-8 h-8 mx-auto mb-2 ${isTerminal ? 'text-t-dim/40' : 'text-white/60'} group-hover:scale-110 group-hover:opacity-100 transition-all duration-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          <span className={`text-xs ${isTerminal ? 'font-mono text-t-dim/60' : 'font-semibold text-white/70'}`}>
+          <span className={`text-xs ${isTerminal ? 'font-mono text-t-dim/60 group-hover:text-t-dim' : 'font-semibold text-white/70 group-hover:text-white'} transition-colors duration-300`}>
             {label}
           </span>
         </div>
@@ -96,20 +96,26 @@ export default function ProjectDetailPage() {
           <ScrollReveal variant="fadeUp">
             <Link
               to="/projects"
-              className={`inline-flex items-center gap-1 text-sm font-semibold mb-6 ${
-                isTerminal ? 'font-mono text-t-accent hover:text-t-accent/80' : 'text-b-accent hover:text-b-accent/80'
-              } transition-colors duration-200`}
+              className={`inline-flex items-center gap-1.5 text-sm font-semibold mb-6 group ${
+                isTerminal ? 'font-mono text-t-accent' : 'text-b-accent'
+              } transition-all duration-200`}
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className={`w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              {isTerminal ? '../projects' : 'Back to projects'}
+              <span className={`${isTerminal ? 'group-hover:text-t-accent/80' : 'group-hover:text-b-accent/80'} transition-colors`}>
+                {isTerminal ? '../projects' : 'Back to projects'}
+              </span>
             </Link>
           </ScrollReveal>
 
           {/* Hero Section */}
           <ScrollReveal variant="fadeUp" delay={0.05}>
-            <div className={`mb-8 ${isTerminal ? '' : 'bg-b-bg rounded-2xl p-8 md:p-10'}`}>
+            <div className={`mb-8 transition-all duration-300 ${
+              isTerminal
+                ? 'border border-transparent rounded-2xl p-8 md:p-10 hover:border-t-border/50 hover:shadow-[0_0_20px_rgba(255,176,0,0.03)]'
+                : 'bg-b-bg rounded-2xl p-8 md:p-10 hover:shadow-[0_8px_30px_rgba(79,70,229,0.06)] transition-shadow duration-300'
+            }`}>
               <div className="flex items-center gap-3 flex-wrap mb-3">
                 <SectionTag>
                   {isTerminal ? project.fileName : project.status === 'shipped' ? 'Shipped' : 'In progress'}
@@ -140,11 +146,11 @@ export default function ProjectDetailPage() {
                 <div className="flex flex-wrap gap-2 mt-5">
                   {project.tags.map((t) =>
                     isTerminal ? (
-                      <span key={t} className="text-xs font-mono border border-t-accent/35 text-t-accent px-2.5 py-1.5 rounded-md">
+                      <span key={t} className="text-xs font-mono border border-t-accent/35 text-t-accent px-2.5 py-1.5 rounded-md transition-all duration-200 hover:bg-t-accent/10 hover:border-t-accent/60">
                         {t}
                       </span>
                     ) : (
-                      <span key={t} className="text-xs font-semibold bg-white text-b-accent px-3 py-1.5 rounded-full shadow-sm border border-b-bg">
+                      <span key={t} className="text-xs font-semibold bg-white text-b-accent px-3 py-1.5 rounded-full shadow-sm border border-b-bg transition-all duration-200 hover:bg-b-accent hover:text-white hover:border-b-accent hover:shadow-md">
                         {t}
                       </span>
                     )
@@ -159,9 +165,12 @@ export default function ProjectDetailPage() {
                     href={project.links.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`text-sm font-bold ${isTerminal ? 'font-mono text-t-accent hover:underline' : 'text-b-accent hover:underline'} transition-all`}
+                    className={`text-sm font-bold inline-flex items-center gap-1 group/link ${
+                      isTerminal ? 'font-mono text-t-accent' : 'text-b-accent'
+                    } transition-all duration-200`}
                   >
-                    Live demo →
+                    <span>Live demo</span>
+                    <span className="transition-transform duration-200 group-hover/link:translate-x-0.5">→</span>
                   </a>
                 )}
                 {project.links?.github && (
@@ -169,9 +178,12 @@ export default function ProjectDetailPage() {
                     href={project.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`text-sm ${isTerminal ? 'font-mono text-t-dim hover:text-t-text' : 'text-b-sub hover:text-b-ink'} transition-colors`}
+                    className={`text-sm inline-flex items-center gap-1 group/link ${
+                      isTerminal ? 'font-mono text-t-dim hover:text-t-text' : 'text-b-sub hover:text-b-ink'
+                    } transition-colors duration-200`}
                   >
-                    GitHub →
+                    <span>GitHub</span>
+                    <span className="transition-transform duration-200 group-hover/link:translate-x-0.5">→</span>
                   </a>
                 )}
                 {project.links?.caseStudy && (
@@ -179,9 +191,12 @@ export default function ProjectDetailPage() {
                     href={project.links.caseStudy}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`text-sm ${isTerminal ? 'font-mono text-t-dim hover:text-t-text' : 'text-b-sub hover:text-b-ink'} transition-colors`}
+                    className={`text-sm inline-flex items-center gap-1 group/link ${
+                      isTerminal ? 'font-mono text-t-dim hover:text-t-text' : 'text-b-sub hover:text-b-ink'
+                    } transition-colors duration-200`}
                   >
-                    Full case study →
+                    <span>Full case study</span>
+                    <span className="transition-transform duration-200 group-hover/link:translate-x-0.5">→</span>
                   </a>
                 )}
               </div>
@@ -198,16 +213,28 @@ export default function ProjectDetailPage() {
 
               {/* Problem */}
               <DetailSection title={isTerminal ? 'Problem' : 'The Problem'} isTerminal={isTerminal} delay={0.1}>
-                <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
-                  {project.caseStudy!.problem}
-                </p>
+                <div className={`p-5 rounded-xl transition-all duration-300 ${
+                  isTerminal
+                    ? 'border border-transparent hover:border-t-border/50 hover:shadow-[0_0_15px_rgba(255,176,0,0.03)]'
+                    : 'bg-b-bg/50 hover:bg-b-bg hover:shadow-[0_4px_20px_rgba(79,70,229,0.04)]'
+                }`}>
+                  <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
+                    {project.caseStudy!.problem}
+                  </p>
+                </div>
               </DetailSection>
 
               {/* Approach / Role */}
               <DetailSection title={isTerminal ? 'Approach' : 'My Approach & Role'} isTerminal={isTerminal} delay={0.15}>
-                <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
-                  {project.caseStudy!.approach}
-                </p>
+                <div className={`p-5 rounded-xl transition-all duration-300 ${
+                  isTerminal
+                    ? 'border border-transparent hover:border-t-border/50 hover:shadow-[0_0_15px_rgba(255,176,0,0.03)]'
+                    : 'bg-b-bg/50 hover:bg-b-bg hover:shadow-[0_4px_20px_rgba(79,70,229,0.04)]'
+                }`}>
+                  <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
+                    {project.caseStudy!.approach}
+                  </p>
+                </div>
               </DetailSection>
 
               {/* Tech Stack */}
@@ -219,7 +246,7 @@ export default function ProjectDetailPage() {
               {project.caseStudy!.screenshots && project.caseStudy!.screenshots.length > 0 && (
                 <DetailSection title={isTerminal ? 'Screenshots' : 'Screenshots & Demos'} isTerminal={isTerminal} delay={0.25}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {project.caseStudy!.screenshots.map((ss, i) => (
+                    {project.caseStudy!.screenshots.map((ss) => (
                       <ScreenshotPlaceholder
                         key={ss.label}
                         label={ss.label}
@@ -235,20 +262,34 @@ export default function ProjectDetailPage() {
               {/* Challenges */}
               {project.caseStudy!.challenges && project.caseStudy!.challenges.length > 0 && (
                 <DetailSection title={isTerminal ? 'Challenges' : 'Challenges & Solutions'} isTerminal={isTerminal} delay={0.3}>
-                  <ul className={`space-y-3 ${isTerminal ? '' : ''}`}>
-                    {project.caseStudy!.challenges.map((c, i) => (
-                      <li key={i} className={`flex gap-3 text-sm leading-relaxed ${isTerminal ? 'font-mono text-t-dim' : 'text-b-sub'}`}>
-                        <span className={`mt-0.5 shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 ${isTerminal ? 'bg-t-accent/50' : 'bg-b-accent'}`} />
-                        {c}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className={`p-5 rounded-xl transition-all duration-300 ${
+                    isTerminal
+                      ? 'border border-transparent hover:border-t-border/50'
+                      : 'bg-b-bg/50 hover:bg-b-bg hover:shadow-[0_4px_20px_rgba(79,70,229,0.04)]'
+                  }`}>
+                    <ul className="space-y-3">
+                      {project.caseStudy!.challenges.map((c, i) => (
+                        <li key={i} className={`flex gap-3 text-sm leading-relaxed group/challenge ${isTerminal ? 'font-mono text-t-dim' : 'text-b-sub'}`}>
+                          <span className={`mt-0.5 shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 transition-all duration-300 ${
+                            isTerminal
+                              ? 'bg-t-accent/50 group-hover/challenge:bg-t-accent'
+                              : 'bg-b-accent group-hover/challenge:bg-b-accent2 group-hover/challenge:scale-125'
+                          }`} />
+                          <span className="transition-colors duration-200 group-hover/challenge:text-b-ink">{c}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </DetailSection>
               )}
 
               {/* Outcome */}
               <DetailSection title={isTerminal ? 'Outcome' : 'Outcome & Learnings'} isTerminal={isTerminal} delay={0.35}>
-                <div className={`p-5 rounded-xl ${isTerminal ? 'bg-t-panel border border-t-border' : 'bg-b-bg border border-transparent'}`}>
+                <div className={`p-5 rounded-xl transition-all duration-300 ${
+                  isTerminal
+                    ? 'bg-t-panel border border-t-border hover:border-t-accent/20 hover:shadow-[0_0_20px_rgba(255,176,0,0.04)]'
+                    : 'bg-b-bg border border-transparent hover:border-b-accent/10 hover:shadow-[0_4px_20px_rgba(79,70,229,0.06)]'
+                }`}>
                   <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-text font-mono' : 'text-b-ink'}`}>
                     {project.caseStudy!.outcome}
                   </p>
@@ -260,7 +301,14 @@ export default function ProjectDetailPage() {
           {/* ── For non-case-study projects (minimal details) ── */}
           {!hasCaseStudy && (
             <ScrollReveal variant="fadeUp" delay={0.1}>
-              <div className={`p-6 rounded-xl text-center ${isTerminal ? 'bg-t-panel border border-t-border' : 'bg-b-bg'}`}>
+              <div className={`p-8 rounded-xl text-center transition-all duration-300 ${
+                isTerminal
+                  ? 'bg-t-panel border border-t-border hover:border-t-accent/20 hover:shadow-[0_0_20px_rgba(255,176,0,0.03)]'
+                  : 'bg-b-bg hover:shadow-[0_4px_20px_rgba(79,70,229,0.04)]'
+              }`}>
+                <svg className={`w-10 h-10 mx-auto mb-3 ${isTerminal ? 'text-t-dim/30' : 'text-b-sub/30'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
                 <p className={`text-sm ${isTerminal ? 'font-mono text-t-dim' : 'text-b-sub'}`}>
                   {isTerminal ? '# Case study details coming soon.' : 'Additional details coming soon.'}
                 </p>
@@ -273,14 +321,16 @@ export default function ProjectDetailPage() {
             <div className={`mt-16 pt-8 ${isTerminal ? 'border-t border-t-border' : 'border-t border-b-bg'} text-center`}>
               <Link
                 to="/projects"
-                className={`inline-flex items-center gap-2 text-sm font-semibold ${
-                  isTerminal ? 'font-mono text-t-accent hover:text-t-accent/80' : 'text-b-accent hover:text-b-accent/80'
-                } transition-colors duration-200`}
+                className={`inline-flex items-center gap-1.5 text-sm font-semibold group ${
+                  isTerminal ? 'font-mono text-t-accent' : 'text-b-accent'
+                } transition-all duration-200`}
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className={`w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                {isTerminal ? 'cd ../projects' : 'Back to all projects'}
+                <span className={`${isTerminal ? 'group-hover:text-t-accent/80' : 'group-hover:text-b-accent/80'} transition-colors`}>
+                  {isTerminal ? 'cd ../projects' : 'Back to all projects'}
+                </span>
               </Link>
             </div>
           </ScrollReveal>
