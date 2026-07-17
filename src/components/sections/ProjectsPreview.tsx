@@ -26,7 +26,7 @@ export default function ProjectsPreview() {
   const [activeFilter, setActiveFilter] = useState<ProjectType | "all">("all");
 
   const filteredProjects = shippedProjects.filter(
-    (p) => activeFilter === "all" || p.type === activeFilter
+    (p) => (activeFilter === "all" || p.type === activeFilter) && !p.flagship
   );
 
   return (
