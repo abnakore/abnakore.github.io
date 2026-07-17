@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  /* Terminal / Dev-Core mode */
+  --color-t-bg: #0B0B09;
+  --color-t-panel: #111008;
+  --color-t-border: #2A2A20;
+  --color-t-accent: #FFB000;
+  --color-t-text: #F3EFDF;
+  --color-t-dim: #8A8574;
+  --color-t-green: #7FBF7F;
+
+  /* Bento Grid mode */
+  --color-b-bg: #F3F1FB;
+  --color-b-panel: #FFFFFF;
+  --color-b-ink: #181425;
+  --color-b-sub: #57516F;
+  --color-b-accent: #4F46E5;
+  --color-b-accent2: #FF6B4A;
+
+  /* Fonts — make sure these are loaded, see index.html */
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-plex: 'IBM Plex Sans', sans-serif;
+  --font-sora: 'Sora', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}

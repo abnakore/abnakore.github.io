@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdullahi Nakore — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Coiny&family=Pixelify+Sans:wght@400..700&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --t-bg:#0B0B09; --t-panel:#111008; --t-border:#2A2A20; --t-accent:#FFB000;
+    --t-text:#F3EFDF; --t-dim:#8A8574; --t-green:#7FBF7F;
+    --b-bg:#F3F1FB; --b-panel:#FFFFFF; --b-ink:#181425; --b-sub:#57516F;
+    --b-accent:#4F46E5; --b-accent2:#FF6B4A; --b-dark:#181425;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  button{font-family:inherit;border:none;background:none;cursor:pointer;}
+  body{overflow-x:hidden;}
+
+  /* ============ MODE TOGGLE ============ */
+  .mode-switch{
+    display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.15); border-radius:999px; padding:4px; position:relative;
+  }
+  .mode-switch button{
+    position:relative; z-index:2; font-size:12px; font-weight:700; padding:8px 14px;
+    border-radius:999px; color:#aaa; transition:color .35s ease; letter-spacing:.02em;
+  }
+  .mode-switch button.active{ color:#0B0B09; }
+  .mode-switch .thumb{
+    position:absolute; top:4px; left:4px; height:calc(100% - 8px); width:calc(50% - 4px);
+    background:var(--t-accent); border-radius:999px; transition:transform .4s cubic-bezier(.65,0,.35,1), background .4s;
+    z-index:1;
+  }
+  body[data-mode="bento"] .mode-switch .thumb{ transform:translateX(100%); background:var(--b-accent); }
+  body[data-mode="bento"] .mode-switch button.active{ color:#fff; }
+
+  /* ============ SHARED NAV ============ */
+  nav.site-nav{
+    position:fixed; top:0; left:0; right:0; z-index:1000; display:flex; align-items:center;
+    justify-content:space-between; padding:18px 5vw; transition:background .4s, border-color .4s;
+    backdrop-filter:blur(14px);
+  }
+  .logo{ font-weight:800; font-size:18px; letter-spacing:-.02em; }
+  .nav-links{ display:flex; gap:28px; font-size:14px; font-weight:600; }
+  .nav-links a{ opacity:.75; transition:opacity .25s; }
+  .nav-links a:hover{ opacity:1; }
+  .nav-right{ display:flex; align-items:center; gap:18px; }
+  .burger{ display:none; }
+
+  section{ padding:120px 6vw 100px; position:relative; }
+  .wrap{ max-width:1180px; margin:0 auto; }
+  .section-tag{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:14px; display:inline-block; }
+  .fade-body{ transition:opacity .45s ease; }
+
+  /* =========================================================
+     TERMINAL / DEV-CORE THEME
+     ========================================================= */
+  body[data-mode="terminal"]{ background:var(--t-bg); color:var(--t-text); font-family:'IBM Plex Sans',sans-serif; }
+  body[data-mode="terminal"] nav.site-nav{ background:rgba(11,11,9,0.75); border-bottom:1px solid var(--t-border); }
+  body[data-mode="terminal"] .logo{ font-family:'JetBrains Mono'; color:var(--t-accent); }
+  body[data-mode="terminal"] .nav-links a{ color:var(--t-text); }
+  body[data-mode="terminal"] .section-tag{ font-family:'JetBrains Mono'; color:var(--t-accent); background:rgba(255,176,0,.1); border:1px solid rgba(255,176,0,.3); padding:5px 12px; border-radius:6px; }
+
+  .scanlines::before{
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.04;
+    background:repeating-linear-gradient(0deg,#fff 0px,transparent 1px,transparent 2px,#fff 3px);
+  }
+
+  .t-hero-window{ background:var(--t-panel); border:1px solid var(--t-border); border-radius:14px; overflow:hidden; box-shadow:0 30px 90px rgba(255,176,0,.08); margin-top:40px; }
+  .t-bar{ background:#17160E; padding:12px 16px; display:flex; gap:7px; border-bottom:1px solid var(--t-border); }
+  .t-bar span{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+  .t-bar span:nth-child(1){background:#FF5F57;} .t-bar span:nth-child(2){background:#FEBC2E;} .t-bar span:nth-child(3){background:#28C840;}
+  .t-body{ padding:44px 40px; font-family:'JetBrains Mono',monospace; }
+  .t-line{ color:var(--t-dim); font-size:13.5px; margin-bottom:8px; }
+  .t-prompt{ color:var(--t-accent); }
+  .t-hero-name{ font-size:clamp(30px,4.8vw,50px); font-weight:800; margin:16px 0 6px; letter-spacing:-.01em; }
+  .t-cursor{ display:inline-block; width:.5ch; background:var(--t-accent); animation:blink 1s step-end infinite; margin-left:3px; }
+  @keyframes blink{ 50%{opacity:0;} }
+  .t-role{ color:var(--t-green); font-size:16px; margin-bottom:20px; }
+  .t-desc{ color:var(--t-dim); font-size:14.5px; line-height:1.75; max-width:640px; }
+  .t-tags{ margin-top:24px; display:flex; flex-wrap:wrap; gap:10px; }
+  .t-tags span{ font-size:12.5px; font-family:'JetBrains Mono'; color:var(--t-accent); border:1px solid rgba(255,176,0,.35); padding:6px 11px; border-radius:6px; transition:all .25s; }
+  .t-tags span:hover{ background:rgba(255,176,0,.12); transform:translateY(-2px); }
+  .t-cta-row{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
+  .t-btn{ font-family:'JetBrains Mono'; font-size:13.5px; font-weight:700; padding:13px 22px; border-radius:8px; transition:all .3s; }
+  .t-btn.primary{ background:var(--t-accent); color:#1a1400; }
+  .t-btn.primary:hover{ box-shadow:0 10px 30px rgba(255,176,0,.35); transform:translateY(-2px); }
+  .t-btn.ghost{ border:1px solid var(--t-border); color:var(--t-text); }
+  .t-btn.ghost:hover{ border-color:var(--t-accent); color:var(--t-accent); }
+
+  .t-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:22px; }
+  .t-card{ background:var(--t-panel); border:1px solid var(--t-border); border-radius:12px; padding:24px; transition:border-color .3s, transform .3s; }
+  .t-card:hover{ border-color:var(--t-accent); transform:translateY(-4px); }
+  .t-card .fname{ font-family:'JetBrains Mono'; color:var(--t-accent); font-size:12px; margin-bottom:10px; }
+  .t-card h4{ font-size:16px; margin-bottom:8px; }
+  .t-card p{ font-size:13px; color:var(--t-dim); line-height:1.6; }
+  .t-card .links{ margin-top:14px; display:flex; gap:12px; font-family:'JetBrains Mono'; font-size:12px; }
+  .t-card .links a{ color:var(--t-green); }
+  .t-card .links a:hover{ text-decoration:underline; }
+
+  .t-bars{ margin-top:22px; }
+  .t-bar-row{ margin-bottom:16px; font-family:'JetBrains Mono'; font-size:13px; }
+  .t-bar-row .label{ display:flex; justify-content:space-between; margin-bottom:6px; color:var(--t-text); }
+  .t-bar-row .label .pct{ color:var(--t-accent); }
+  .t-track{ height:6px; background:#1E1D14; border-radius:4px; overflow:hidden; }
+  .t-fill{ height:100%; background:linear-gradient(90deg,var(--t-accent),#FFD166); width:0; transition:width 1.4s cubic-bezier(.2,.8,.2,1); }
+
+  .t-services{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:22px; }
+  .t-service{ background:var(--t-panel); border:1px solid var(--t-border); border-radius:12px; padding:22px; transition:transform .3s, border-color .3s; }
+  .t-service:hover{ transform:translateY(-4px); border-color:var(--t-accent); }
+  .t-service .idx{ font-family:'JetBrains Mono'; color:var(--t-accent); font-size:12px; margin-bottom:10px; }
+  .t-service h4{ font-size:15px; margin-bottom:6px; }
+  .t-service p{ font-size:12.5px; color:var(--t-dim); line-height:1.55; }
+
+  .t-form{ margin-top:26px; display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:760px; }
+  .t-form .full{ grid-column:1/-1; }
+  .t-field label{ display:block; font-family:'JetBrains Mono'; font-size:12px; color:var(--t-accent); margin-bottom:6px; }
+  .t-field input, .t-field textarea{
+    width:100%; background:var(--t-panel); border:1px solid var(--t-border); border-radius:8px;
+    padding:12px 14px; color:var(--t-text); font-family:'IBM Plex Sans'; font-size:14px; transition:border-color .25s;
+  }
+  .t-field input:focus, .t-field textarea:focus{ outline:none; border-color:var(--t-accent); }
+  .t-field textarea{ min-height:120px; resize:vertical; }
+
+  @media(max-width:820px){ .t-grid,.t-services{grid-template-columns:1fr 1fr;} .t-form{grid-template-columns:1fr;} }
+  @media(max-width:560px){ .t-grid,.t-services{grid-template-columns:1fr;} }
+
+  /* =========================================================
+     BENTO GRID / LIGHT THEME
+     ========================================================= */
+  body[data-mode="bento"]{ background:var(--b-bg); color:var(--b-ink); font-family:'Inter',sans-serif; }
+  body[data-mode="bento"] nav.site-nav{ background:rgba(243,241,251,0.8); border-bottom:1px solid rgba(24,20,37,0.06); }
+  body[data-mode="bento"] .logo{ font-family:'Sora'; color:var(--b-ink); }
+  body[data-mode="bento"] .nav-links a{ color:var(--b-ink); }
+  body[data-mode="bento"] .section-tag{ background:rgba(79,70,229,0.1); color:var(--b-accent); padding:5px 12px; border-radius:999px; }
+
+  .b-hero h1{ font-family:'Sora'; font-weight:800; font-size:clamp(36px,5.6vw,66px); letter-spacing:-.02em; line-height:1.06; margin-top:18px; }
+  .b-hero h1 .accent{ color:var(--b-accent2); }
+  .b-hero p.lead{ margin-top:18px; max-width:540px; color:var(--b-sub); font-size:16.5px; line-height:1.65; }
+  .b-cta-row{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
+  .b-btn{ font-size:14.5px; font-weight:700; padding:14px 26px; border-radius:14px; transition:transform .3s, box-shadow .3s; }
+  .b-btn.primary{ background:var(--b-ink); color:#fff; }
+  .b-btn.primary:hover{ transform:translateY(-3px); box-shadow:0 14px 34px rgba(24,20,37,.25); }
+  .b-btn.ghost{ border:1.5px solid rgba(24,20,37,.15); color:var(--b-ink); }
+  .b-btn.ghost:hover{ background:#fff; transform:translateY(-3px); }
+
+  .b-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:18px; margin-top:56px; }
+  .b-card{ background:var(--b-panel); border-radius:24px; padding:26px; box-shadow:0 8px 30px rgba(24,20,37,.06); transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; }
+  .b-card:hover{ transform:translateY(-6px); box-shadow:0 22px 50px rgba(24,20,37,.14); }
+  .b-card.dark{ background:var(--b-dark); color:#F3F1FB; }
+  .b-card.accent{ background:linear-gradient(135deg,var(--b-accent),#8B5CF6); color:#fff; }
+  .c1{grid-column:span 3;grid-row:span 2;} .c2{grid-column:span 3;} .c3{grid-column:span 2;} .c4{grid-column:span 2;} .c5{grid-column:span 2;}
+  .b-card h3{ font-family:'Sora'; font-size:18px; margin-bottom:8px; }
+  .b-card p{ font-size:13.5px; color:var(--b-sub); line-height:1.55; }
+  .b-card.dark p, .b-card.accent p{ color:rgba(255,255,255,.75); }
+  .b-num{ font-family:'Sora'; font-weight:800; font-size:44px; color:var(--b-accent); }
+  .b-tags{ margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; }
+  .b-tags span{ font-size:12px; background:var(--b-bg); color:var(--b-accent); padding:6px 11px; border-radius:999px; font-weight:600; }
+  .b-card.dark .b-tags span, .b-card.accent .b-tags span{ background:rgba(255,255,255,.12); color:#fff; }
+
+  .b-bars{ margin-top:18px; }
+  .b-bar-row{ margin-bottom:14px; }
+  .b-bar-row .label{ display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:6px; }
+  .b-track{ height:8px; background:#EEEBFA; border-radius:6px; overflow:hidden; }
+  .b-fill{ height:100%; background:linear-gradient(90deg,var(--b-accent),var(--b-accent2)); width:0; border-radius:6px; transition:width 1.4s cubic-bezier(.2,.8,.2,1); }
+
+  .b-services{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:26px; }
+  .b-service{ background:var(--b-panel); border-radius:20px; padding:26px; box-shadow:0 8px 24px rgba(24,20,37,.05); transition:transform .3s; }
+  .b-service:hover{ transform:translateY(-5px); }
+  .b-service .ico{ width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,var(--b-accent),var(--b-accent2)); margin-bottom:14px; }
+  .b-service h4{ font-family:'Sora'; font-size:15.5px; margin-bottom:6px; }
+  .b-service p{ font-size:13px; color:var(--b-sub); line-height:1.55; }
+
+  .b-projects{ display:grid; grid-template-columns:repeat(6,1fr); gap:18px; margin-top:26px; }
+  .b-proj{ grid-column:span 3; background:var(--b-panel); border-radius:22px; overflow:hidden; box-shadow:0 8px 30px rgba(24,20,37,.06); transition:transform .35s; }
+  .b-proj:hover{ transform:translateY(-6px); }
+  .b-proj .thumb{ height:150px; background:linear-gradient(135deg,var(--b-accent),#8B5CF6); }
+  .b-proj .body{ padding:20px; }
+  .b-proj h4{ font-family:'Sora'; font-size:16px; margin-bottom:6px; }
+  .b-proj p{ font-size:13px; color:var(--b-sub); line-height:1.5; }
+
+  .b-form{ margin-top:26px; display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:760px; }
+  .b-form .full{ grid-column:1/-1; }
+  .b-field label{ display:block; font-size:12.5px; font-weight:700; color:var(--b-sub); margin-bottom:6px; }
+  .b-field input, .b-field textarea{
+    width:100%; background:var(--b-panel); border:1.5px solid #E4E0F5; border-radius:12px;
+    padding:13px 15px; font-size:14px; font-family:'Inter'; transition:border-color .25s;
+  }
+  .b-field input:focus, .b-field textarea:focus{ outline:none; border-color:var(--b-accent); }
+  .b-field textarea{ min-height:120px; resize:vertical; }
+
+  @media(max-width:820px){ .b-grid,.b-services,.b-projects{grid-template-columns:1fr 1fr;} .c1{grid-column:span 2;} .b-form{grid-template-columns:1fr;} }
+  @media(max-width:560px){ .b-grid,.b-services,.b-projects{grid-template-columns:1fr;} }
+
+  /* wave dividers (bento mode only) */
+  .wave-svg{ display:none; position:absolute; left:0; right:0; bottom:-1px; width:100%; height:90px; z-index:2; pointer-events:none; }
+  body[data-mode="bento"] .wave-svg{ display:block; }
+  body[data-mode="bento"] #hero{ background:#FFFFFF; }
+  body[data-mode="bento"] #about{ background:var(--b-bg); }
+  body[data-mode="bento"] #services{ background:#FFFFFF; }
+  body[data-mode="bento"] #projects{ background:var(--b-bg); }
+  body[data-mode="bento"] #contact{ background:#FFFFFF; }
+  body[data-mode="bento"] footer{ position:relative; z-index:1; }
+
+  footer{ padding:34px 6vw; display:flex; justify-content:space-between; align-items:center; font-size:13px; }
+  body[data-mode="terminal"] footer{ background:#000; color:var(--t-dim); border-top:1px solid var(--t-border); font-family:'JetBrains Mono'; }
+  body[data-mode="bento"] footer{ background:#fff; color:var(--b-sub); }
+
+  h2.title{ font-size:clamp(26px,3.6vw,38px); font-weight:800; letter-spacing:-.01em; }
+  body[data-mode="terminal"] h2.title{ font-family:'JetBrains Mono'; }
+  body[data-mode="bento"] h2.title{ font-family:'Sora'; }
+</style>
+</head>
+<body data-mode="terminal" class="scanlines">
+
+<nav class="site-nav">
+  <div class="logo" id="logoText">AB.NAKORE</div>
+  <div class="nav-links">
+    <a href="#about">About</a><a href="#skills">Skills</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <div class="mode-switch">
+      <div class="thumb"></div>
+      <button id="btnTerminal" class="active" onclick="setMode('terminal')">CLI</button>
+      <button id="btnBento" onclick="setMode('bento')">GRID</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section id="hero" style="padding-top:110px;">
+  <div class="wrap">
+
+    <!-- TERMINAL HERO -->
+    <div id="t-hero" class="fade-body">
+      <div class="t-hero-window">
+        <div class="t-bar"><span></span><span></span><span></span></div>
+        <div class="t-body">
+          <div class="t-line"><span class="t-prompt">abdul@buk</span>:~$ whoami</div>
+          <div class="t-hero-name">Abdullahi Nakore<span class="t-cursor">&nbsp;</span></div>
+          <div class="t-role">&gt; full-stack developer · UI/UX designer · CS student</div>
+          <p class="t-desc">300-level Software Engineering student at Bayero University Kano. I build full-stack products with React, TypeScript, Django &amp; DRF — and design the screens they live in. Trained at NITDA's NCAIR across data science, embedded systems, and UI/UX.</p>
+          <div class="t-tags"><span>react</span><span>typescript</span><span>django</span><span>python</span><span>figma</span><span>tailwind</span></div>
+          <div class="t-cta-row">
+            <a class="t-btn primary" href="#projects">./view-projects</a>
+            <a class="t-btn ghost" href="#contact">$ contact --now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BENTO HERO -->
+    <div id="b-hero" class="fade-body b-hero" style="display:none;">
+      <div class="section-tag">Available for work</div>
+      <h1>Building software with <span class="accent">craft</span> &amp; clarity.</h1>
+      <p class="lead">Abdullahi Nakore — full-stack developer and UI/UX designer based in Nigeria. I like clean systems, tidy code, and interfaces that don't need instructions.</p>
+      <div class="b-cta-row">
+        <a class="b-btn primary" href="#projects">View my work</a>
+        <a class="b-btn ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </div>
+  <svg class="wave-svg" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C240,90 480,0 720,30 C960,60 1200,10 1440,45 L1440,90 L0,90 Z" fill="#F3F1FB"></path></svg>
+</section>
+
+<!-- ================= ABOUT + SKILLS ================= -->
+<section id="about">
+  <div class="wrap">
+    <div id="t-about" class="fade-body">
+      <div class="section-tag">$ cat about.md</div>
+      <h2 class="title" style="margin-top:10px;">A bit about me</h2>
+      <p class="t-desc" style="margin-top:14px;">I'm a versatile developer with experience across web, mobile and embedded platforms. I care about clean architecture as much as clean UI — whether that's a Django API or a Figma file.</p>
+      <div class="t-bars" id="skillbars-t">
+        <div class="t-bar-row"><div class="label"><span>Scratch</span><span class="pct">90%</span></div><div class="t-track"><div class="t-fill" data-w="90"></div></div></div>
+        <div class="t-bar-row"><div class="label"><span>Python</span><span class="pct">90%</span></div><div class="t-track"><div class="t-fill" data-w="90"></div></div></div>
+        <div class="t-bar-row"><div class="label"><span>React / TypeScript</span><span class="pct">85%</span></div><div class="t-track"><div class="t-fill" data-w="85"></div></div></div>
+        <div class="t-bar-row"><div class="label"><span>Django / DRF</span><span class="pct">80%</span></div><div class="t-track"><div class="t-fill" data-w="80"></div></div></div>
+        <div class="t-bar-row"><div class="label"><span>UI/UX &amp; Figma</span><span class="pct">80%</span></div><div class="t-track"><div class="t-fill" data-w="80"></div></div></div>
+      </div>
+    </div>
+
+    <div id="b-about" class="fade-body" style="display:none;">
+      <div class="section-tag">About me</div>
+      <h2 class="title" style="margin-top:10px;">Hi, I'm here to help your next project</h2>
+      <div class="b-grid" style="margin-top:26px;">
+        <div class="b-card dark c1">
+          <h3 style="color:#fff;">What I do</h3>
+          <p>Full-stack web apps, dashboards and design systems — from Figma to production code.</p>
+          <div class="b-tags"><span>React</span><span>Django</span><span>DRF</span><span>Figma</span></div>
+        </div>
+        <div class="b-card c2">
+          <h3>Skill focus</h3>
+          <div class="b-bars" id="skillbars-b">
+            <div class="b-bar-row"><div class="label"><span>Python</span><span>90%</span></div><div class="b-track"><div class="b-fill" data-w="90"></div></div></div>
+            <div class="b-bar-row"><div class="label"><span>React / TS</span><span>85%</span></div><div class="b-track"><div class="b-fill" data-w="85"></div></div></div>
+            <div class="b-bar-row"><div class="label"><span>Django</span><span>80%</span></div><div class="b-track"><div class="b-fill" data-w="80"></div></div></div>
+          </div>
+        </div>
+        <div class="b-card accent c3">
+          <div class="b-num" style="color:#fff;">300L</div>
+          <p>Software Engineering, Bayero University Kano</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg class="wave-svg" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 C240,10 480,90 720,50 C960,10 1200,70 1440,30 L1440,90 L0,90 Z" fill="#FFFFFF"></path></svg>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services">
+  <div class="wrap">
+    <div id="t-services-wrap" class="fade-body">
+      <div class="section-tag">$ services --list</div>
+      <h2 class="title" style="margin-top:10px;">What I can build</h2>
+      <div class="t-services">
+        <div class="t-service"><div class="idx">01</div><h4>Web Development</h4><p>Full-stack apps with React, TypeScript, Django &amp; DRF.</p></div>
+        <div class="t-service"><div class="idx">02</div><h4>UI/UX Design</h4><p>Wireframes to high-fidelity screens in Figma.</p></div>
+        <div class="t-service"><div class="idx">03</div><h4>Graphics Design</h4><p>Brand marks, logos, and visual identity work.</p></div>
+        <div class="t-service"><div class="idx">04</div><h4>Data &amp; Embedded</h4><p>Python data tooling and embedded systems basics.</p></div>
+      </div>
+    </div>
+
+    <div id="b-services-wrap" class="fade-body" style="display:none;">
+      <div class="section-tag">My services</div>
+      <h2 class="title" style="margin-top:10px;">Where I add value</h2>
+      <div class="b-services">
+        <div class="b-service"><div class="ico"></div><h4>Web Development</h4><p>Full-stack apps with React, TypeScript, Django &amp; DRF.</p></div>
+        <div class="b-service"><div class="ico"></div><h4>UI/UX Design</h4><p>Wireframes to high-fidelity screens in Figma.</p></div>
+        <div class="b-service"><div class="ico"></div><h4>Graphics Design</h4><p>Brand marks, logos, and visual identity work.</p></div>
+        <div class="b-service"><div class="ico"></div><h4>Data &amp; Embedded</h4><p>Python data tooling and embedded systems basics.</p></div>
+      </div>
+    </div>
+  </div>
+  <svg class="wave-svg" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 C240,70 480,10 720,45 C960,80 1200,20 1440,50 L1440,90 L0,90 Z" fill="#F3F1FB"></path></svg>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects">
+  <div class="wrap">
+    <div id="t-projects" class="fade-body">
+      <div class="section-tag">$ ls ./projects</div>
+      <h2 class="title" style="margin-top:10px;">Latest work</h2>
+      <div class="t-grid">
+        <div class="t-card">
+          <div class="fname">./family-tree.tsx</div>
+          <h4>Family Tree Platform</h4>
+          <p>Full-stack visualization app — React 18, TypeScript, Django, DRF, custom Tailwind design system.</p>
+          <div class="links"><a href="#">live →</a><a href="#">github →</a></div>
+        </div>
+        <div class="t-card">
+          <div class="fname">./nera.py</div>
+          <h4>NERA Currency Exchange</h4>
+          <p>Real-time conversion platform across 100+ currencies.</p>
+          <div class="links"><a href="#">live →</a><a href="#">github →</a></div>
+        </div>
+        <div class="t-card">
+          <div class="fname">./pump-house.fig</div>
+          <h4>Pump House UI/UX</h4>
+          <p>Mobile fitness app design spec + high-fidelity screens.</p>
+          <div class="links"><a href="#">case study →</a></div>
+        </div>
+      </div>
+      <div class="section-tag" style="margin-top:50px;">$ ls ./in-progress</div>
+      <div class="t-grid">
+        <div class="t-card"><div class="fname">./nakore-construction/</div><h4>Nakore Construction</h4><p>Brand + site — in progress.</p></div>
+        <div class="t-card"><div class="fname">./ft-project/</div><h4>FT</h4><p>Details coming soon.</p></div>
+      </div>
+    </div>
+
+    <div id="b-projects-wrap" class="fade-body" style="display:none;">
+      <div class="section-tag">Latest projects</div>
+      <h2 class="title" style="margin-top:10px;">Things I've shipped</h2>
+      <div class="b-projects">
+        <div class="b-proj"><div class="thumb"></div><div class="body"><h4>Family Tree Platform</h4><p>React 18 + TypeScript + Django, full events &amp; photo pipeline.</p></div></div>
+        <div class="b-proj"><div class="thumb" style="background:linear-gradient(135deg,#22C55E,#4F46E5);"></div><div class="body"><h4>NERA Currency Exchange</h4><p>Real-time conversion across 100+ currencies.</p></div></div>
+        <div class="b-proj"><div class="thumb" style="background:linear-gradient(135deg,#FF6B4A,#8B5CF6);"></div><div class="body"><h4>Pump House UI/UX</h4><p>Fitness app design spec + high-fidelity screens.</p></div></div>
+        <div class="b-proj"><div class="thumb" style="background:linear-gradient(135deg,#181425,#4F46E5);"></div><div class="body"><h4>Portfolio v1</h4><p>Previous single-page portfolio design.</p></div></div>
+      </div>
+      <div class="section-tag" style="margin-top:50px;">In progress</div>
+      <div class="b-projects">
+        <div class="b-proj"><div class="thumb" style="background:#EDEBFA;"></div><div class="body"><h4>Nakore Construction</h4><p>Brand identity + website — ongoing.</p></div></div>
+        <div class="b-proj"><div class="thumb" style="background:#EDEBFA;"></div><div class="body"><h4>FT</h4><p>Details coming soon.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <svg class="wave-svg" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,45 C240,5 480,80 720,40 C960,0 1200,60 1440,25 L1440,90 L0,90 Z" fill="#FFFFFF"></path></svg>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="wrap">
+    <div id="t-contact" class="fade-body">
+      <div class="section-tag">$ mail --compose</div>
+      <h2 class="title" style="margin-top:10px;">Let's talk</h2>
+      <div class="t-form">
+        <div class="t-field"><label>--name</label><input type="text" placeholder="your name"></div>
+        <div class="t-field"><label>--email</label><input type="email" placeholder="you@example.com"></div>
+        <div class="t-field full"><label>--subject</label><input type="text" placeholder="what's this about"></div>
+        <div class="t-field full"><label>--message</label><textarea placeholder="type here..."></textarea></div>
+        <div class="full"><button class="t-btn primary" type="button">$ send --message</button></div>
+      </div>
+    </div>
+
+    <div id="b-contact" class="fade-body" style="display:none;">
+      <div class="section-tag">Contact</div>
+      <h2 class="title" style="margin-top:10px;">Let's build something</h2>
+      <div class="b-form">
+        <div class="b-field"><label>Full name</label><input type="text" placeholder="Your name"></div>
+        <div class="b-field"><label>Email</label><input type="email" placeholder="you@example.com"></div>
+        <div class="b-field full"><label>Subject</label><input type="text" placeholder="What's this about"></div>
+        <div class="b-field full"><label>Message</label><textarea placeholder="Tell me about your project..."></textarea></div>
+        <div class="full"><button class="b-btn primary" type="button">Send message</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span id="footText">© 2026 Abdullahi Nakore — CLI mode</span>
+  <a href="#hero">↑ top</a>
+</footer>
+
+<script>
+  function setMode(mode){
+    document.body.setAttribute('data-mode', mode);
+    document.getElementById('btnTerminal').classList.toggle('active', mode==='terminal');
+    document.getElementById('btnBento').classList.toggle('active', mode==='bento');
+
+    const pairs = [
+      ['t-hero','b-hero'],['t-about','b-about'],
+      ['t-services-wrap','b-services-wrap'],['t-projects','b-projects-wrap'],
+      ['t-contact','b-contact']
+    ];
+    pairs.forEach(([t,b])=>{
+      document.getElementById(t).style.display = mode==='terminal' ? '' : 'none';
+      document.getElementById(b).style.display = mode==='bento' ? '' : 'none';
+    });
+
+    document.getElementById('footText').textContent = mode==='terminal'
+      ? '© 2026 Abdullahi Nakore — CLI mode'
+      : '© 2026 Abdullahi Nakore — Grid mode';
+
+    if(mode==='bento'){ animateBars('.b-fill'); } else { animateBars('.t-fill'); }
+  }
+
+  function animateBars(selector){
+    document.querySelectorAll(selector).forEach(el=>{
+      el.style.width = '0%';
+      requestAnimationFrame(()=> requestAnimationFrame(()=>{
+        el.style.width = el.getAttribute('data-w') + '%';
+      }));
+    });
+  }
+  animateBars('.t-fill');
+
+  // playful tilt-toward-cursor for grid mode cards
+  function attachTilt(el){
+    el.style.transition = 'transform .15s ease-out, box-shadow .35s';
+    el.addEventListener('mousemove', e=>{
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      const rx = ((y / r.height) - 0.5) * -10;
+      const ry = ((x / r.width) - 0.5) * 10;
+      el.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px) scale(1.015)`;
+    });
+    el.addEventListener('mouseleave', ()=>{
+      el.style.transition = 'transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .35s';
+      el.style.transform = '';
+    });
+    el.addEventListener('mouseenter', ()=>{ el.style.transition = 'transform .15s ease-out, box-shadow .35s'; });
+  }
+  document.querySelectorAll('.b-card, .b-proj, .b-service').forEach(attachTilt);
+</script>
+</body>
+</html>
