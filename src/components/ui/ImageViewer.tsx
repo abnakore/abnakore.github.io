@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useMode } from "../../hooks/useMode";
-import { useTypewriter } from "../../hooks/useTypewriter";
 
 interface Screenshot {
   label: string;
@@ -17,15 +16,6 @@ interface ImageViewerProps {
   gradient: string;
 }
 
-/**
- * Usage: mount conditionally from the parent, e.g.
- *   {viewerOpen && (
- *     <ImageViewer ... onClose={() => setViewerOpen(false)} />
- *   )}
- * The exit ("genie") animation is handled internally — onClose is only
- * called once the close animation has finished, so no AnimatePresence
- * wrapper is required in the parent.
- */
 export default function ImageViewer({
   screenshots,
   currentIndex,
@@ -35,9 +25,8 @@ export default function ImageViewer({
 }: ImageViewerProps) {
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
+  const isEditorial = mode === "editorial";
   const [isClosing, setIsClosing] = useState(false);
-
-  // const getTyped = (text: string) => useTypewriter(text, 25);
 
   const requestClose = useCallback(() => {
     if (isClosing) return;
@@ -73,59 +62,19 @@ export default function ImageViewer({
 
   const currentScreenshot = screenshots[currentIndex];
 
-  // --- "Genie" open/close animation ---
-  // Starts as a thin, pill-shaped sliver near the bottom of the viewport
-  // (like a macOS dock minimize), then stretches up into the full panel
-  // with a slight overshoot/settle for an elastic, "poured out" feel.
-  const panelRadius = isTerminal ? "16px" : "28px";
-  // const genieVariants = {
-  //   hidden: {
-  //     opacity: 0,
-  //     scaleY: 0.04,
-  //     scaleX: 0.35,
-  //     y: 140,
-  //     borderRadius: "999px",
-  //   },
-  //   visible: {
-  //     opacity: 1,
-  //     scaleY: [0.04, 1.06, 0.97, 1],
-  //     scaleX: [0.35, 1.07, 0.97, 1],
-  //     y: [140, -10, 4, 0],
-  //     borderRadius: ["999px", "32px", "20px", panelRadius],
-  //     transition: {
-  //       duration: 0.62,
-  //       ease: [0.34, 1.15, 0.64, 1] as const,
-  //       times: [0, 0.55, 0.8, 1],
-  //     },
-  //   },
-  //   exit: {
-  //     opacity: [1, 1, 0],
-  //     scaleY: [1, 0.88, 0.04],
-  //     scaleX: [1, 0.5, 0.32],
-  //     y: [0, 24, 140],
-  //     borderRadius: [panelRadius, "48px", "999px"],
-  //     transition: {
-  //       duration: 0.42,
-  //       ease: [0.55, 0, 0.85, 0.35] as const,
-  //       times: [0, 0.4, 1],
-  //     },
-  //   },
-  // };
+  const panelRadius = isTerminal ? "16px" : isEditorial ? "0px" : "28px";
+
   const genieVariants = {
     hidden: {
       opacity: 0,
       scaleX: 0.1,
       scaleY: 0.01,
-      y: 350, // Starts squeezed deep in the "dock" position
-      skewX: 12, // Subtle lean as it begins to emerge
+      y: 350,
+      skewX: 12,
       filter: "blur(4px)",
     },
     visible: {
       opacity: 1,
-      // The keyframes create a dramatic fluid stretch:
-      // 1. It shoots out incredibly thin and tall
-      // 2. The sides catch up and widen out
-      // 3. It snaps back into perfect shape with a tight, fast ease
       scaleX: [0.1, 0.25, 0.95, 1],
       scaleY: [0.01, 1.3, 0.97, 1],
       y: [350, 40, -5, 0],
@@ -134,15 +83,12 @@ export default function ImageViewer({
       filter: "blur(0px)",
       transition: {
         duration: 0.52,
-        // Custom Bezier curve mirroring Apple's responsive, snappy fluid dynamic
         ease: [0.25, 0.85, 0.45, 1] as const,
         times: [0, 0.4, 0.85, 1],
       },
     },
     exit: {
       opacity: [1, 1, 0],
-      // Slips downward into a funnel shape:
-      // It squashes inward horizontally first, then gets sucked downward into a sliver
       scaleX: [1, 0.6, 0.15, 0.05],
       scaleY: [1, 0.85, 0.3, 0.01],
       y: [0, 80, 240, 380],
@@ -151,7 +97,6 @@ export default function ImageViewer({
       filter: ["blur(0px)", "blur(1px)", "blur(3px)", "blur(6px)"],
       transition: {
         duration: 0.42,
-        // Accelerated easing curve mimicking gravitational pull into the dock
         ease: [0.4, 0, 0.7, 0.3] as const,
         times: [0, 0.35, 0.75, 1],
       },
@@ -170,7 +115,7 @@ export default function ImageViewer({
     <motion.div
       className="fixed inset-0 z-50 flex items-center justify-center pt-20 pb-4 px-4 sm:px-6 md:px-8"
       style={{
-        background: isTerminal ? "rgba(0,0,0,0.85)" : "rgba(24,20,37,0.55)",
+        background: isTerminal ? "rgba(0,0,0,0.85)" : isEditorial ? "rgba(17,17,17,0.9)" : "rgba(24,20,37,0.55)",
         backdropFilter: "blur(6px)",
       }}
       variants={backdropVariants}
@@ -182,7 +127,9 @@ export default function ImageViewer({
         className={`relative w-full max-w-5xl max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-9rem)] md:max-h-[calc(100vh-10rem)] flex flex-col overflow-hidden ${
           isTerminal
             ? "border border-t-border bg-t-panel shadow-[0_30px_90px_rgba(255,176,0,0.1)]"
-            : "bg-white shadow-[0_30px_80px_rgba(24,20,37,0.25)]"
+            : isEditorial
+              ? "border border-e-border bg-e-panel"
+              : "bg-white shadow-[0_30px_80px_rgba(24,20,37,0.25)]"
         }`}
         style={{ transformOrigin: "bottom center" }}
         variants={genieVariants}
@@ -192,142 +139,100 @@ export default function ImageViewer({
       >
         {isTerminal ? (
           <>
-            {/* Terminal title bar, matching Hero's window chrome */}
             <div className="flex items-center gap-2 bg-[#17160E] px-4 py-3 border-b border-t-border shrink-0">
-              <span
-                className="w-2.5 h-2.5 rounded-full bg-[#FF5F57] cursor-pointer"
-                onClick={requestClose}
-              />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57] cursor-pointer" onClick={requestClose} />
               <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
               <span className="ml-3 font-mono text-[11px] text-t-dim truncate">
-                ~/screenshots/
-                {currentScreenshot.label.toLowerCase().replace(/\s+/g, "-")}.png
+                ~/screenshots/{currentScreenshot.label.toLowerCase().replace(/\s+/g, "-")}.png
               </span>
             </div>
-
-            {/* Header — terminal-style command + description */}
             <div className="px-6 pt-5 pb-4 border-b border-t-border shrink-0 font-mono">
               <div className="text-t-dim text-xs">
                 <span className="text-t-accent">abdul@dev</span>:~$ open{" "}
                 {currentScreenshot.label.toLowerCase().replace(/\s+/g, "-")}.png
                 <span className="animate-blink text-t-accent">_</span>
               </div>
-              <h3 className="text-t-text text-lg font-bold mt-1.5">
-                {currentScreenshot.label}
-              </h3>
-              <p className="text-t-dim text-[13px] mt-1">
-                // {currentScreenshot.description}
-              </p>
+              <h3 className="text-t-text text-lg font-bold mt-1.5">{currentScreenshot.label}</h3>
+              <p className="text-t-dim text-[13px] mt-1">// {currentScreenshot.description}</p>
             </div>
-
-            {/* Image */}
             <div className="flex-1 flex items-center justify-center p-6 md:p-10 min-h-[360px] overflow-auto">
               {currentScreenshot.image ? (
-                <img
-                  src={currentScreenshot.image}
-                  alt={currentScreenshot.label}
-                  className="max-w-full max-h-[56vh] object-contain rounded-md border border-t-border"
-                />
+                <img src={currentScreenshot.image} alt={currentScreenshot.label} className="max-w-full max-h-[56vh] object-contain rounded-md border border-t-border" />
               ) : (
-                <div
-                  className={`w-full aspect-video bg-gradient-to-br ${gradient} rounded-md flex items-center justify-center border border-t-border`}
-                >
-                  <PlaceholderIcon
-                    className="text-t-dim/40"
-                    label={currentScreenshot.label}
-                    labelClass="font-mono text-t-dim/70"
-                  />
+                <div className={`w-full aspect-video bg-gradient-to-br ${gradient} rounded-md flex items-center justify-center border border-t-border`}>
+                  <PlaceholderIcon className="text-t-dim/40" label={currentScreenshot.label} labelClass="font-mono text-t-dim/70" />
                 </div>
               )}
             </div>
-
-            {/* Nav footer */}
             <div className="flex items-center justify-between px-6 py-4 border-t border-t-border font-mono text-xs shrink-0">
-              <button
-                onClick={goToPrevious}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-t-border text-t-accent hover:border-t-accent hover:bg-t-accent/10 transition-all duration-200"
-                aria-label="Previous image"
-              >
+              <button onClick={goToPrevious} className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-t-border text-t-accent hover:border-t-accent hover:bg-t-accent/10 transition-all duration-200" aria-label="Previous image">
                 <ChevronLeft /> <span className="hidden sm:inline">$ prev</span>
               </button>
-
-              <div className="text-t-dim">
-                [{currentIndex + 1}/{screenshots.length}]
+              <div className="text-t-dim">[{currentIndex + 1}/{screenshots.length}]</div>
+              <button onClick={goToNext} className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-t-border text-t-accent hover:border-t-accent hover:bg-t-accent/10 transition-all duration-200" aria-label="Next image">
+                <span className="hidden sm:inline">$ next</span> <ChevronRight />
+              </button>
+            </div>
+          </>
+        ) : isEditorial ? (
+          <>
+            <div className="flex items-start justify-between p-6 md:p-7 border-b border-e-border shrink-0">
+              <div className="min-w-0">
+                <h3 className="font-fraunces text-lg md:text-xl font-semibold text-e-text">{currentScreenshot.label}</h3>
+                <p className="text-e-dim text-sm mt-1.5 font-archivo">{currentScreenshot.description}</p>
               </div>
-
-              <button
-                onClick={goToNext}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-t-border text-t-accent hover:border-t-accent hover:bg-t-accent/10 transition-all duration-200"
-                aria-label="Next image"
-              >
-                <span className="hidden sm:inline">$ next</span>{" "}
-                <ChevronRight />
+              <button onClick={requestClose} className="ml-4 w-9 h-9 shrink-0 flex items-center justify-center text-e-dim hover:text-e-accent transition-colors duration-200" aria-label="Close viewer">
+                <CloseIcon />
+              </button>
+            </div>
+            <div className="flex-1 flex items-center justify-center p-6 md:p-10 bg-e-bg/40 min-h-[360px] overflow-auto">
+              {currentScreenshot.image ? (
+                <img src={currentScreenshot.image} alt={currentScreenshot.label} className="max-w-full max-h-[56vh] object-contain border border-e-border" />
+              ) : (
+                <div className={`w-full aspect-video bg-gradient-to-br ${gradient} flex items-center justify-center border border-e-border`}>
+                  <PlaceholderIcon className="text-e-dim/40" label={currentScreenshot.label} labelClass="font-archivo text-e-dim/70" />
+                </div>
+              )}
+            </div>
+            <div className="flex items-center justify-between p-6 md:p-7 border-t border-e-border shrink-0">
+              <button onClick={goToPrevious} className="flex items-center gap-2 px-4 py-2.5 border border-e-border text-e-accent hover:bg-e-accent hover:text-e-bg transition-all duration-150 font-archivo text-sm font-bold" aria-label="Previous image">
+                <ChevronLeft /> <span className="hidden sm:inline">Prev</span>
+              </button>
+              <div className="font-fraunces text-e-dim text-sm">
+                {String(currentIndex + 1).padStart(2, '0')}/{String(screenshots.length).padStart(2, '0')}
+              </div>
+              <button onClick={goToNext} className="flex items-center gap-2 px-4 py-2.5 border border-e-border text-e-accent hover:bg-e-accent hover:text-e-bg transition-all duration-150 font-archivo text-sm font-bold" aria-label="Next image">
+                <span className="hidden sm:inline">Next</span> <ChevronRight />
               </button>
             </div>
           </>
         ) : (
           <>
-            {/* Grid mode header */}
             <div className="flex items-start justify-between p-6 md:p-7 border-b border-black/5 shrink-0">
               <div className="min-w-0">
-                <h3 className="font-sora text-lg md:text-xl font-bold text-b-ink truncate">
-                  {currentScreenshot.label}
-                </h3>
-                <p className="text-b-sub text-sm mt-1.5">
-                  {currentScreenshot.description}
-                </p>
+                <h3 className="font-sora text-lg md:text-xl font-bold text-b-ink truncate">{currentScreenshot.label}</h3>
+                <p className="text-b-sub text-sm mt-1.5">{currentScreenshot.description}</p>
               </div>
-              <button
-                onClick={requestClose}
-                className="ml-4 w-9 h-9 shrink-0 flex items-center justify-center rounded-full bg-b-bg text-b-ink hover:bg-b-accent hover:text-white transition-all duration-200"
-                aria-label="Close viewer"
-              >
+              <button onClick={requestClose} className="ml-4 w-9 h-9 shrink-0 flex items-center justify-center rounded-full bg-b-bg text-b-ink hover:bg-b-accent hover:text-white transition-all duration-200" aria-label="Close viewer">
                 <CloseIcon />
               </button>
             </div>
-
-            {/* Image */}
             <div className="flex-1 flex items-center justify-center p-6 md:p-10 bg-b-bg/40 min-h-[360px] overflow-auto">
               {currentScreenshot.image ? (
-                <img
-                  src={currentScreenshot.image}
-                  alt={currentScreenshot.label}
-                  className="max-w-full max-h-[56vh] object-contain rounded-2xl shadow-[0_8px_30px_rgba(24,20,37,0.1)]"
-                />
+                <img src={currentScreenshot.image} alt={currentScreenshot.label} className="max-w-full max-h-[56vh] object-contain rounded-2xl shadow-[0_8px_30px_rgba(24,20,37,0.1)]" />
               ) : (
-                <div
-                  className={`w-full aspect-video bg-gradient-to-br ${gradient} rounded-2xl flex items-center justify-center shadow-[0_8px_30px_rgba(24,20,37,0.1)]`}
-                >
-                  <PlaceholderIcon
-                    className="text-white/70"
-                    label={currentScreenshot.label}
-                    labelClass="font-sora text-white/85"
-                  />
+                <div className={`w-full aspect-video bg-gradient-to-br ${gradient} rounded-2xl flex items-center justify-center shadow-[0_8px_30px_rgba(24,20,37,0.1)]`}>
+                  <PlaceholderIcon className="text-white/70" label={currentScreenshot.label} labelClass="font-sora text-white/85" />
                 </div>
               )}
             </div>
-
-            {/* Nav footer */}
             <div className="flex items-center justify-between p-6 md:p-7 border-t border-black/5 shrink-0">
-              <button
-                onClick={goToPrevious}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl border-[1.5px] border-black/10 text-sm font-bold text-b-ink hover:bg-b-bg transition-all duration-200 hover:-translate-y-0.5"
-                aria-label="Previous image"
-              >
-                <ChevronLeft />{" "}
-                <span className="hidden sm:inline">Previous</span>
+              <button onClick={goToPrevious} className="flex items-center gap-2 px-5 py-3 rounded-xl border-[1.5px] border-black/10 text-sm font-bold text-b-ink hover:bg-b-bg transition-all duration-200 hover:-translate-y-0.5" aria-label="Previous image">
+                <ChevronLeft /> <span className="hidden sm:inline">Previous</span>
               </button>
-
-              <div className="text-sm font-semibold text-b-sub">
-                {currentIndex + 1} / {screenshots.length}
-              </div>
-
-              <button
-                onClick={goToNext}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-b-ink text-white text-sm font-bold hover:shadow-lg hover:shadow-b-ink/25 transition-all duration-200 hover:-translate-y-0.5"
-                aria-label="Next image"
-              >
+              <div className="text-sm font-semibold text-b-sub">{currentIndex + 1} / {screenshots.length}</div>
+              <button onClick={goToNext} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-b-ink text-white text-sm font-bold hover:shadow-lg hover:shadow-b-ink/25 transition-all duration-200 hover:-translate-y-0.5" aria-label="Next image">
                 <span className="hidden sm:inline">Next</span> <ChevronRight />
               </button>
             </div>
@@ -338,29 +243,11 @@ export default function ImageViewer({
   );
 }
 
-function PlaceholderIcon({
-  className = "",
-  label,
-  labelClass = "",
-}: {
-  className?: string;
-  label: string;
-  labelClass?: string;
-}) {
+function PlaceholderIcon({ className = "", label, labelClass = "" }: { className?: string; label: string; labelClass?: string }) {
   return (
     <div className="text-center">
-      <svg
-        className={`w-14 h-14 mx-auto mb-3 ${className}`}
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1}
-          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-        />
+      <svg className={`w-14 h-14 mx-auto mb-3 ${className}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
       </svg>
       <span className={`text-sm ${labelClass}`}>{label}</span>
     </div>
@@ -369,54 +256,24 @@ function PlaceholderIcon({
 
 function ChevronLeft() {
   return (
-    <svg
-      className="w-4 h-4"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M15 19l-7-7 7-7"
-      />
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
     </svg>
   );
 }
 
 function ChevronRight() {
   return (
-    <svg
-      className="w-4 h-4"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M9 5l7 7-7 7"
-      />
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
     </svg>
   );
 }
 
 function CloseIcon() {
   return (
-    <svg
-      className="w-4 h-4"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M6 18L18 6M6 6l12 12"
-      />
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
     </svg>
   );
 }

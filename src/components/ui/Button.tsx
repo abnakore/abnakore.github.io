@@ -13,6 +13,18 @@ interface Props {
 
 export default function Button({ to, href, variant = 'primary', children, onClick, type = 'button' }: Props) {
   const { mode } = useMode();
+
+  if (mode === 'editorial') {
+    const base = 'inline-block font-archivo font-bold text-sm px-6 py-3.5 transition-all duration-150';
+    const styles = variant === 'primary'
+      ? 'bg-e-accent text-e-bg hover:bg-e-bg hover:text-e-accent border border-e-accent'
+      : 'border border-e-border text-e-text hover:bg-e-accent hover:text-e-bg';
+    const cls = `${base} ${styles}`;
+    if (to) return <Link to={to} className={cls}>{children}</Link>;
+    if (href) return <a href={href} className={cls}>{children}</a>;
+    return <button type={type} onClick={onClick} className={cls}>{children}</button>;
+  }
+
   const isTerminal = mode === 'terminal';
 
   const base = `inline-block font-bold text-sm px-6 py-3.5 transition-all duration-300 hover:-translate-y-0.5 ${

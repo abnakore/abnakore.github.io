@@ -92,12 +92,19 @@ export default function SocialLinks({
   className?: string;
 }) {
   const { mode } = useMode();
-  const isTerminal = mode === "terminal";
 
   return (
     <div className={`flex gap-3 ${className}`}>
       {socials.map((s) => {
         const Icon = iconMap[s.icon];
+        let linkClass: string;
+        if (mode === "terminal") {
+          linkClass = "w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300 hover:-translate-y-0.5 border border-t-border text-t-dim hover:border-t-accent hover:text-t-accent";
+        } else if (mode === "editorial") {
+          linkClass = "w-9 h-9 flex items-center justify-center text-e-dim hover:text-e-accent transition-colors duration-200";
+        } else {
+          linkClass = "w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300 hover:-translate-y-0.5 bg-white text-b-ink shadow-sm hover:shadow-md";
+        }
         return (
           <a
             key={s.label}
@@ -105,11 +112,7 @@ export default function SocialLinks({
             target="_blank"
             rel="noreferrer"
             aria-label={s.label}
-            className={`w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300 hover:-translate-y-0.5 ${
-              isTerminal
-                ? "border border-t-border text-t-dim hover:border-t-accent hover:text-t-accent"
-                : "bg-white text-b-ink shadow-sm hover:shadow-md"
-            }`}
+            className={linkClass}
           >
             <Icon size={16} />
           </a>
