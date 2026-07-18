@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useMode } from "../../hooks/useMode";
 import { journey } from "../../data/journey";
 import SectionTag from "../ui/SectionTag";
-import WaveDivider from "../layout/WaveDivider";
 import ScrollReveal from "../ui/ScrollReveal";
 
 /* Terminal Roadmap Item */
