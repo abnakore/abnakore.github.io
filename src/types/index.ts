@@ -19,7 +19,7 @@ export interface ProjectCaseStudy {
   challenges?: string[];
   features?: string[];
   designConsiderations?: string;
-  screenshots?: { label: string; description: string }[];
+  screenshots?: { label: string; description: string; image?: string }[];
 }
 
 export interface Project {
@@ -37,6 +37,7 @@ export interface Project {
   caseStudy?: ProjectCaseStudy;
   role?: string;
   timeline?: string;
+  thumbnail?: string;
 }
 
 export interface SkillGroup {

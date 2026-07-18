@@ -4,6 +4,7 @@ export const projects: Project[] = [
   {
     slug: "family-tree-web-app",
     title: "Family Tree Web Application",
+    thumbnail: "/images/kamal_portfolio.png",
     description:
       "A full-stack genealogy platform combining interactive tree visualization, family event notifications, and a multilingual AI assistant for family history.",
     longDescription:
