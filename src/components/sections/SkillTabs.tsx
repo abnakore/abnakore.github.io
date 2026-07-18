@@ -13,7 +13,7 @@ export default function SkillTabs() {
   return (
     <div className="mt-2">
       {/* Tab headers */}
-      <div className={`flex gap-1.5 mb-6 ${isTerminal ? 'font-mono' : ''}`}>
+      <div className={`flex flex-wrap gap-1.5 mb-6 ${isTerminal ? 'font-mono' : ''}`}>
         {skillGroups.map((g, i) => (
           <button
             key={g.category}

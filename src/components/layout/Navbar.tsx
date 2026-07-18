@@ -4,6 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useMode } from "../../hooks/useMode";
 import ModeToggle from "./ModeToggle";
 
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 const links = [
   { label: "Home", href: "/", isHash: false },
   { label: "About", href: "/about", isHash: false },
@@ -95,7 +99,7 @@ export default function Navbar() {
               {isTerminal ? `./${l.label.toLowerCase()}` : l.label}
             </button>
           ) : (
-            <Link key={l.label} to={l.href} className={linkStyle}>
+            <Link key={l.label} to={l.href} onClick={scrollToTop} className={linkStyle}>
               {isTerminal ? `./${l.label.toLowerCase()}` : l.label}
             </Link>
           )
@@ -182,7 +186,7 @@ export default function Navbar() {
                   >
                     <Link
                       to={l.href}
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() => { setMenuOpen(false); scrollToTop(); }}
                       className={`block ${mobileLinkStyle}`}
                     >
                       {isTerminal ? (

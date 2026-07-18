@@ -2,6 +2,10 @@ import { useMode } from "../../hooks/useMode";
 import { useTypewriter } from "../../hooks/useTypewriter";
 import SocialLinks from "../ui/SocialLinks";
 
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 export default function Footer() {
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
@@ -37,9 +41,9 @@ export default function Footer() {
       )}
 
       <SocialLinks />
-      <a href="#hero" className="hover:opacity-70 transition-opacity">
+      <button onClick={scrollToTop} className="hover:opacity-70 transition-opacity cursor-pointer">
         ↑ top
-      </a>
+      </button>
     </footer>
   );
 }
