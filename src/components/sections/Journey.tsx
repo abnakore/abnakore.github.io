@@ -3,6 +3,7 @@ import { useMode } from "../../hooks/useMode";
 import { journey } from "../../data/journey";
 import SectionTag from "../ui/SectionTag";
 import ScrollReveal from "../ui/ScrollReveal";
+import WaveDivider from "../layout/WaveDivider";
 
 /* Terminal Roadmap Item */
 function TerminalRoadmapItem({
@@ -265,6 +266,7 @@ export default function Journey() {
           )}
         </div>
       </div>
+      {!isTerminal && <WaveDivider fill="#FFFFFF" />}
     </section>
   );
 }

@@ -35,11 +35,31 @@ function InstagramIcon({ size = 16 }: { size?: number }) {
   );
 }
 
+function XIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
+function ScratchIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18.5c-4.694 0-8.5-3.806-8.5-8.5S7.306 3.5 12 3.5s8.5 3.806 8.5 8.5-3.806 8.5-8.5 8.5zm-1.5-12v6a1.5 1.5 0 003 0v-6h-3zm-3 3a1.5 1.5 0 000 3h9a1.5 1.5 0 000-3h-9z" />
+      <circle cx="12" cy="8.5" r="1.5" />
+      <circle cx="12" cy="15.5" r="1.5" />
+    </svg>
+  );
+}
+
 const iconMap = {
   github: GithubIcon,
   linkedin: LinkedinIcon,
   instagram: InstagramIcon,
   mail: Mail,
+  x: XIcon,
+  scratch: ScratchIcon,
 };
 
 export default function SocialLinks({

@@ -52,5 +52,5 @@ export interface JourneyItem {
 export interface SocialLink {
   label: string;
   href: string;
-  icon: "github" | "linkedin" | "instagram" | "mail";
+  icon: "github" | "linkedin" | "instagram" | "mail" | "x" | "scratch";
 }

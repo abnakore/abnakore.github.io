@@ -1,45 +1,58 @@
-import { useState } from 'react';
-import Layout from '../components/layout/Layout';
-import SectionTag from '../components/ui/SectionTag';
-import WaveDivider from '../components/layout/WaveDivider';
-import ProjectCard from '../components/sections/ProjectCard';
-import FlagshipCard from '../components/sections/FlagshipCard';
-import { shippedProjects, ongoingProjects, flagshipProjects } from '../data/projects';
-import { useMode } from '../hooks/useMode';
+import { useState } from "react";
+import Layout from "../components/layout/Layout";
+import SectionTag from "../components/ui/SectionTag";
+import ProjectCard from "../components/sections/ProjectCard";
+import FlagshipCard from "../components/sections/FlagshipCard";
+import {
+  shippedProjects,
+  ongoingProjects,
+  flagshipProjects,
+} from "../data/projects";
+import { useMode } from "../hooks/useMode";
 import ScrollReveal, {
   ScrollRevealContainer,
   ScrollRevealItem,
-} from '../components/ui/ScrollReveal';
-import type { ProjectType } from '../types';
+} from "../components/ui/ScrollReveal";
+import type { ProjectType } from "../types";
 
-const FILTERS: { label: string; value: ProjectType | 'all' }[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Web', value: 'web' },
-  { label: 'Mobile', value: 'mobile' },
-  { label: 'Desktop', value: 'desktop' },
-  { label: 'Design', value: 'design' },
+const FILTERS: { label: string; value: ProjectType | "all" }[] = [
+  { label: "All", value: "all" },
+  { label: "Web", value: "web" },
+  { label: "Mobile", value: "mobile" },
+  { label: "Desktop", value: "desktop" },
+  { label: "Design", value: "design" },
 ];
 
 export default function ProjectsPage() {
   const { mode } = useMode();
-  const isTerminal = mode === 'terminal';
-  const [activeFilter, setActiveFilter] = useState<ProjectType | 'all'>('all');
+  const isTerminal = mode === "terminal";
+  const [activeFilter, setActiveFilter] = useState<ProjectType | "all">("all");
 
   const filteredProjects = shippedProjects.filter(
-    (p) => (activeFilter === 'all' || p.type === activeFilter) && !p.flagship
+    (p) => (activeFilter === "all" || p.type === activeFilter) && !p.flagship,
   );
 
   return (
     <Layout>
-      <section className={`relative px-[6vw] pt-32 pb-24 ${!isTerminal ? 'bg-white' : ''}`}>
+      <section
+        className={`relative px-[6vw] pt-32 pb-24 ${!isTerminal ? "bg-white" : ""}`}
+      >
         <div className="max-w-[1180px] mx-auto">
           <ScrollReveal variant="fadeUp">
-            <SectionTag>{isTerminal ? '$ ls -la ./projects' : 'All projects'}</SectionTag>
-            <h1 className={`text-3xl md:text-5xl font-extrabold mt-3 ${isTerminal ? 'font-mono' : 'font-sora'}`}>
+            <SectionTag>
+              {isTerminal ? "$ ls -la ./projects" : "All projects"}
+            </SectionTag>
+            <h1
+              className={`text-3xl md:text-5xl font-extrabold mt-3 ${isTerminal ? "font-mono" : "font-sora"}`}
+            >
               Everything I've built
             </h1>
-            <p className={`text-sm mt-2 ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
-              {isTerminal ? '# Flagship case studies, then all projects' : 'Flagship case studies, then all projects'}
+            <p
+              className={`text-sm mt-2 ${isTerminal ? "text-t-dim font-mono" : "text-b-sub"}`}
+            >
+              {isTerminal
+                ? "# Flagship case studies, then all projects"
+                : "Flagship case studies, then all projects"}
             </p>
           </ScrollReveal>
 
@@ -56,8 +69,10 @@ export default function ProjectsPage() {
           <div className="mt-16 mb-6">
             <div className="flex items-center justify-between flex-wrap gap-4">
               <ScrollReveal variant="fadeUp">
-                <h2 className={`text-xl font-semibold ${isTerminal ? 'font-mono' : 'font-sora'}`}>
-                  {isTerminal ? '$ ls ./shipped' : 'All Shipped Projects'}
+                <h2
+                  className={`text-xl font-semibold ${isTerminal ? "font-mono" : "font-sora"}`}
+                >
+                  {isTerminal ? "$ ls ./shipped" : "All Shipped Projects"}
                 </h2>
               </ScrollReveal>
 
@@ -70,11 +85,11 @@ export default function ProjectsPage() {
                       className={`px-3.5 py-1.5 text-xs rounded-lg transition-all duration-300 ${
                         isTerminal
                           ? activeFilter === f.value
-                            ? 'bg-t-accent/15 text-t-accent border border-t-accent/40 font-mono'
-                            : 'bg-t-panel text-t-dim border border-t-border font-mono hover:border-t-accent/30 hover:text-t-text'
+                            ? "bg-t-accent/15 text-t-accent border border-t-accent/40 font-mono"
+                            : "bg-t-panel text-t-dim border border-t-border font-mono hover:border-t-accent/30 hover:text-t-text"
                           : activeFilter === f.value
-                            ? 'bg-b-accent text-white font-semibold'
-                            : 'bg-b-bg text-b-sub border border-b-bg font-semibold hover:border-b-accent/30 hover:text-b-ink'
+                            ? "bg-b-accent text-white font-semibold"
+                            : "bg-b-bg text-b-sub border border-b-bg font-semibold hover:border-b-accent/30 hover:text-b-ink"
                       }`}
                     >
                       {f.label}
@@ -99,8 +114,12 @@ export default function ProjectsPage() {
               ))
             ) : (
               <div className="col-span-full text-center py-12">
-                <p className={`text-sm ${isTerminal ? 'text-t-dim font-mono' : 'text-b-sub'}`}>
-                  {isTerminal ? '# No projects match this filter' : 'No projects match this filter'}
+                <p
+                  className={`text-sm ${isTerminal ? "text-t-dim font-mono" : "text-b-sub"}`}
+                >
+                  {isTerminal
+                    ? "# No projects match this filter"
+                    : "No projects match this filter"}
                 </p>
               </div>
             )}
@@ -110,7 +129,9 @@ export default function ProjectsPage() {
           {ongoingProjects.length > 0 && (
             <div className="mt-16">
               <ScrollReveal variant="fadeUp">
-                <SectionTag>{isTerminal ? '$ ls ./in-progress' : 'In progress'}</SectionTag>
+                <SectionTag>
+                  {isTerminal ? "$ ls ./in-progress" : "In progress"}
+                </SectionTag>
               </ScrollReveal>
               <ScrollRevealContainer
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6"
@@ -125,7 +146,6 @@ export default function ProjectsPage() {
             </div>
           )}
         </div>
-        {!isTerminal && <WaveDivider fill="#F3F1FB" />}
       </section>
     </Layout>
   );
