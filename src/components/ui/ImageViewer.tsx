@@ -75,7 +75,39 @@ export default function ImageViewer({
   // (like a macOS dock minimize), then stretches up into the full panel
   // with a slight overshoot/settle for an elastic, "poured out" feel.
   const panelRadius = isTerminal ? "16px" : "28px";
-  // Make sure to add 'as const' to the easing array to keep the TypeScript compiler happy!
+  // const genieVariants = {
+  //   hidden: {
+  //     opacity: 0,
+  //     scaleY: 0.04,
+  //     scaleX: 0.35,
+  //     y: 140,
+  //     borderRadius: "999px",
+  //   },
+  //   visible: {
+  //     opacity: 1,
+  //     scaleY: [0.04, 1.06, 0.97, 1],
+  //     scaleX: [0.35, 1.07, 0.97, 1],
+  //     y: [140, -10, 4, 0],
+  //     borderRadius: ["999px", "32px", "20px", panelRadius],
+  //     transition: {
+  //       duration: 0.62,
+  //       ease: [0.34, 1.15, 0.64, 1] as const,
+  //       times: [0, 0.55, 0.8, 1],
+  //     },
+  //   },
+  //   exit: {
+  //     opacity: [1, 1, 0],
+  //     scaleY: [1, 0.88, 0.04],
+  //     scaleX: [1, 0.5, 0.32],
+  //     y: [0, 24, 140],
+  //     borderRadius: [panelRadius, "48px", "999px"],
+  //     transition: {
+  //       duration: 0.42,
+  //       ease: [0.55, 0, 0.85, 0.35] as const,
+  //       times: [0, 0.4, 1],
+  //     },
+  //   },
+  // };
   const genieVariants = {
     hidden: {
       opacity: 0,
@@ -94,6 +126,7 @@ export default function ImageViewer({
       scaleX: [0.1, 0.25, 0.95, 1],
       scaleY: [0.01, 1.3, 0.97, 1],
       y: [350, 40, -5, 0],
+      borderRadius: ["999px", "32px", "20px", panelRadius],
       skewX: [12, -4, 1, 0],
       filter: "blur(0px)",
       transition: {
@@ -110,6 +143,7 @@ export default function ImageViewer({
       scaleX: [1, 0.6, 0.15, 0.05],
       scaleY: [1, 0.85, 0.3, 0.01],
       y: [0, 80, 240, 380],
+      borderRadius: [panelRadius, "48px", "999px"],
       skewX: [0, 6, 15, 20],
       filter: ["blur(0px)", "blur(1px)", "blur(3px)", "blur(6px)"],
       transition: {
@@ -172,7 +206,7 @@ export default function ImageViewer({
             {/* Header — terminal-style command + description */}
             <div className="px-6 pt-5 pb-4 border-b border-t-border shrink-0 font-mono">
               <div className="text-t-dim text-xs">
-                <span className="text-t-accent">abdul@buk</span>:~$ open{" "}
+                <span className="text-t-accent">abdul@dev</span>:~$ open{" "}
                 {currentScreenshot.label.toLowerCase().replace(/\s+/g, "-")}.png
               </div>
               <h3 className="text-t-text text-lg font-bold mt-1.5">
