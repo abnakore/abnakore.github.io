@@ -38,7 +38,7 @@ function FullBio() {
   return (
     <section
       className={`relative px-[6vw] py-24 md:py-28 ${
-        !isTerminal ? "bg-b-bg" : "bg-t-bg"
+        !isTerminal ? "bg-white" : "bg-t-bg"
       }`}
     >
       <div className="max-w-[1180px] mx-auto w-full">
@@ -209,7 +209,7 @@ function FullBio() {
           </div>
         )}
       </div>
-      {!isTerminal && <WaveDivider fill="#FFFFFF" />}
+      {!isTerminal && <WaveDivider fill="#F3F1FB" />}
     </section>
   );
 }

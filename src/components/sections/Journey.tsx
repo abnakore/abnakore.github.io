@@ -266,7 +266,6 @@ export default function Journey() {
           )}
         </div>
       </div>
-      {!isTerminal && <WaveDivider fill="#FFFFFF" />}
     </section>
   );
 }
