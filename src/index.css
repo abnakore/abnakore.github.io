@@ -105,3 +105,39 @@ body {
   pointer-events: none;
   border-radius: inherit;
 }
+
+/* ── Journey roadmap animations ── */
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 176, 0, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 176, 0, 0); }
+}
+.journey-node-active {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes node-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.journey-node-pop {
+  animation: node-pop 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* ── Bento journey hover glow ── */
+@keyframes journey-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.15); }
+  50% { box-shadow: 0 0 20px 4px rgba(79, 70, 229, 0.25); }
+}
+.journey-item-active:hover {
+  box-shadow: 0 10px 40px rgba(79, 70, 229, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ── Glow for active terminal nodes ── */
+@keyframes terminal-node-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 176, 0, 0.3); }
+  50% { box-shadow: 0 0 0 10px rgba(255, 176, 0, 0.1); }
+}
+.terminal-node-glow {
+  animation: terminal-node-glow 2.5s ease-in-out infinite;
+}

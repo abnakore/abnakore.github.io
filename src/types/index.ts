@@ -38,6 +38,16 @@ export interface Service {
   description: string;
 }
 
+export interface JourneyItem {
+  id: string;
+  type: 'education' | 'work' | 'milestone';
+  title: string;
+  subtitle: string;
+  date: string;
+  description: string;
+  isActive: boolean;
+}
+
 export interface SocialLink {
   label: string;
   href: string;
