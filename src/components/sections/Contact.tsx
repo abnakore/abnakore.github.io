@@ -188,7 +188,7 @@ export default function Contact() {
             {isTerminal ? "$ mail --compose" : isEditorial ? "04" : "Let's connect"}
           </SectionTag>
           <h2
-            className={`text-2xl md:text-4xl font-extrabold mt-3 leading-tight ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold" : "font-sora"}`}
+            className={`text-2xl md:text-4xl font-extrabold mt-3 leading-tight ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em]" : "font-sora"}`}
           >
             {isTerminal ? "Drop me a line" : isEditorial ? "Say hello — I don't bite" : "Say hello — I don't bite"}
           </h2>

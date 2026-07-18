@@ -28,7 +28,7 @@ export default function NotFoundPage() {
         <div className={`text-sm font-bold mb-3 ${isTerminal ? 'font-mono text-t-accent' : isEditorial ? 'font-archivo text-e-accent' : 'text-b-accent'}`}>
           {errorLabel}
         </div>
-        <h1 className={`text-3xl md:text-5xl font-extrabold ${titleClass}`}>
+        <h1 className={`text-3xl md:text-5xl font-extrabold ${isEditorial ? 'font-fraunces text-[clamp(44px,6vw,80px)] leading-[1.02] tracking-[-0.03em]' : ''} ${titleClass}`}>
           Page not found
         </h1>
         <p className={`mt-4 max-w-md ${descClass}`}>

@@ -102,7 +102,7 @@ function FullBio() {
         ) : isEditorial ? (
           <ScrollReveal variant="fadeUp">
             <SectionTag>01</SectionTag>
-            <h2 className="font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em] text-e-text mt-3">
+            <h2 className="font-fraunces font-semibold text-[clamp(44px,6vw,80px)] leading-[1.02] tracking-[-0.03em] text-e-text mt-3">
               The full story
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">

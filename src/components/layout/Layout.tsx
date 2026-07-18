@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   if (mode === 'terminal') {
     bgClass = 'bg-t-bg text-t-text font-plex';
   } else if (mode === 'editorial') {
-    bgClass = 'bg-e-bg text-e-text font-archivo';
+    bgClass = 'bg-e-bg text-e-text font-archivo editorial-pattern';
   } else {
     bgClass = 'bg-b-bg text-b-ink font-inter';
   }

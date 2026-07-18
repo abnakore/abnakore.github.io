@@ -180,7 +180,7 @@ export default function ProjectDetailPage() {
                 )}
               </div>
 
-              <h1 className={`text-3xl md:text-5xl font-extrabold mt-2 ${isTerminal ? 'font-mono' : isEditorial ? 'font-fraunces font-semibold' : 'font-sora'}`}>
+              <h1 className={`text-3xl md:text-5xl font-extrabold mt-2 ${isTerminal ? 'font-mono' : isEditorial ? 'font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em]' : 'font-sora'}`}>
                 {project.title}
               </h1>
 

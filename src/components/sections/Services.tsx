@@ -30,7 +30,7 @@ export default function Services() {
             {isTerminal ? "$ services --list" : isEditorial ? "02" : "My services"}
           </SectionTag>
           <h2
-            className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold" : "font-sora"}`}
+            className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em]" : "font-sora"}`}
           >
             {isTerminal ? "What I can build" : isEditorial ? "Where I add value" : "Where I add value"}
           </h2>

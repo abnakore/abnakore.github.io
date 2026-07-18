@@ -276,7 +276,7 @@ export default function Journey() {
           </SectionTag>
           <h2
             className={`text-2xl md:text-4xl font-extrabold mt-3 ${
-              isTerminal ? "font-mono text-t-text" : isEditorial ? "font-fraunces font-semibold text-e-text" : "font-sora text-b-ink"
+              isTerminal ? "font-mono text-t-text" : isEditorial ? "font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em] text-e-text" : "font-sora text-b-ink"
             }`}
           >
             {isTerminal ? "The Builder's Log" : "The path that brought me here"}

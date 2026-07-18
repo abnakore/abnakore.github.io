@@ -42,7 +42,7 @@ export default function ProjectsPreview() {
             {isTerminal ? "$ ls ./projects" : isEditorial ? "03" : "Latest projects"}
           </SectionTag>
           <h2
-            className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold" : "font-sora"}`}
+            className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em]" : "font-sora"}`}
           >
             {isTerminal ? "Selected work" : isEditorial ? "Selected Work" : "Selected Work"}
           </h2>

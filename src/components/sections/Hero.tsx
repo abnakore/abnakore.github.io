@@ -108,7 +108,7 @@ export default function Hero() {
             transition={{ duration: 0.5 }}
           >
             <SectionTag>Available for work</SectionTag>
-            <h1 className="font-fraunces font-medium text-[clamp(44px,8vw,108px)] leading-[0.98] tracking-[-0.02em] text-e-text mt-6">
+            <h1 className="font-fraunces font-medium text-[clamp(56px,10vw,140px)] leading-[0.96] tracking-[-0.03em] text-e-text mt-6">
               <KineticHeadline
                 text="Abdul builds things that work and look like they mean it."
                 emphasize={["work"]}
@@ -161,7 +161,9 @@ export default function Hero() {
         )}
       </div>
       {!isTerminal && !isEditorial && <WaveDivider fill="#F3F1FB" />}
-      {isEditorial && <div className="absolute bottom-0 left-0 right-0 border-t border-e-border" />}
+      {isEditorial && (
+        <div className="absolute bottom-0 left-0 right-0 border-t border-e-border" />
+      )}
     </section>
   );
 }

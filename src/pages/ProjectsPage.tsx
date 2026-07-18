@@ -45,7 +45,7 @@ export default function ProjectsPage() {
               {isTerminal ? "$ ls -la ./projects" : "All projects"}
             </SectionTag>
             <h1
-              className={`text-3xl md:text-5xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold" : "font-sora"}`}
+              className={`text-3xl md:text-5xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold text-[clamp(44px,6vw,80px)] leading-[1.02] tracking-[-0.03em]" : "font-sora"}`}
             >
               Everything I've built
             </h1>

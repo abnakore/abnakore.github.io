@@ -14,7 +14,7 @@ export default function FlagshipCard({ project }: { project: Project }) {
           <div className="font-fraunces text-e-accent text-sm mb-3 tracking-wider uppercase">
             {project.type === "web" ? "Web App" : project.type === "design" ? "UI/UX Design" : "Project"} · Flagship
           </div>
-          <h3 className="font-fraunces font-semibold text-2xl md:text-3xl text-e-text group-hover:text-e-accent transition-colors duration-300">
+          <h3 className="font-fraunces font-semibold text-[clamp(28px,4vw,48px)] leading-[1.06] tracking-[-0.02em] text-e-text group-hover:text-e-accent transition-colors duration-300">
             {project.title}
           </h3>
           <p className="font-archivo text-[14px] text-e-dim leading-relaxed mt-3 mb-5">
