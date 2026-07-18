@@ -95,6 +95,63 @@ function TerminalRoadmapItem({
   );
 }
 
+/* Editorial Roadmap Item (Sharp, minimal, numbered) */
+function EditorialRoadmapItem({
+  item,
+  index,
+  isLast,
+}: {
+  item: (typeof journey)[0];
+  index: number;
+  isLast: boolean;
+}) {
+  const isActive = item.isActive;
+
+  return (
+    <div className={`relative pl-10 md:pl-12 ${!isLast ? "pb-12" : "pb-2"}`}>
+      {/* Vertical connector line */}
+      {!isLast && (
+        <div className="absolute left-[7px] md:left-[15px] top-3 bottom-0 w-px bg-e-border" />
+      )}
+
+      {/* Numbered dot */}
+      <div className="absolute left-0 md:left-2 top-1.5 z-10 flex items-center justify-center">
+        <div className={`w-3.5 h-3.5 flex items-center justify-center font-fraunces text-[10px] font-semibold ${
+          isActive ? "text-e-bg bg-e-accent" : "text-e-dim bg-e-panel border border-e-border"
+        }`}>
+          {String(index + 1).padStart(2, '0')}
+        </div>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: index * 0.08 }}
+        className="space-y-2"
+      >
+        {/* Meta line */}
+        <div className="flex items-center gap-2 text-[11px] font-archivo font-bold tracking-[0.18em] uppercase text-e-accent">
+          <span>{item.type}</span>
+          <span className="text-e-dim">•</span>
+          <span className="text-e-dim">{item.date}</span>
+        </div>
+
+        {/* Content */}
+        <h3 className="font-fraunces font-semibold text-xl md:text-2xl text-e-text leading-tight">
+          {item.title}
+        </h3>
+        <p className="font-archivo text-sm text-e-dim italic font-medium">
+          {item.subtitle}
+        </p>
+        <p className="font-archivo text-[14.5px] leading-relaxed text-e-dim/80">
+          {item.description}
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
 /* Bento Roadmap Item (Alternating Center Timeline) */
 function BentoRoadmapItem({
   item,
@@ -257,6 +314,17 @@ export default function Journey() {
                 <span>exit_code: 0 | status: still_building</span>
                 <span className="w-1.5 h-3 bg-t-accent inline-block animate-blink" />
               </div>
+            </div>
+          ) : isEditorial ? (
+            <div className="max-w-3xl">
+              {journey.map((item, index) => (
+                <EditorialRoadmapItem
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  isLast={index === journey.length - 1}
+                />
+              ))}
             </div>
           ) : (
             <div className="flex flex-col pl-4 md:pl-0">

@@ -62,15 +62,35 @@ function FaqItem({
   question,
   answer,
   isTerminal,
+  isEditorial = false,
   isOpen,
   onToggle,
 }: {
   question: string;
   answer: string;
   isTerminal: boolean;
+  isEditorial?: boolean;
   isOpen: boolean;
   onToggle: () => void;
 }) {
+  let btnClass: string, openClass: string, iconClass: string, answerClass: string;
+  if (isTerminal) {
+    btnClass = "font-mono text-sm text-t-text hover:bg-t-accent/5 border border-t-border hover:border-t-accent/30";
+    openClass = "border-t-accent bg-t-accent/5";
+    iconClass = "text-t-accent";
+    answerClass = "text-t-dim font-mono";
+  } else if (isEditorial) {
+    btnClass = "font-archivo text-sm text-e-text border border-e-border hover:border-e-accent/50";
+    openClass = "border-e-accent bg-e-accent/5";
+    iconClass = "text-e-accent";
+    answerClass = "text-e-dim font-archivo";
+  } else {
+    btnClass = "text-sm font-semibold text-b-ink bg-white border-[1.5px] border-[#E4E0F5] hover:border-b-accent/30 hover:shadow-sm";
+    openClass = "border-b-accent bg-b-accent/5";
+    iconClass = "text-b-accent";
+    answerClass = "text-b-sub";
+  }
+
   return (
     <div>
       <button
@@ -78,20 +98,16 @@ function FaqItem({
         onClick={onToggle}
         className={`
           w-full text-left flex items-center justify-between gap-3
-          px-4 py-3.5 rounded-xl transition-all duration-200
-          ${
-            isTerminal
-              ? "font-mono text-sm text-t-text hover:bg-t-accent/5 border border-t-border hover:border-t-accent/30"
-              : "text-sm font-semibold text-b-ink bg-white border-[1.5px] border-[#E4E0F5] hover:border-b-accent/30 hover:shadow-sm"
-          }
-          ${isOpen ? (isTerminal ? "border-t-accent bg-t-accent/5" : "border-b-accent bg-b-accent/5") : ""}
+          px-4 py-3.5 transition-all duration-200
+          ${btnClass}
+          ${isOpen ? openClass : ""}
         `}
       >
         <span className="flex-1 leading-snug">{question}</span>
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.25 }}
-          className={`shrink-0 text-lg leading-none ${isTerminal ? "text-t-accent" : "text-b-accent"}`}
+          className={`shrink-0 text-lg leading-none ${iconClass}`}
         >
           {isOpen ? "−" : "+"}
         </motion.span>
@@ -105,11 +121,7 @@ function FaqItem({
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p
-              className={`px-4 pb-4 pt-2 text-sm leading-relaxed ${
-                isTerminal ? "text-t-dim font-mono" : "text-b-sub"
-              }`}
-            >
+            <p className={`px-4 pb-4 pt-2 text-sm leading-relaxed ${answerClass}`}>
               {answer}
             </p>
           </motion.div>
@@ -385,6 +397,7 @@ export default function Contact() {
                         question={faq.q}
                         answer={faq.a}
                         isTerminal={false}
+                        isEditorial={true}
                         isOpen={openFaqIdx === i}
                         onToggle={() =>
                           setOpenFaqIdx(openFaqIdx === i ? null : i)
