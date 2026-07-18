@@ -211,7 +211,7 @@ export default function Navbar() {
               >
                 <div className="border-t border-t-border/30 pt-4">
                   <div className="text-t-dim text-xs font-mono">
-                    <span className="text-t-accent">abdul@buk</span>
+                    <span className="text-t-accent">abdul@dev</span>
                     <span className="text-t-dim">:</span>
                     <span className="text-t-green">~</span>
                     <span className="text-t-dim">$ _</span>

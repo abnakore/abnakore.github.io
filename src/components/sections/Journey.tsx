@@ -11,7 +11,7 @@ function TerminalRoadmapItem({
   index,
   isLast,
 }: {
-  item: typeof journey[0];
+  item: (typeof journey)[0];
   index: number;
   isLast: boolean;
 }) {
@@ -24,8 +24,9 @@ function TerminalRoadmapItem({
   };
 
   return (
-    <div className={`font-mono text-sm relative pl-8 md:pl-12 pb-10 last:pb-2 ${!isActive ? "opacity-40" : ""}`}>
-      
+    <div
+      className={`font-mono text-sm relative pl-8 md:pl-12 pb-10 last:pb-2 ${!isActive ? "opacity-40" : ""}`}
+    >
       {/* File-tree connector track */}
       {!isLast && (
         <div className="absolute left-[7px] md:left-[15px] top-4 bottom-0 w-px bg-t-border/50" />
@@ -33,10 +34,10 @@ function TerminalRoadmapItem({
 
       {/* Interactive Node Point using CSS Classes from your file */}
       <div className="absolute left-0 md:left-2 top-1.5 z-10 flex items-center justify-center">
-        <div 
+        <div
           className={`w-3 h-3 rounded-full border transition-all duration-300 ${
-            isActive 
-              ? "bg-t-accent border-t-accent terminal-node-glow" 
+            isActive
+              ? "bg-t-accent border-t-accent terminal-node-glow"
               : "bg-t-bg border-t-dim/40"
           }`}
         />
@@ -53,22 +54,26 @@ function TerminalRoadmapItem({
         {/* Environment Line Metadata */}
         <div className="flex flex-wrap items-center gap-x-2 text-xs text-t-dim select-none">
           <span className="text-t-accent">❯</span>
-          <span className="text-t-green font-semibold">{typeLabels[item.type] || "sys.log"}</span>
-          <span>•</span>
-          <span className="text-t-accent/90">
-            {isActive ? "2015 — PRESENT" : item.date}
+          <span className="text-t-green font-semibold">
+            {typeLabels[item.type] || "sys.log"}
           </span>
+          <span>•</span>
+          <span className="text-t-accent/90">{item.date}</span>
         </div>
 
         {/* Clean, Readable Log Card */}
-        <div className={`border border-t-border rounded-lg p-4 md:p-5 transition-all duration-300 ${
-          isActive 
-            ? "bg-t-panel/60 border-t-border hover:border-t-accent/40" 
-            : "bg-t-panel/20"
-        }`}>
+        <div
+          className={`border border-t-border rounded-lg p-4 md:p-5 transition-all duration-300 ${
+            isActive
+              ? "bg-t-panel/60 border-t-border hover:border-t-accent/40"
+              : "bg-t-panel/20"
+          }`}
+        >
           {/* Header Block */}
           <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
-            <h3 className={`text-base font-bold tracking-tight ${isActive ? "text-t-text" : "text-t-dim"}`}>
+            <h3
+              className={`text-base font-bold tracking-tight ${isActive ? "text-t-text" : "text-t-dim"}`}
+            >
               {item.title}
             </h3>
             <span className="text-t-dim/70 text-xs italic font-sans font-medium">
@@ -77,9 +82,11 @@ function TerminalRoadmapItem({
           </div>
 
           {/* Clean Readable Prose Description using font-plex or font-inter for extreme readability */}
-          <p className={`mt-3 leading-relaxed text-[13.5px] font-plex ${
-            isActive ? "text-t-text/90" : "text-t-dim/70"
-          }`}>
+          <p
+            className={`mt-3 leading-relaxed text-[13.5px] font-plex ${
+              isActive ? "text-t-text/90" : "text-t-dim/70"
+            }`}
+          >
             {item.description}
           </p>
         </div>
@@ -94,7 +101,7 @@ function BentoRoadmapItem({
   index,
   isLast,
 }: {
-  item: typeof journey[0];
+  item: (typeof journey)[0];
   index: number;
   isLast: boolean;
 }) {
@@ -109,11 +116,10 @@ function BentoRoadmapItem({
 
   return (
     <div className="relative md:grid md:grid-cols-2 md:gap-12 items-start w-full min-h-[200px]">
-      
       {/* Central Axis Elements */}
       <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full top-2">
         {!isLast && (
-          <motion.div 
+          <motion.div
             className={`w-px mx-auto h-full ${isActive ? "bg-b-accent/30" : "bg-gray-200"}`}
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
@@ -122,7 +128,7 @@ function BentoRoadmapItem({
             transition={{ duration: 0.5 }}
           />
         )}
-        <motion.div 
+        <motion.div
           className={`absolute top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full border-2 bg-b-bg flex items-center justify-center transition-all duration-300 ${
             isActive ? "border-b-accent journey-node-active" : "border-gray-300"
           }`}
@@ -130,12 +136,16 @@ function BentoRoadmapItem({
           whileInView={{ scale: 1 }}
           viewport={{ once: true }}
         >
-          <div className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-b-accent" : "bg-gray-300"}`} />
+          <div
+            className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-b-accent" : "bg-gray-300"}`}
+          />
         </motion.div>
       </div>
 
       {/* Content wrapper */}
-      <div className={`md:col-span-1 pb-10 md:pb-14 ${isEven ? "md:col-start-2 md:text-left md:pl-6" : "md:col-start-1 md:text-right md:pr-6"}`}>
+      <div
+        className={`md:col-span-1 pb-10 md:pb-14 ${isEven ? "md:col-start-2 md:text-left md:pl-6" : "md:col-start-1 md:text-right md:pr-6"}`}
+      >
         <motion.div
           initial={{ opacity: 0, x: isEven ? 30 : -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -145,14 +155,20 @@ function BentoRoadmapItem({
         >
           {/* Mobile timeline line element */}
           <div className="md:hidden absolute -left-5 top-2 bottom-0 w-px bg-gray-200">
-            <div className={`absolute top-0 -left-[3px] w-2 h-2 rounded-full ${dotColors[item.type] || "bg-gray-400"} ${isActive ? "journey-node-active" : ""}`} />
+            <div
+              className={`absolute top-0 -left-[3px] w-2 h-2 rounded-full ${dotColors[item.type] || "bg-gray-400"} ${isActive ? "journey-node-active" : ""}`}
+            />
           </div>
 
           {/* Subheader category label */}
-          <div className={`flex items-center gap-2 mb-2 text-[11px] font-mono tracking-widest uppercase font-semibold ${
-            isEven ? "md:justify-start" : "md:justify-end"
-          } text-b-sub/70`}>
-            <span className={`w-2 h-2 rounded-full ${dotColors[item.type] || "bg-gray-400"}`} />
+          <div
+            className={`flex items-center gap-2 mb-2 text-[11px] font-mono tracking-widest uppercase font-semibold ${
+              isEven ? "md:justify-start" : "md:justify-end"
+            } text-b-sub/70`}
+          >
+            <span
+              className={`w-2 h-2 rounded-full ${dotColors[item.type] || "bg-gray-400"}`}
+            />
             <span>{item.type}</span>
             <span className="opacity-40">•</span>
             <span>{item.date}</span>
@@ -166,9 +182,11 @@ function BentoRoadmapItem({
             {item.subtitle}
           </p>
 
-          <p className={`text-sm md:text-[14.5px] leading-relaxed mt-3 max-w-xl font-inter ${
-            isEven ? "md:mr-auto" : "md:ml-auto"
-          } text-b-sub/80`}>
+          <p
+            className={`text-sm md:text-[14.5px] leading-relaxed mt-3 max-w-xl font-inter ${
+              isEven ? "md:mr-auto" : "md:ml-auto"
+            } text-b-sub/80`}
+          >
             {item.description}
           </p>
         </motion.div>
@@ -192,18 +210,26 @@ export default function Journey() {
     >
       <div className="max-w-[1180px] mx-auto w-full relative z-10">
         <ScrollReveal variant="fadeUp">
-          <SectionTag>{isTerminal ? "$ cat journey.log" : "My journey"}</SectionTag>
-          <h2 className={`text-2xl md:text-4xl font-extrabold mt-3 ${
-            isTerminal ? "font-mono text-t-text" : "font-sora text-b-ink"
-          }`}>
-            {isTerminal ? "My Development Journey" : "The path that brought me here"}
+          <SectionTag>
+            {isTerminal ? "$ cat journey.log" : "My journey"}
+          </SectionTag>
+          <h2
+            className={`text-2xl md:text-4xl font-extrabold mt-3 ${
+              isTerminal ? "font-mono text-t-text" : "font-sora text-b-ink"
+            }`}
+          >
+            {isTerminal ? "The Builder's Log" : "The path that brought me here"}
           </h2>
-          <p className={`leading-relaxed max-w-2xl mt-4 ${
-            isTerminal ? "text-t-dim text-[14.5px] font-mono" : "text-b-sub text-[16.5px] font-inter"
-          }`}>
+          <p
+            className={`leading-relaxed max-w-2xl mt-4 ${
+              isTerminal
+                ? "text-t-dim text-[14.5px] font-mono"
+                : "text-b-sub text-[16.5px] font-inter"
+            }`}
+          >
             {isTerminal
-              ? "A timeline of my path through education, work, and key milestones. Each step has shaped how I think about code and design today."
-              : "From early curiosity to building full-stack applications, here's how I've evolved as a developer through education and hands-on experience."}
+              ? "A timeline of curiosity, experiments, failures, and breakthroughs that shaped the engineer behind the code."
+              : "Curiosity turned into code. Code turned into products. Here's how the journey unfolded."}
           </p>
         </ScrollReveal>
 
@@ -218,11 +244,11 @@ export default function Journey() {
                   isLast={index === journey.length - 1}
                 />
               ))}
-              
+
               {/* Terminal trailing system line marker */}
               <div className="font-mono text-xs text-t-dim/40 pl-8 md:pl-12 mt-2 select-none flex items-center gap-2">
-                <span className="text-t-accent">❯</span> 
-                <span>process exited safely with code 0</span>
+                <span className="text-t-accent">❯</span>
+                <span>exit_code: 0 | status: still_building</span>
                 <span className="w-1.5 h-3 bg-t-accent inline-block animate-blink" />
               </div>
             </div>

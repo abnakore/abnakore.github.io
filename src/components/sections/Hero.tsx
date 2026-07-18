@@ -7,8 +7,11 @@ import SectionTag from "../ui/SectionTag";
 import WaveDivider from "../layout/WaveDivider";
 
 const roles = [
+  "software engineer",
   "full-stack developer",
   "mobile app developer",
+  "game developer",
+  "scratcher",
   "UI/UX designer",
   "CS student",
 ];
@@ -18,13 +21,18 @@ export default function Hero() {
   const isTerminal = mode === "terminal";
   const typed = useTypewriter("Abdullahi Nakore", 55, 400);
   const typedRole = useTypewriterMulti(roles, 50, 25, 2000, 400);
+  const typedSub = useTypewriter(
+    "Turning ambitious ideas into reliable software.",
+    55,
+    400,
+  );
 
   return (
     <section
       id="hero"
       className={`relative min-h-screen flex items-center px-[6vw] py-32 md:py-36 ${!isTerminal ? "bg-white" : ""}`}
     >
-      <div className="max-w-[1180px] mx-auto w-full">
+      <div className="max-w-295 mx-auto w-full">
         {isTerminal ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -39,7 +47,7 @@ export default function Hero() {
             </div>
             <div className="p-8 md:p-10 font-mono">
               <div className="text-t-dim text-sm mb-2">
-                <span className="text-t-accent">abdul@buk</span>:~$ whoami
+                <span className="text-t-accent">abdul@dev</span>:~$ whoami
               </div>
               <h1 className="text-3xl md:text-5xl font-extrabold text-t-text tracking-tight">
                 {typed}
@@ -49,24 +57,28 @@ export default function Hero() {
               </h1>
               <div className="text-t-green mt-3 mb-5 min-h-[1.5em]">
                 {">"} {typedRole}
-                <span className="inline-block w-[0.4ch] bg-t-green animate-blink ml-0.5">
-                  &nbsp;
-                </span>
+                <span className="animate-blink text-t-green">_</span>
+              </div>
+              <div className="text-t-green mt-3 mb-5 min-h-[1.5em]">
+                {">"} {typedSub}
+                <span className="animate-blink text-t-green">_</span>
               </div>
               <p className="text-t-dim text-[14.5px] leading-relaxed max-w-xl">
-                300-level Software Engineering student at Bayero University
-                Kano. I build full-stack products with React, TypeScript, Django
-                & DRF — and design the screens they live in. Trained at NITDA's
-                NCAIR across data science, embedded systems, and UI/UX.
+                I build digital products that are fast, scalable, and designed
+                to make an impact. Whether it's a web platform, mobile app,
+                backend system, or AI-powered solution, I turn ambitious ideas
+                into experiences people love to use.
               </p>
               <div className="flex flex-wrap gap-2.5 mt-6">
                 {[
+                  "python",
+                  "django",
+                  "DRF",
                   "react",
                   "typescript",
-                  "django",
-                  "python",
-                  "figma",
+                  "javascript",
                   "tailwind",
+                  "figma",
                 ].map((t) => (
                   <span
                     key={t}
@@ -94,13 +106,17 @@ export default function Hero() {
           >
             <SectionTag>Available for work</SectionTag>
             <h1 className="font-sora font-extrabold text-4xl md:text-6xl tracking-tight leading-[1.06] mt-4 text-b-ink">
-              Building software with{" "}
-              <span className="text-b-accent2">craft</span> & clarity.
+              Turning bold ideas into{" "}
+              <span className="text-b-accent2">exceptional</span> software.
             </h1>
             <p className="text-b-sub text-[16.5px] leading-relaxed max-w-lg mt-4">
-              Abdullahi Nakore — full-stack developer and UI/UX designer based
-              in Nigeria. I like clean systems, tidy code, and interfaces that
-              don't need instructions.
+              I'm{" "}
+              <span className="text-b-accent2 font-bold">Abdullahi Nakore</span>
+              , a software engineer passionate about turning ambitious ideas
+              into polished digital experiences. From modern web platforms and
+              mobile apps to scalable backend systems and AI-powered solutions,
+              I build software that's fast, reliable, and made to create real
+              impact.
             </p>
             <div className="flex flex-wrap gap-3.5 mt-7">
               <Button href="#projects" variant="primary">

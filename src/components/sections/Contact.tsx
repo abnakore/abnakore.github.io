@@ -127,13 +127,7 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(null);
 
-  const typedCatch = useTypewriterMulti(
-    terminalPrompts,
-    40,
-    20,
-    2500,
-    600,
-  );
+  const typedCatch = useTypewriterMulti(terminalPrompts, 40, 20, 2500, 600);
 
   function handleChange(field: keyof FormState) {
     return (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -351,7 +345,9 @@ export default function Contact() {
                         answer={faq.a}
                         isTerminal={isTerminal}
                         isOpen={openFaqIdx === i}
-                        onToggle={() => setOpenFaqIdx(openFaqIdx === i ? null : i)}
+                        onToggle={() =>
+                          setOpenFaqIdx(openFaqIdx === i ? null : i)
+                        }
                       />
                     ))}
                   </div>
@@ -373,7 +369,9 @@ export default function Contact() {
                         answer={faq.a}
                         isTerminal={isTerminal}
                         isOpen={openFaqIdx === i}
-                        onToggle={() => setOpenFaqIdx(openFaqIdx === i ? null : i)}
+                        onToggle={() =>
+                          setOpenFaqIdx(openFaqIdx === i ? null : i)
+                        }
                       />
                     ))}
                   </div>

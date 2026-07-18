@@ -40,7 +40,7 @@ export interface Service {
 
 export interface JourneyItem {
   id: string;
-  type: 'education' | 'work' | 'milestone';
+  type: 'education' | 'work' | 'milestone' | 'training';
   title: string;
   subtitle: string;
   date: string;
