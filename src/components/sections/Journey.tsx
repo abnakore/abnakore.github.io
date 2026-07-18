@@ -200,22 +200,26 @@ function BentoRoadmapItem({
 export default function Journey() {
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
+  const isEditorial = mode === "editorial";
+
+  let sectionClass: string;
+  if (isTerminal) sectionClass = "bg-t-bg terminal-scanline";
+  else if (isEditorial) sectionClass = "bg-e-bg";
+  else sectionClass = "bg-b-bg";
 
   return (
     <section
       id="journey"
-      className={`relative min-h-screen flex items-center px-[6vw] py-24 md:py-32 overflow-hidden transition-colors duration-300 ${
-        isTerminal ? "bg-t-bg terminal-scanline" : "bg-b-bg"
-      }`}
+      className={`relative min-h-screen flex items-center px-[6vw] py-24 md:py-32 overflow-hidden transition-colors duration-300 ${sectionClass}`}
     >
       <div className="max-w-[1180px] mx-auto w-full relative z-10">
         <ScrollReveal variant="fadeUp">
           <SectionTag>
-            {isTerminal ? "$ cat journey.log" : "My journey"}
+            {isTerminal ? "$ cat journey.log" : isEditorial ? "02" : "My journey"}
           </SectionTag>
           <h2
             className={`text-2xl md:text-4xl font-extrabold mt-3 ${
-              isTerminal ? "font-mono text-t-text" : "font-sora text-b-ink"
+              isTerminal ? "font-mono text-t-text" : isEditorial ? "font-fraunces font-semibold text-e-text" : "font-sora text-b-ink"
             }`}
           >
             {isTerminal ? "The Builder's Log" : "The path that brought me here"}
@@ -224,7 +228,9 @@ export default function Journey() {
             className={`leading-relaxed max-w-2xl mt-4 ${
               isTerminal
                 ? "text-t-dim text-[14.5px] font-mono"
-                : "text-b-sub text-[16.5px] font-inter"
+                : isEditorial
+                  ? "text-e-dim text-[16.5px] font-archivo"
+                  : "text-b-sub text-[16.5px] font-inter"
             }`}
           >
             {isTerminal
@@ -266,7 +272,7 @@ export default function Journey() {
           )}
         </div>
       </div>
-      {!isTerminal && <WaveDivider fill="#FFFFFF" />}
+      {!isTerminal && !isEditorial && <WaveDivider fill="#FFFFFF" />}
     </section>
   );
 }
