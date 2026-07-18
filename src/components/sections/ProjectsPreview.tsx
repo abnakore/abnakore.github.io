@@ -16,8 +16,8 @@ const FILTERS: { label: string; value: ProjectType | "all" }[] = [
   { label: "All", value: "all" },
   { label: "Web", value: "web" },
   { label: "Mobile", value: "mobile" },
-  { label: "Desktop", value: "desktop" },
-  { label: "Design", value: "design" },
+  { label: "Embedded", value: "embedded" },
+  { label: "Game", value: "game" },
 ];
 
 export default function ProjectsPreview() {
@@ -26,7 +26,7 @@ export default function ProjectsPreview() {
   const [activeFilter, setActiveFilter] = useState<ProjectType | "all">("all");
 
   const filteredProjects = shippedProjects.filter(
-    (p) => (activeFilter === "all" || p.type === activeFilter) && !p.flagship
+    (p) => (activeFilter === "all" || p.type === activeFilter) && !p.flagship,
   );
 
   return (
@@ -44,8 +44,12 @@ export default function ProjectsPreview() {
           >
             {isTerminal ? "Selected work" : "Selected Work"}
           </h2>
-          <p className={`text-sm mt-2 ${isTerminal ? "text-t-dim font-mono" : "text-b-sub"}`}>
-            {isTerminal ? "# Full case studies below, more projects further down" : "Full case studies below, more projects further down"}
+          <p
+            className={`text-sm mt-2 ${isTerminal ? "text-t-dim font-mono" : "text-b-sub"}`}
+          >
+            {isTerminal
+              ? "# Full case studies below, more projects further down"
+              : "Full case studies below, more projects further down"}
           </p>
         </ScrollReveal>
 
@@ -62,7 +66,9 @@ export default function ProjectsPreview() {
         <div className="mt-16 mb-6">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <ScrollReveal variant="fadeUp">
-              <h3 className={`text-xl font-semibold ${isTerminal ? "font-mono" : "font-sora"}`}>
+              <h3
+                className={`text-xl font-semibold ${isTerminal ? "font-mono" : "font-sora"}`}
+              >
                 {isTerminal ? "$ ls ./more-projects" : "More Projects"}
               </h3>
             </ScrollReveal>
@@ -99,15 +105,19 @@ export default function ProjectsPreview() {
           staggerDelay={0.08}
         >
           {filteredProjects.length > 0 ? (
-            filteredProjects.map((p) => (
+            filteredProjects.slice(0, 3).map((p) => (
               <ScrollRevealItem key={p.slug}>
                 <ProjectCard project={p} />
               </ScrollRevealItem>
             ))
           ) : (
             <div className="col-span-full text-center py-12">
-              <p className={`text-sm ${isTerminal ? "text-t-dim font-mono" : "text-b-sub"}`}>
-                {isTerminal ? "# No projects match this filter" : "No projects match this filter"}
+              <p
+                className={`text-sm ${isTerminal ? "text-t-dim font-mono" : "text-b-sub"}`}
+              >
+                {isTerminal
+                  ? "# No projects match this filter"
+                  : "No projects match this filter"}
               </p>
             </div>
           )}

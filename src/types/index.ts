@@ -1,6 +1,15 @@
 export type Mode = "terminal" | "bento";
 
-export type ProjectType = "web" | "mobile" | "desktop" | "design" | "other";
+export type ProjectType =
+  | "web"
+  | "mobile"
+  | "desktop"
+  | "design"
+  | "embedded"
+  | "game"
+  | "ai"
+  | "web3"
+  | "other";
 
 export interface ProjectCaseStudy {
   problem: string;

@@ -19,8 +19,8 @@ const FILTERS: { label: string; value: ProjectType | "all" }[] = [
   { label: "All", value: "all" },
   { label: "Web", value: "web" },
   { label: "Mobile", value: "mobile" },
-  { label: "Desktop", value: "desktop" },
-  { label: "Design", value: "design" },
+  { label: "Embedded", value: "embedded" },
+  { label: "Game", value: "game" },
 ];
 
 export default function ProjectsPage() {
