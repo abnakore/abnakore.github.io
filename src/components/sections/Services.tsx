@@ -12,26 +12,32 @@ import ScrollReveal, {
 export default function Services() {
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
+  const isEditorial = mode === "editorial";
+
+  let bgClass: string;
+  if (isTerminal) bgClass = "";
+  else if (isEditorial) bgClass = "bg-e-bg";
+  else bgClass = "bg-white";
 
   return (
     <section
       id="services"
-      className={`relative min-h-screen flex items-center px-[6vw] py-24 md:py-28 ${!isTerminal ? "bg-white" : ""}`}
+      className={`relative min-h-screen flex items-center px-[6vw] py-24 md:py-28 ${!isTerminal ? bgClass : ""}`}
     >
       <div className="max-w-[1180px] mx-auto w-full">
         <ScrollReveal variant="fadeUp">
           <SectionTag>
-            {isTerminal ? "$ services --list" : "My services"}
+            {isTerminal ? "$ services --list" : isEditorial ? "02" : "My services"}
           </SectionTag>
           <h2
-            className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : "font-sora"}`}
+            className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold" : "font-sora"}`}
           >
-            {isTerminal ? "What I can build" : "Where I add value"}
+            {isTerminal ? "What I can build" : isEditorial ? "Where I add value" : "Where I add value"}
           </h2>
         </ScrollReveal>
 
         <ScrollRevealContainer
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8"
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8`}
           staggerDelay={0.1}
         >
           {services.map((s, i) =>
@@ -47,6 +53,14 @@ export default function Services() {
                   <p className="text-[12.5px] text-t-dim leading-relaxed">
                     {s.description}
                   </p>
+                </div>
+              </ScrollRevealItem>
+            ) : isEditorial ? (
+              <ScrollRevealItem key={s.title}>
+                <div className="border-t border-e-border pt-5 transition-[padding] duration-300 hover:pl-2">
+                  <div className="font-fraunces text-e-accent text-sm mb-2">{String(i + 1).padStart(2, "0")}</div>
+                  <h4 className="font-fraunces font-semibold text-lg text-e-text mb-1.5">{s.title}</h4>
+                  <p className="font-archivo text-[13px] text-e-dim leading-relaxed">{s.description}</p>
                 </div>
               </ScrollRevealItem>
             ) : (
@@ -65,7 +79,8 @@ export default function Services() {
           )}
         </ScrollRevealContainer>
       </div>
-      {!isTerminal && <WaveDivider fill="#F3F1FB" />}
+      {!isTerminal && !isEditorial && <WaveDivider fill="#F3F1FB" />}
+      {isEditorial && <div className="absolute bottom-0 left-0 right-0 border-t border-e-border" />}
     </section>
   );
 }

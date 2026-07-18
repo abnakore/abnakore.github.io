@@ -28,14 +28,22 @@ const metrics = [
   },
 ];
 
+import KineticHeadline from "../editorial/KineticHeadline";
+
 export default function About() {
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
+  const isEditorial = mode === "editorial";
+
+  let bgClass: string;
+  if (isTerminal) bgClass = "";
+  else if (isEditorial) bgClass = "bg-e-bg";
+  else bgClass = "bg-b-bg";
 
   return (
     <section
       id="about"
-      className={`relative min-h-screen flex items-center px-[6vw] py-24 md:py-28 ${!isTerminal ? "bg-b-bg" : ""}`}
+      className={`relative min-h-screen flex items-center px-[6vw] py-24 md:py-28 ${!isTerminal ? bgClass : ""}`}
     >
       <div className="max-w-[1180px] mx-auto w-full">
         {isTerminal ? (
@@ -86,6 +94,48 @@ export default function About() {
               $ cat full_bio.md →
             </Link>
           </ScrollReveal>
+        ) : isEditorial ? (
+          <ScrollReveal variant="fadeUp">
+            <SectionTag>01</SectionTag>
+            <h2 className="font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em] text-e-text mt-3">
+              <KineticHeadline
+                text="Building things that actually ship."
+                emphasize={["ship"]}
+              />
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+              <div>
+                <p className="font-archivo text-e-text text-[16.5px] leading-relaxed">
+                  I don't just enjoy writing code — I enjoy building things people
+                  actually use. There's something exciting about taking a rough
+                  idea, asking "What if?", and turning it into a polished product
+                  that solves a real problem.
+                </p>
+                <p className="font-archivo text-e-dim text-[16.5px] leading-relaxed mt-4">
+                  Curiosity has taken me far beyond traditional web development.
+                  I've explored mobile apps, AI, backend engineering, data science,
+                  embedded systems, UI/UX design, and even game development.
+                </p>
+                <Link
+                  to="/about"
+                  className="inline-block mt-6 font-archivo font-bold text-sm text-e-accent hover:text-e-accent/80 transition-colors"
+                >
+                  Read the full story →
+                </Link>
+              </div>
+              <div className="border-t md:border-t-0 md:border-l border-e-border md:pl-8 pt-6 md:pt-0">
+                <div className="space-y-5">
+                  {metrics.map((m) => (
+                    <div key={m.label} className="border-b border-e-border pb-4">
+                      <div className="font-fraunces text-2xl font-semibold text-e-accent">{m.value}</div>
+                      <div className="font-archivo text-sm font-semibold text-e-text mt-1">{m.label}</div>
+                      <div className="font-archivo text-xs text-e-dim mt-0.5">{m.description}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
         ) : (
           <ScrollReveal variant="fadeUp">
             <SectionTag>About me</SectionTag>
@@ -135,7 +185,8 @@ export default function About() {
           </ScrollReveal>
         )}
       </div>
-      {!isTerminal && <WaveDivider fill="#FFFFFF" />}
+      {!isTerminal && !isEditorial && <WaveDivider fill="#FFFFFF" />}
+      {isEditorial && <div className="absolute bottom-0 left-0 right-0 border-t border-e-border" />}
     </section>
   );
 }

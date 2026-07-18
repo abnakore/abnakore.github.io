@@ -123,6 +123,7 @@ function FaqItem({
 export default function Contact() {
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
+  const isEditorial = mode === "editorial";
   const [form, setForm] = useState<FormState>(initialState);
   const [sent, setSent] = useState(false);
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(null);
@@ -153,27 +154,31 @@ export default function Contact() {
   /* ---- shared classes ---- */
   const inputCls = isTerminal
     ? "w-full bg-t-panel border border-t-border rounded-lg px-3.5 py-3 text-sm text-t-text placeholder:text-t-dim focus:outline-none focus:border-t-accent transition-colors"
-    : "w-full bg-white border-[1.5px] border-[#E4E0F5] rounded-xl px-4 py-3.5 text-sm placeholder:text-b-sub/60 focus:outline-none focus:border-b-accent transition-colors";
+    : isEditorial
+      ? "w-full bg-e-bg border border-e-border px-3.5 py-3 text-sm text-e-text placeholder:text-e-dim focus:outline-none focus:border-e-accent transition-colors"
+      : "w-full bg-white border-[1.5px] border-[#E4E0F5] rounded-xl px-4 py-3.5 text-sm placeholder:text-b-sub/60 focus:outline-none focus:border-b-accent transition-colors";
 
   const labelCls = isTerminal
     ? "block font-mono text-xs text-t-accent mb-1.5"
-    : "block text-xs font-bold text-b-sub mb-1.5";
+    : isEditorial
+      ? "block font-archivo text-xs font-bold text-e-accent mb-1.5"
+      : "block text-xs font-bold text-b-sub mb-1.5";
 
   return (
     <section
       id="contact"
-      className={`relative min-h-screen flex items-center px-[6vw] py-24 md:py-28 ${!isTerminal ? "bg-white" : ""}`}
+      className={`relative min-h-screen flex items-center px-[6vw] py-24 md:py-28 ${!isTerminal ? (isEditorial ? "bg-e-bg" : "bg-white") : ""}`}
     >
       <div className="max-w-[1180px] mx-auto w-full">
         {/* ---- heading ---- */}
         <ScrollReveal variant="fadeUp">
           <SectionTag>
-            {isTerminal ? "$ mail --compose" : "Let's connect"}
+            {isTerminal ? "$ mail --compose" : isEditorial ? "04" : "Let's connect"}
           </SectionTag>
           <h2
-            className={`text-2xl md:text-4xl font-extrabold mt-3 leading-tight ${isTerminal ? "font-mono" : "font-sora"}`}
+            className={`text-2xl md:text-4xl font-extrabold mt-3 leading-tight ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold" : "font-sora"}`}
           >
-            {isTerminal ? "Drop me a line" : "Say hello — I don't bite"}
+            {isTerminal ? "Drop me a line" : isEditorial ? "Say hello — I don't bite" : "Say hello — I don't bite"}
           </h2>
           {isTerminal ? (
             <p className="mt-3 text-sm leading-relaxed max-w-xl min-h-[3em] text-t-green font-mono">
@@ -181,6 +186,10 @@ export default function Contact() {
               <span className="inline-block w-[0.4ch] ml-0.5 bg-t-green animate-blink">
                 &nbsp;
               </span>
+            </p>
+          ) : isEditorial ? (
+            <p className="mt-3 font-archivo text-sm leading-relaxed max-w-xl text-e-dim">
+              {gridTagline}
             </p>
           ) : (
             <p className="mt-3 text-sm leading-relaxed max-w-xl text-b-sub">
@@ -195,17 +204,21 @@ export default function Contact() {
           <div className="lg:col-span-3 space-y-8">
             <ScrollReveal variant="fadeUp" delay={0.1}>
               <div
-                className={`rounded-2xl p-6 md:p-7 ${
+                className={`p-6 md:p-7 ${
                   isTerminal
-                    ? "border border-t-border bg-t-panel"
-                    : "bg-b-bg border-[1.5px] border-[#E4E0F5]"
+                    ? "rounded-2xl border border-t-border bg-t-panel"
+                    : isEditorial
+                      ? "border border-e-border"
+                      : "rounded-2xl bg-b-bg border-[1.5px] border-[#E4E0F5]"
                 }`}
               >
                 <p
                   className={`text-sm mb-5 ${
                     isTerminal
                       ? "text-t-dim font-mono"
-                      : "text-b-sub font-semibold"
+                      : isEditorial
+                        ? "text-e-dim font-archivo"
+                        : "text-b-sub font-semibold"
                   }`}
                 >
                   {isTerminal
@@ -216,9 +229,9 @@ export default function Contact() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className={labelCls}>
-                        {isTerminal ? "--name" : "Full name"}
-                      </label>
+                    <label className={labelCls}>
+                      {isTerminal ? "--name" : isEditorial ? "Full name" : "Full name"}
+                    </label>
                       <input
                         required
                         value={form.name}
@@ -229,9 +242,9 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <label className={labelCls}>
-                        {isTerminal ? "--email" : "Email"}
-                      </label>
+                    <label className={labelCls}>
+                      {isTerminal ? "--email" : "Email"}
+                    </label>
                       <input
                         required
                         value={form.email}
@@ -289,8 +302,10 @@ export default function Contact() {
                               : "text-b-accent font-semibold"
                           }`}
                         >
-                          {isTerminal
-                            ? "✓ message queued"
+                        {isTerminal
+                          ? "✓ message queued"
+                          : isEditorial
+                            ? "✓ Opening your mail app..."
                             : "✓ Opening your mail app..."}
                         </motion.span>
                       )}
@@ -303,15 +318,17 @@ export default function Contact() {
             {/* social links row */}
             <ScrollReveal variant="fadeUp" delay={0.2}>
               <div
-                className={`flex flex-wrap items-center gap-4 rounded-2xl p-5 ${
+                className={`flex flex-wrap items-center gap-4 p-5 ${
                   isTerminal
-                    ? "border border-t-border bg-t-panel"
-                    : "bg-b-bg border-[1.5px] border-[#E4E0F5]"
+                    ? "rounded-2xl border border-t-border bg-t-panel"
+                    : isEditorial
+                      ? "border border-e-border"
+                      : "rounded-2xl bg-b-bg border-[1.5px] border-[#E4E0F5]"
                 }`}
               >
                 <span
                   className={`text-xs font-bold uppercase tracking-wider ${
-                    isTerminal ? "text-t-dim font-mono" : "text-b-sub"
+                    isTerminal ? "text-t-dim font-mono" : isEditorial ? "text-e-dim font-archivo" : "text-b-sub"
                   }`}
                 >
                   {isTerminal ? "# ping me on" : "Find me on"}
@@ -344,6 +361,30 @@ export default function Contact() {
                         question={faq.q}
                         answer={faq.a}
                         isTerminal={isTerminal}
+                        isOpen={openFaqIdx === i}
+                        onToggle={() =>
+                          setOpenFaqIdx(openFaqIdx === i ? null : i)
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : isEditorial ? (
+                <div className="border border-e-border p-6 h-full">
+                  <h3 className="font-fraunces font-semibold text-e-text text-lg mb-4 flex items-center gap-2">
+                    <span className="inline-block w-1 h-5 bg-e-accent" />
+                    FAQ
+                  </h3>
+                  <p className="text-xs text-e-dim mb-5 font-archivo">
+                    Quick answers to things you're probably wondering.
+                  </p>
+                  <div className="space-y-2.5">
+                    {faqs.map((faq, i) => (
+                      <FaqItem
+                        key={i}
+                        question={faq.q}
+                        answer={faq.a}
+                        isTerminal={false}
                         isOpen={openFaqIdx === i}
                         onToggle={() =>
                           setOpenFaqIdx(openFaqIdx === i ? null : i)
@@ -385,7 +426,7 @@ export default function Contact() {
         <ScrollReveal variant="fadeUp" delay={0.35}>
           <div
             className={`mt-12 text-center text-xs ${
-              isTerminal ? "text-t-dim font-mono" : "text-b-sub"
+              isTerminal ? "text-t-dim font-mono" : isEditorial ? "text-e-dim font-archivo" : "text-b-sub"
             }`}
           >
             {isTerminal

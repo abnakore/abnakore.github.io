@@ -16,9 +16,12 @@ const roles = [
   "CS student",
 ];
 
+import KineticHeadline from "../editorial/KineticHeadline";
+
 export default function Hero() {
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
+  const isEditorial = mode === "editorial";
   const typed = useTypewriter("Abdullahi Nakore", 55, 400);
   const typedRole = useTypewriterMulti(roles, 50, 25, 2000, 400);
   const typedSub = useTypewriter(
@@ -30,7 +33,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className={`relative min-h-screen flex items-center px-[6vw] py-32 md:py-36 ${!isTerminal ? "bg-white" : ""}`}
+      className={`relative min-h-screen flex items-center px-[6vw] py-32 md:py-36 ${!isTerminal ? (isEditorial ? "bg-e-bg" : "bg-white") : ""}`}
     >
       <div className="max-w-295 mx-auto w-full">
         {isTerminal ? (
@@ -98,6 +101,34 @@ export default function Hero() {
               </div>
             </div>
           </motion.div>
+        ) : isEditorial ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <SectionTag>Available for work</SectionTag>
+            <h1 className="font-fraunces font-medium text-[clamp(44px,8vw,108px)] leading-[0.98] tracking-[-0.02em] text-e-text mt-6">
+              <KineticHeadline
+                text="Abdul builds things that work and look like they mean it."
+                emphasize={["work"]}
+              />
+            </h1>
+            <p className="font-archivo text-e-dim text-[16.5px] leading-relaxed max-w-lg mt-6">
+              I'm a software engineer who turns ambitious ideas into polished
+              digital experiences. From modern web platforms and mobile apps to
+              scalable backend systems and AI-powered solutions — I build
+              software that's fast, reliable, and made to create real impact.
+            </p>
+            <div className="flex flex-wrap gap-3.5 mt-8">
+              <Button href="#projects" variant="primary">
+                View my work
+              </Button>
+              <Button to="/contact" variant="ghost">
+                Get in touch
+              </Button>
+            </div>
+          </motion.div>
         ) : (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -129,7 +160,8 @@ export default function Hero() {
           </motion.div>
         )}
       </div>
-      {!isTerminal && <WaveDivider fill="#F3F1FB" />}
+      {!isTerminal && !isEditorial && <WaveDivider fill="#F3F1FB" />}
+      {isEditorial && <div className="absolute bottom-0 left-0 right-0 border-t border-e-border" />}
     </section>
   );
 }

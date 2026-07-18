@@ -6,9 +6,55 @@ import { useMode } from '../../hooks/useMode';
 export default function SkillTabs() {
   const { mode } = useMode();
   const isTerminal = mode === 'terminal';
+  const isEditorial = mode === 'editorial';
   const [activeIndex, setActiveIndex] = useState(0);
 
   const activeGroup = skillGroups[activeIndex];
+
+  if (isEditorial) {
+    return (
+      <div className="mt-2">
+        <div className="flex flex-wrap gap-1.5 mb-6 font-archivo">
+          {skillGroups.map((g, i) => (
+            <button
+              key={g.category}
+              onClick={() => setActiveIndex(i)}
+              className={`relative text-xs font-bold px-3.5 py-2 transition-all duration-200 ${
+                i === activeIndex
+                  ? 'text-e-bg bg-e-accent'
+                  : 'text-e-dim hover:text-e-text'
+              }`}
+            >
+              {g.category}
+            </button>
+          ))}
+        </div>
+        <motion.div
+          key={activeGroup.category}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
+        >
+          {activeGroup.items.map((s, i) => (
+            <div key={s.label} className="mb-4">
+              <div className="flex justify-between text-sm mb-1.5 font-archivo">
+                <span className="text-e-text">{s.label}</span>
+                <span className="text-e-accent">{s.value}%</span>
+              </div>
+              <div className="h-2 overflow-hidden bg-e-border">
+                <motion.div
+                  className="h-full bg-e-accent"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${s.value}%` }}
+                  transition={{ duration: 0.8, delay: i * 0.08, ease: [0.2, 0.8, 0.2, 1] }}
+                />
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-2">

@@ -3,9 +3,16 @@ import { useMode } from '../../hooks/useMode';
 import TiltCard from '../ui/TiltCard';
 import type { Project } from '../../types';
 
+import ProjectRow from "../editorial/ProjectRow";
+
 export default function ProjectCard({ project }: { project: Project }) {
   const { mode } = useMode();
   const isTerminal = mode === 'terminal';
+  const isEditorial = mode === 'editorial';
+
+  if (isEditorial) {
+    return <ProjectRow project={project} index={0} />;
+  }
 
   if (isTerminal) {
     return (

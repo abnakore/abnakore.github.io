@@ -5,6 +5,58 @@ import type { Project } from "../../types";
 export default function FlagshipCard({ project }: { project: Project }) {
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
+  const isEditorial = mode === "editorial";
+
+  if (isEditorial) {
+    return (
+      <div className="group relative border-t border-e-border py-8 md:py-10 grid md:grid-cols-2 gap-8 items-center transition-all duration-300 hover:pl-4">
+        <div>
+          <div className="font-fraunces text-e-accent text-sm mb-3 tracking-wider uppercase">
+            {project.type === "web" ? "Web App" : project.type === "design" ? "UI/UX Design" : "Project"} · Flagship
+          </div>
+          <h3 className="font-fraunces font-semibold text-2xl md:text-3xl text-e-text group-hover:text-e-accent transition-colors duration-300">
+            {project.title}
+          </h3>
+          <p className="font-archivo text-[14px] text-e-dim leading-relaxed mt-3 mb-5">
+            {project.longDescription ?? project.description}
+          </p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {project.tags.map((t) => (
+              <span key={t} className="font-archivo text-[11px] text-e-dim/70 border border-e-border px-2.5 py-1 transition-all duration-300">
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-4 text-sm flex-wrap">
+            {project.links?.live && (
+              <a href={project.links.live} className="font-archivo text-xs text-e-accent hover:text-e-accent/80 transition-colors" target="_blank" rel="noopener noreferrer">Live demo →</a>
+            )}
+            {project.links?.github && (
+              <a href={project.links.github} className="font-archivo text-xs text-e-dim hover:text-e-text transition-colors" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            )}
+            {project.links?.caseStudy && (
+              <a href={project.links.caseStudy} className="font-archivo text-xs text-e-dim hover:text-e-text transition-colors" target="_blank" rel="noopener noreferrer">Case study →</a>
+            )}
+            <Link to={`/projects/${project.slug}`} className="font-archivo text-xs text-e-accent hover:underline transition-all">Details →</Link>
+          </div>
+        </div>
+        <div className="aspect-video overflow-hidden relative border border-e-border">
+          {project.thumbnail ? (
+            <img src={project.thumbnail} alt={project.title} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full bg-e-panel flex items-center justify-center text-e-dim text-sm">
+              <div className="text-center">
+                <svg className="w-10 h-10 mx-auto mb-2 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span className="font-archivo text-[11px] opacity-60">[ screenshot ]</span>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   if (isTerminal) {
     return (
