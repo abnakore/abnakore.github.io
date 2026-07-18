@@ -272,6 +272,35 @@ export default function ProjectDetailPage() {
                 <TechStackTable stacks={project.caseStudy!.techStack} isTerminal={isTerminal} />
               </DetailSection>
 
+              {/* Key Features */}
+              {project.caseStudy!.features && project.caseStudy!.features.length > 0 && (
+                <DetailSection title={isTerminal ? 'Key Features' : 'Key Features'} isTerminal={isTerminal} delay={0.22}>
+                  <ul className="space-y-2.5">
+                    {project.caseStudy!.features.map((f, i) => (
+                      <li key={i} className={`flex gap-3 text-sm leading-relaxed ${isTerminal ? 'font-mono text-t-dim' : 'text-b-sub'}`}>
+                        <span className={`mt-0.5 shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 ${isTerminal ? 'bg-t-accent/50' : 'bg-b-accent'}`} />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </DetailSection>
+              )}
+
+              {/* Design Considerations */}
+              {project.caseStudy!.designConsiderations && (
+                <DetailSection title={isTerminal ? 'Design Considerations' : 'Design Considerations'} isTerminal={isTerminal} delay={0.24}>
+                  <div className={`p-5 rounded-xl transition-all duration-300 ${
+                    isTerminal
+                      ? 'bg-t-panel border border-t-border hover:border-t-accent/20 hover:shadow-[0_0_20px_rgba(255,176,0,0.04)]'
+                      : 'bg-b-bg border border-transparent hover:border-b-accent/10 hover:shadow-[0_4px_20px_rgba(79,70,229,0.06)]'
+                  }`}>
+                    <p className={`text-sm leading-relaxed ${isTerminal ? 'text-t-text font-mono' : 'text-b-ink'}`}>
+                      {project.caseStudy!.designConsiderations}
+                    </p>
+                  </div>
+                </DetailSection>
+              )}
+
               {/* Screenshots */}
               {project.caseStudy!.screenshots && project.caseStudy!.screenshots.length > 0 && (
                 <DetailSection title={isTerminal ? 'Screenshots' : 'Screenshots & Demos'} isTerminal={isTerminal} delay={0.25}>
