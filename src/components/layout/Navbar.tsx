@@ -6,11 +6,9 @@ import ModeToggle from "./ModeToggle";
 
 const links = [
   { label: "Home", href: "/", isHash: false },
-  { label: "About", href: "/#about", isHash: true },
-  { label: "Skills", href: "/#skills", isHash: true },
+  { label: "About", href: "/about", isHash: false },
   { label: "Services", href: "/#services", isHash: true },
   { label: "Projects", href: "/projects", isHash: false },
-  { label: "Journey", href: "/#journey", isHash: true },
   { label: "Contact", href: "/contact", isHash: false },
 ];
 
