@@ -12,7 +12,12 @@ export const ModeContext = createContext<ModeContextType | undefined>(undefined)
 export function ModeProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<Mode>('terminal');
 
-  const toggleMode = () => setMode((prev) => (prev === 'terminal' ? 'bento' : 'terminal'));
+  const toggleMode = () =>
+    setMode((prev) => {
+      if (prev === 'terminal') return 'bento';
+      if (prev === 'bento') return 'editorial';
+      return 'terminal';
+    });
 
   return (
     <ModeContext.Provider value={{ mode, setMode, toggleMode }}>

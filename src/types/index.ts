@@ -1,4 +1,4 @@
-export type Mode = "terminal" | "bento";
+export type Mode = "terminal" | "bento" | "editorial";
 
 export type ProjectType =
   | "web"
