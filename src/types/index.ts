@@ -1,6 +1,6 @@
-export type Mode = 'terminal' | 'bento';
+export type Mode = "terminal" | "bento";
 
-export type ProjectType = 'web' | 'mobile' | 'desktop' | 'design' | 'other';
+export type ProjectType = "web" | "mobile" | "desktop" | "design" | "other";
 
 export interface ProjectCaseStudy {
   problem: string;
@@ -18,7 +18,7 @@ export interface Project {
   longDescription?: string;
   tags: string[];
   fileName: string;
-  status: 'shipped' | 'in-progress';
+  status: "shipped" | "in-progress";
   links?: { live?: string; github?: string; caseStudy?: string };
   gradient: string;
   flagship?: boolean;
@@ -36,11 +36,12 @@ export interface SkillGroup {
 export interface Service {
   title: string;
   description: string;
+  icon: React.ReactNode;
 }
 
 export interface JourneyItem {
   id: string;
-  type: 'education' | 'work' | 'milestone' | 'training';
+  type: "education" | "work" | "milestone" | "training";
   title: string;
   subtitle: string;
   date: string;
@@ -51,5 +52,5 @@ export interface JourneyItem {
 export interface SocialLink {
   label: string;
   href: string;
-  icon: 'github' | 'linkedin' | 'instagram' | 'mail';
+  icon: "github" | "linkedin" | "instagram" | "mail";
 }

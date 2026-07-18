@@ -3,10 +3,33 @@ import SkillTabs from "../components/sections/SkillTabs";
 import Journey from "../components/sections/Journey";
 import TiltCard from "../components/ui/TiltCard";
 import SectionTag from "../components/ui/SectionTag";
-import ScrollReveal from "../components/ui/ScrollReveal";
+import ScrollReveal, { ScrollRevealContainer, ScrollRevealItem } from "../components/ui/ScrollReveal";
 import WaveDivider from "../components/layout/WaveDivider";
 import { useMode } from "../hooks/useMode";
 import { useScrollToHash } from "../hooks/useScrollToHash";
+
+const metrics = [
+  {
+    value: "20+",
+    label: "Projects Built",
+    description: "Ideas transformed into working products",
+  },
+  {
+    value: "3+",
+    label: "Years Coding",
+    description: "Still learning, still leveling up",
+  },
+  {
+    value: "∞",
+    label: "Bugs Encountered",
+    description: "Most fixed. Some became features 😄",
+  },
+  {
+    value: "6+",
+    label: "Tech Fields Explored",
+    description: "Web, mobile, AI, data & beyond",
+  },
+];
 
 function FullBio() {
   const { mode } = useMode();
@@ -50,6 +73,24 @@ function FullBio() {
               step toward creating software that's reliable, impactful, and
               genuinely enjoyable to use.
             </p>
+
+            <ScrollRevealContainer className="grid grid-cols-2 gap-3 mt-8" staggerDelay={0.06}>
+              {metrics.map((m) => (
+                <ScrollRevealItem key={m.label} variant="fadeUp">
+                  <div className="border border-t-border rounded-lg p-4 transition-all duration-300 hover:border-t-accent/40 hover:bg-t-panel/60 hover:-translate-y-0.5">
+                    <div className="font-mono text-2xl md:text-3xl font-bold text-t-accent">
+                      {m.value}
+                    </div>
+                    <div className="font-mono text-sm text-t-text mt-1.5 font-semibold">
+                      {m.label}
+                    </div>
+                    <div className="font-mono text-xs text-t-dim mt-1 leading-relaxed">
+                      {m.description}
+                    </div>
+                  </div>
+                </ScrollRevealItem>
+              ))}
+            </ScrollRevealContainer>
 
             <div className="max-w-xl mt-8">
               <SectionTag>$ cat skills.json</SectionTag>
@@ -142,6 +183,27 @@ function FullBio() {
                     Software Engineering @ Bayero University Kano.
                   </p>
                 </TiltCard>
+              </ScrollReveal>
+
+              {/* Metrics row */}
+              <ScrollReveal variant="fadeUp" delay={0.4} className="md:col-span-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {metrics.map((m) => (
+                    <TiltCard key={m.label}>
+                      <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(24,20,37,0.04)] border border-transparent transition-all duration-300 hover:border-b-accent/10 hover:shadow-[0_8px_30px_rgba(79,70,229,0.08)]">
+                        <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-b-accent to-b-accent2 bg-clip-text text-transparent">
+                          {m.value}
+                        </div>
+                        <div className="text-sm font-sora font-semibold text-b-ink mt-2">
+                          {m.label}
+                        </div>
+                        <div className="text-xs font-inter text-b-sub mt-1.5 leading-relaxed">
+                          {m.description}
+                        </div>
+                      </div>
+                    </TiltCard>
+                  ))}
+                </div>
               </ScrollReveal>
             </div>
           </div>

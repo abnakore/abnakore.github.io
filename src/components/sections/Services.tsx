@@ -1,5 +1,6 @@
 import { useMode } from "../../hooks/useMode";
 import { services } from "../../data/services";
+import type { ReactNode } from "react";
 import SectionTag from "../ui/SectionTag";
 import WaveDivider from "../layout/WaveDivider";
 import TiltCard from "../ui/TiltCard";
@@ -51,7 +52,9 @@ export default function Services() {
             ) : (
               <ScrollRevealItem key={s.title}>
                 <TiltCard className="bg-white rounded-2xl p-6 shadow-[0_8px_24px_rgba(24,20,37,0.05)]">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-b-accent to-b-accent2 mb-3.5" />
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-b-accent to-b-accent2 mb-3.5 flex items-center justify-center text-white">
+                    {s.icon as ReactNode}
+                  </div>
                   <h4 className="font-sora text-[15.5px] mb-1.5">{s.title}</h4>
                   <p className="text-[13px] text-b-sub leading-relaxed">
                     {s.description}
