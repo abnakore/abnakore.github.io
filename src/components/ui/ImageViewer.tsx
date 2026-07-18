@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useMode } from "../../hooks/useMode";
+import { useTypewriter } from "../../hooks/useTypewriter";
 
 interface Screenshot {
   label: string;
@@ -35,6 +36,8 @@ export default function ImageViewer({
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
   const [isClosing, setIsClosing] = useState(false);
+
+  // const getTyped = (text: string) => useTypewriter(text, 25);
 
   const requestClose = useCallback(() => {
     if (isClosing) return;
@@ -208,6 +211,7 @@ export default function ImageViewer({
               <div className="text-t-dim text-xs">
                 <span className="text-t-accent">abdul@dev</span>:~$ open{" "}
                 {currentScreenshot.label.toLowerCase().replace(/\s+/g, "-")}.png
+                <span className="animate-blink text-t-accent">_</span>
               </div>
               <h3 className="text-t-text text-lg font-bold mt-1.5">
                 {currentScreenshot.label}
