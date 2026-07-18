@@ -1,4 +1,4 @@
-import { HashRouter as BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ModeProvider } from "./context/ModeContext";
 import Home from "./pages/Home";
 import AboutPage from "./pages/AboutPage";

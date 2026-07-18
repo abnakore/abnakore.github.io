@@ -5,9 +5,11 @@ export type ProjectType = "web" | "mobile" | "desktop" | "design" | "other";
 export interface ProjectCaseStudy {
   problem: string;
   approach: string;
-  techStack: { category: string; items: string[] }[];
+  techStack: { category: string; items: string[] }[] | Record<string, string[]>;
   outcome: string;
   challenges?: string[];
+  features?: string[];
+  designConsiderations?: string;
   screenshots?: { label: string; description: string }[];
 }
 

@@ -43,11 +43,12 @@ export default function Navbar() {
     setMenuOpen(false);
     if (!l.isHash) return;
     const id = l.href.replace("/#", "");
-    if (window.location.hash.replace("#", "").replace(/\/$/, "") !== "") {
-      navigate("/");
-      setTimeout(() => scrollToSection(id), 100);
-    } else {
+    const onHomePage = window.location.pathname === "/" || window.location.pathname === "";
+    if (onHomePage) {
       scrollToSection(id);
+    } else {
+      navigate("/");
+      setTimeout(() => scrollToSection(id), 150);
     }
   }
 

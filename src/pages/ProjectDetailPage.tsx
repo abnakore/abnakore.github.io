@@ -44,11 +44,16 @@ function DetailSection({ title, children, isTerminal, delay = 0 }: { title: stri
   );
 }
 
-function TechStackTable({ stacks, isTerminal }: { stacks: { category: string; items: string[] }[]; isTerminal: boolean }) {
+function TechStackTable({ stacks, isTerminal }: { stacks: { category: string; items: string[] }[] | Record<string, string[]>; isTerminal: boolean }) {
+  // Normalize to array format
+  const stackArray = Array.isArray(stacks)
+    ? stacks
+    : Object.entries(stacks).map(([category, items]) => ({ category, items }));
+
   if (isTerminal) {
     return (
       <div className="space-y-3">
-        {stacks.map((s) => (
+        {stackArray.map((s) => (
           <div key={s.category} className="group border border-t-border rounded-lg p-4 transition-all duration-300 hover:border-t-accent/30 hover:shadow-[0_0_15px_rgba(255,176,0,0.04)]">
             <div className="font-mono text-t-accent text-xs mb-2"># {s.category}</div>
             <div className="flex flex-wrap gap-2">
@@ -66,7 +71,7 @@ function TechStackTable({ stacks, isTerminal }: { stacks: { category: string; it
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {stacks.map((s) => (
+      {stackArray.map((s) => (
         <div key={s.category} className="group bg-b-bg rounded-xl p-4 border border-transparent transition-all duration-300 hover:border-b-accent/15 hover:shadow-[0_4px_20px_rgba(79,70,229,0.06)] hover:-translate-y-0.5">
           <div className="text-xs font-semibold text-b-accent mb-2 uppercase tracking-wider">{s.category}</div>
           <div className="flex flex-wrap gap-1.5">
