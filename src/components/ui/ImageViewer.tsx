@@ -16,6 +16,15 @@ interface ImageViewerProps {
   gradient: string;
 }
 
+/**
+ * Usage: mount conditionally from the parent, e.g.
+ *   {viewerOpen && (
+ *     <ImageViewer ... onClose={() => setViewerOpen(false)} />
+ *   )}
+ * The exit ("genie") animation is handled internally — onClose is only
+ * called once the close animation has finished, so no AnimatePresence
+ * wrapper is required in the parent.
+ */
 export default function ImageViewer({
   screenshots,
   currentIndex,
@@ -61,6 +70,10 @@ export default function ImageViewer({
 
   const currentScreenshot = screenshots[currentIndex];
 
+  // --- "Genie" open/close animation ---
+  // Starts as a thin, pill-shaped sliver near the bottom of the viewport
+  // (like a macOS dock minimize), then stretches up into the full panel
+  // with a slight overshoot/settle for an elastic, "poured out" feel.
   const panelRadius = isTerminal ? "16px" : "28px";
   const genieVariants = {
     hidden: {
@@ -78,7 +91,7 @@ export default function ImageViewer({
       borderRadius: ["999px", "32px", "20px", panelRadius],
       transition: {
         duration: 0.62,
-        ease: [0.34, 1.15, 0.64, 1] as any,
+        ease: [0.34, 1.15, 0.64, 1] as const,
         times: [0, 0.55, 0.8, 1],
       },
     },
@@ -90,7 +103,7 @@ export default function ImageViewer({
       borderRadius: [panelRadius, "48px", "999px"],
       transition: {
         duration: 0.42,
-        ease: [0.55, 0, 0.85, 0.35] as any,
+        ease: [0.55, 0, 0.85, 0.35] as const,
         times: [0, 0.4, 1],
       },
     },
@@ -106,7 +119,7 @@ export default function ImageViewer({
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center pt-20 pb-4 px-4 sm:px-6 md:px-8"
       style={{
         background: isTerminal ? "rgba(0,0,0,0.85)" : "rgba(24,20,37,0.55)",
         backdropFilter: "blur(6px)",
@@ -117,7 +130,7 @@ export default function ImageViewer({
       onClick={requestClose}
     >
       <motion.div
-        className={`relative w-full max-w-5xl max-h-[calc(100vh-4rem)] sm:max-h-[calc(100vh-5rem)] md:max-h-[calc(100vh-6rem)] flex flex-col overflow-hidden ${
+        className={`relative w-full max-w-5xl max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-9rem)] md:max-h-[calc(100vh-10rem)] flex flex-col overflow-hidden ${
           isTerminal
             ? "border border-t-border bg-t-panel shadow-[0_30px_90px_rgba(255,176,0,0.1)]"
             : "bg-white shadow-[0_30px_80px_rgba(24,20,37,0.25)]"
@@ -130,6 +143,7 @@ export default function ImageViewer({
       >
         {isTerminal ? (
           <>
+            {/* Terminal title bar, matching Hero's window chrome */}
             <div className="flex items-center gap-2 bg-[#17160E] px-4 py-3 border-b border-t-border shrink-0">
               <span
                 className="w-2.5 h-2.5 rounded-full bg-[#FF5F57] cursor-pointer"
@@ -143,6 +157,7 @@ export default function ImageViewer({
               </span>
             </div>
 
+            {/* Header — terminal-style command + description */}
             <div className="px-6 pt-5 pb-4 border-b border-t-border shrink-0 font-mono">
               <div className="text-t-dim text-xs">
                 <span className="text-t-accent">abdul@buk</span>:~$ open{" "}
@@ -156,6 +171,7 @@ export default function ImageViewer({
               </p>
             </div>
 
+            {/* Image */}
             <div className="flex-1 flex items-center justify-center p-6 md:p-10 min-h-[360px] overflow-auto">
               {currentScreenshot.image ? (
                 <img
@@ -176,6 +192,7 @@ export default function ImageViewer({
               )}
             </div>
 
+            {/* Nav footer */}
             <div className="flex items-center justify-between px-6 py-4 border-t border-t-border font-mono text-xs shrink-0">
               <button
                 onClick={goToPrevious}
@@ -201,6 +218,7 @@ export default function ImageViewer({
           </>
         ) : (
           <>
+            {/* Grid mode header */}
             <div className="flex items-start justify-between p-6 md:p-7 border-b border-black/5 shrink-0">
               <div className="min-w-0">
                 <h3 className="font-sora text-lg md:text-xl font-bold text-b-ink truncate">
@@ -219,6 +237,7 @@ export default function ImageViewer({
               </button>
             </div>
 
+            {/* Image */}
             <div className="flex-1 flex items-center justify-center p-6 md:p-10 bg-b-bg/40 min-h-[360px] overflow-auto">
               {currentScreenshot.image ? (
                 <img
@@ -239,6 +258,7 @@ export default function ImageViewer({
               )}
             </div>
 
+            {/* Nav footer */}
             <div className="flex items-center justify-between p-6 md:p-7 border-t border-black/5 shrink-0">
               <button
                 onClick={goToPrevious}
@@ -280,7 +300,7 @@ function PlaceholderIcon({
   return (
     <div className="text-center">
       <svg
-        className={`w-16 h-16 mx-auto mb-3 ${className}`}
+        className={`w-14 h-14 mx-auto mb-3 ${className}`}
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
