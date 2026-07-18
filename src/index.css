@@ -77,6 +77,20 @@ body {
   border-radius: inherit;
 }
 
+/* ── Blur page content when mobile menu is open ── */
+.mobile-menu-open main {
+  filter: blur(4px);
+  transition: filter 0.3s ease;
+  pointer-events: none;
+  user-select: none;
+}
+.mobile-menu-open footer {
+  filter: blur(4px);
+  transition: filter 0.3s ease;
+  pointer-events: none;
+  user-select: none;
+}
+
 /* ── Terminal mode scan line effect ── */
 @keyframes scanline {
   0% { transform: translateY(-100%); }
