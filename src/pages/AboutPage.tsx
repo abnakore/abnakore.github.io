@@ -34,13 +34,15 @@ const metrics = [
 function FullBio() {
   const { mode } = useMode();
   const isTerminal = mode === "terminal";
+  const isEditorial = mode === "editorial";
+
+  let bgClass: string;
+  if (isTerminal) bgClass = "bg-t-bg";
+  else if (isEditorial) bgClass = "bg-e-bg";
+  else bgClass = "bg-white";
 
   return (
-    <section
-      className={`relative px-[6vw] py-24 md:py-28 ${
-        !isTerminal ? "bg-white" : "bg-t-bg"
-      }`}
-    >
+    <section className={`relative px-[6vw] py-24 md:py-28 ${bgClass}`}>
       <div className="max-w-[1180px] mx-auto w-full">
         {isTerminal ? (
           <ScrollReveal variant="fadeUp">
@@ -97,6 +99,58 @@ function FullBio() {
               <SkillTabs />
             </div>
           </ScrollReveal>
+        ) : isEditorial ? (
+          <ScrollReveal variant="fadeUp">
+            <SectionTag>01</SectionTag>
+            <h2 className="font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em] text-e-text mt-3">
+              The full story
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+              <div>
+                <p className="font-archivo text-e-text text-[16.5px] leading-relaxed">
+                  I love the moment an idea stops living on paper and starts
+                  becoming something real. Whether it's a startup, a business
+                  tool, or a personal project, I enjoy building software that
+                  solves problems, feels effortless to use, and leaves people
+                  thinking, "This is exactly what I needed."
+                </p>
+                <p className="font-archivo text-e-dim text-[16.5px] leading-relaxed mt-4">
+                  Curiosity keeps me moving. That's why I've explored web
+                  development, mobile apps, AI, backend engineering, embedded
+                  systems, UI/UX, data science, and even game development. The
+                  more I learn, the more creative my solutions become.
+                </p>
+                <p className="font-archivo text-e-dim text-[16.5px] leading-relaxed mt-4">
+                  I'm currently a 400-level Software Engineering student at
+                  Bayero University Kano, constantly building, breaking,
+                  rebuilding, and improving my craft.
+                </p>
+              </div>
+              <div>
+                <div className="border-t border-e-border pt-6">
+                  <SectionTag>Skills</SectionTag>
+                  <div className="mt-4">
+                    <SkillTabs />
+                  </div>
+                </div>
+                <div className="mt-8 border-t border-e-border pt-6">
+                  <div className="font-fraunces text-2xl font-semibold text-e-accent">400L</div>
+                  <p className="font-archivo text-sm text-e-dim mt-1">
+                    Software Engineering @ Bayero University Kano.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
+              {metrics.map((m) => (
+                <div key={m.label} className="border-t border-e-border pt-4">
+                  <div className="font-fraunces text-2xl font-semibold text-e-accent">{m.value}</div>
+                  <div className="font-archivo text-sm font-semibold text-e-text mt-1">{m.label}</div>
+                  <div className="font-archivo text-xs text-e-dim mt-0.5">{m.description}</div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
         ) : (
           <div>
             <ScrollReveal variant="fadeUp">
@@ -106,11 +160,7 @@ function FullBio() {
               </h2>
             </ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mt-8">
-              <ScrollReveal
-                variant="fadeUp"
-                delay={0.1}
-                className="md:col-span-3 md:row-span-2"
-              >
+              <ScrollReveal variant="fadeUp" delay={0.1} className="md:col-span-3 md:row-span-2">
                 <TiltCard className="bg-b-ink text-white rounded-3xl p-7 shadow-[0_8px_30px_rgba(24,20,37,0.06)]">
                   <h3 className="font-sora text-lg mb-2">What I do</h3>
                   <p className="text-sm text-white/70 leading-relaxed">
@@ -119,87 +169,45 @@ function FullBio() {
                     tool, or a personal project, I enjoy building software that
                     solves problems, feels effortless to use, and leaves people
                     thinking,{" "}
-                    <span className="italic">
-                      "This is exactly what I needed."
-                    </span>
+                    <span className="italic">"This is exactly what I needed."</span>
                   </p>
                   <p className="text-sm text-white/70 leading-relaxed mt-3">
                     Curiosity keeps me moving. That's why I've explored web
                     development, mobile apps, AI, backend engineering, embedded
-                    systems, UI/UX, data science, and even game development. The
-                    more I learn, the more creative my solutions become.
+                    systems, UI/UX, data science, and even game development.
                   </p>
                   <p className="text-sm text-white/70 leading-relaxed mt-3">
                     I'm currently a 400-level Software Engineering student at
                     Bayero University Kano, constantly building, breaking,
-                    rebuilding, and improving my craft. Every project teaches me
-                    something new, every challenge sharpens my thinking, and
-                    every line of code is another step toward creating software
-                    that's reliable, impactful, and genuinely enjoyable to use.
+                    rebuilding, and improving my craft.
                   </p>
                   <div className="flex flex-wrap gap-2 mt-4">
-                    {[
-                      "Python",
-                      "Django",
-                      "DRF",
-                      "React",
-                      "Typescript",
-                      "Javascript",
-                      "Figma",
-                      "Tailwind",
-                    ].map((t) => (
-                      <span
-                        key={t}
-                        className="text-xs bg-white/10 text-white px-2.5 py-1.5 rounded-full font-semibold"
-                      >
-                        {t}
-                      </span>
+                    {["Python","Django","DRF","React","Typescript","Javascript","Figma","Tailwind"].map((t) => (
+                      <span key={t} className="text-xs bg-white/10 text-white px-2.5 py-1.5 rounded-full font-semibold">{t}</span>
                     ))}
                   </div>
                 </TiltCard>
               </ScrollReveal>
-
-              <ScrollReveal
-                variant="fadeUp"
-                delay={0.2}
-                className="md:col-span-3"
-              >
+              <ScrollReveal variant="fadeUp" delay={0.2} className="md:col-span-3">
                 <TiltCard className="bg-white rounded-3xl p-7 shadow-[0_8px_30px_rgba(24,20,37,0.06)]">
-                  <h3 className="font-sora text-lg mb-2">
-                    Skills & expertise
-                  </h3>
+                  <h3 className="font-sora text-lg mb-2">Skills & expertise</h3>
                   <SkillTabs />
                 </TiltCard>
               </ScrollReveal>
-
-              <ScrollReveal
-                variant="fadeUp"
-                delay={0.3}
-                className="md:col-span-3"
-              >
+              <ScrollReveal variant="fadeUp" delay={0.3} className="md:col-span-3">
                 <TiltCard className="bg-gradient-to-br from-b-accent to-purple-500 text-white rounded-3xl p-7 shadow-[0_8px_30px_rgba(24,20,37,0.06)] flex flex-col justify-center">
                   <div className="font-sora font-extrabold text-4xl">400L</div>
-                  <p className="text-sm text-white/80 mt-2">
-                    Software Engineering @ Bayero University Kano.
-                  </p>
+                  <p className="text-sm text-white/80 mt-2">Software Engineering @ Bayero University Kano.</p>
                 </TiltCard>
               </ScrollReveal>
-
-              {/* Metrics row */}
               <ScrollReveal variant="fadeUp" delay={0.4} className="md:col-span-6">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {metrics.map((m) => (
                     <TiltCard key={m.label}>
                       <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(24,20,37,0.04)] border border-transparent transition-all duration-300 hover:border-b-accent/10 hover:shadow-[0_8px_30px_rgba(79,70,229,0.08)]">
-                        <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-b-accent to-b-accent2 bg-clip-text text-transparent">
-                          {m.value}
-                        </div>
-                        <div className="text-sm font-sora font-semibold text-b-ink mt-2">
-                          {m.label}
-                        </div>
-                        <div className="text-xs font-inter text-b-sub mt-1.5 leading-relaxed">
-                          {m.description}
-                        </div>
+                        <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-b-accent to-b-accent2 bg-clip-text text-transparent">{m.value}</div>
+                        <div className="text-sm font-sora font-semibold text-b-ink mt-2">{m.label}</div>
+                        <div className="text-xs font-inter text-b-sub mt-1.5 leading-relaxed">{m.description}</div>
                       </div>
                     </TiltCard>
                   ))}
@@ -209,7 +217,7 @@ function FullBio() {
           </div>
         )}
       </div>
-      {!isTerminal && <WaveDivider fill="#F3F1FB" />}
+      {!isTerminal && !isEditorial && <WaveDivider fill="#F3F1FB" />}
     </section>
   );
 }
