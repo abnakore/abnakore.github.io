@@ -134,7 +134,6 @@ export default function Navbar() {
 
       {/* ── Mobile hamburger + toggle ── */}
       <div className="flex md:hidden items-center gap-2">
-        <ModeToggle />
         <button
           onClick={() => setMenuOpen((prev) => !prev)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -254,6 +253,11 @@ export default function Navbar() {
                 </div>
               </motion.div>
             )}
+
+            {/* Mode toggle at bottom of mobile menu */}
+            <div className="mt-auto pt-6 pb-8 px-5 flex justify-center items-center">
+              <ModeToggle />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

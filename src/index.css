@@ -163,11 +163,11 @@ body {
 }
 
 /* ── Editorial background pattern (subtle dot grid) ── */
-@keyframes editoria-dot-pattern {
+@keyframes editorial-dot-pattern {
   from { background-position: 0 0; }
   to { background-position: 24px 24px; }
 }
 .editorial-pattern {
-  background-image: radial-gradient(circle, rgba(255, 210, 63, 0.04) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255, 210, 63, 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
 }
