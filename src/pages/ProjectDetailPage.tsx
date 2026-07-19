@@ -46,7 +46,7 @@ function DetailSection({ title, children, isTerminal, isEditorial = false, delay
   );
 }
 
-function TechStackTable({ stacks, isTerminal }: { stacks: { category: string; items: string[] }[] | Record<string, string[]>; isTerminal: boolean }) {
+function TechStackTable({ stacks, isTerminal, isEditorial }: { stacks: { category: string; items: string[] }[] | Record<string, string[]>; isTerminal: boolean; isEditorial: boolean }) {
   // Normalize to array format
   const stackArray = Array.isArray(stacks)
     ? stacks
@@ -67,6 +67,27 @@ function TechStackTable({ stacks, isTerminal }: { stacks: { category: string; it
             </div>
           </div>
         ))}
+      </div>
+    );
+  }
+
+  if (isEditorial) {
+    return (
+      <div className="border border-e-border rounded-sm p-6 bg-e-panel/50">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {stackArray.map((s) => (
+            <div key={s.category} className="group">
+              <div className="text-xs font-bold text-e-accent mb-2 uppercase tracking-wider font-archivo">{s.category}</div>
+              <div className="flex flex-wrap gap-1.5">
+                {s.items.map((item) => (
+                  <span key={item} className="text-[12px] font-medium border border-e-border text-e-dim px-2.5 py-1 rounded-sm transition-all duration-200 hover:border-e-accent hover:text-e-accent">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -294,7 +315,7 @@ export default function ProjectDetailPage() {
 
               {/* Tech Stack */}
               <DetailSection title={isTerminal ? 'Tech Stack' : 'Technology Stack'} isTerminal={isTerminal} isEditorial={isEditorial} delay={0.2}>
-                <TechStackTable stacks={project.caseStudy!.techStack} isTerminal={isTerminal} />
+                <TechStackTable stacks={project.caseStudy!.techStack} isTerminal={isTerminal} isEditorial={isEditorial} />
               </DetailSection>
 
               {/* Key Features */}
