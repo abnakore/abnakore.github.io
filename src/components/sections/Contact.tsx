@@ -80,7 +80,7 @@ function FaqItem({
     answerClass: string;
   if (isTerminal) {
     btnClass =
-      "font-mono text-sm text-t-text hover:bg-t-accent/5 border border-t-border hover:border-t-accent/30";
+      "font-mono rounded-md text-sm text-t-text hover:bg-t-accent/5 border border-t-border hover:border-t-accent/30";
     openClass = "border-t-accent bg-t-accent/5";
     iconClass = "text-t-accent";
     answerClass = "text-t-dim font-mono";
@@ -92,7 +92,7 @@ function FaqItem({
     answerClass = "text-e-dim font-archivo";
   } else {
     btnClass =
-      "text-sm font-semibold text-b-ink bg-white border-[1.5px] border-[#E4E0F5] hover:border-b-accent/30 hover:shadow-sm";
+      "text-sm rounded-lg font-semibold text-b-ink bg-white border-[1.5px] border-[#E4E0F5] hover:border-b-accent/30 hover:shadow-sm";
     openClass = "border-b-accent bg-b-accent/5";
     iconClass = "text-b-accent";
     answerClass = "text-b-sub";
@@ -395,9 +395,9 @@ export default function Contact() {
                   </div>
                   <div className="p-4 space-y-3">
                     <p className="text-t-dim font-mono text-xs mb-3">
-                      $ cat FAQ.md | head -5
+                      $ cat FAQ.md | head -{faqs.length}
                     </p>
-                    {faqs.slice(0, 4).map((faq, i) => (
+                    {faqs.map((faq, i) => (
                       <FaqItem
                         key={i}
                         question={faq.q}
