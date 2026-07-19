@@ -15,6 +15,7 @@ import ScrollReveal, {
   ScrollRevealItem,
 } from "../components/ui/ScrollReveal";
 import type { ProjectType } from "../types";
+import KineticHeadline from "../components/editorial/KineticHeadline";
 
 const FILTERS: { label: string; value: ProjectType | "all" }[] = [
   { label: "All", value: "all" },
@@ -44,11 +45,20 @@ export default function ProjectsPage() {
             <SectionTag>
               {isTerminal ? "$ ls -la ./projects" : "All projects"}
             </SectionTag>
-            <h1
-              className={`text-3xl md:text-5xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold text-[clamp(44px,6vw,80px)] leading-[1.02] tracking-[-0.03em]" : "font-sora"}`}
-            >
-              Everything I've built
-            </h1>
+            {isEditorial ? (
+              <h1 className="font-fraunces font-semibold text-[clamp(44px,6vw,80px)] leading-[1.02] tracking-[-0.03em] text-e-text mt-3">
+                <KineticHeadline
+                  text="Everything I've built."
+                  emphasize={["built"]}
+                />
+              </h1>
+            ) : (
+              <h1
+                className={`text-3xl md:text-5xl font-extrabold mt-3 ${isTerminal ? "font-mono" : "font-sora"}`}
+              >
+                Everything I've built
+              </h1>
+            )}
             <p
               className={`text-sm mt-2 ${isTerminal ? "text-t-dim font-mono" : isEditorial ? "text-e-dim font-archivo" : "text-b-sub"}`}
             >
@@ -117,7 +127,9 @@ export default function ProjectsPage() {
                 ))
               ) : (
                 <div className="text-center py-12">
-                  <p className="text-sm text-e-dim font-archivo">No projects match this filter</p>
+                  <p className="text-sm text-e-dim font-archivo">
+                    No projects match this filter
+                  </p>
                 </div>
               )}
             </div>
@@ -158,7 +170,11 @@ export default function ProjectsPage() {
               {isEditorial ? (
                 <div className="mt-6">
                   {ongoingProjects.map((p, i) => (
-                    <ScrollReveal key={p.slug} variant="fadeUp" delay={i * 0.05}>
+                    <ScrollReveal
+                      key={p.slug}
+                      variant="fadeUp"
+                      delay={i * 0.05}
+                    >
                       <ProjectRow project={p} index={i} />
                     </ScrollReveal>
                   ))}

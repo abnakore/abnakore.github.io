@@ -7,6 +7,7 @@ import Button from "../ui/Button";
 import ScrollReveal from "../ui/ScrollReveal";
 import TiltCard from "../ui/TiltCard";
 import SocialLinks from "../ui/SocialLinks";
+import KineticHeadline from "../editorial/KineticHeadline";
 
 /* ---------- types ---------- */
 interface FormState {
@@ -73,19 +74,25 @@ function FaqItem({
   isOpen: boolean;
   onToggle: () => void;
 }) {
-  let btnClass: string, openClass: string, iconClass: string, answerClass: string;
+  let btnClass: string,
+    openClass: string,
+    iconClass: string,
+    answerClass: string;
   if (isTerminal) {
-    btnClass = "font-mono text-sm text-t-text hover:bg-t-accent/5 border border-t-border hover:border-t-accent/30";
+    btnClass =
+      "font-mono text-sm text-t-text hover:bg-t-accent/5 border border-t-border hover:border-t-accent/30";
     openClass = "border-t-accent bg-t-accent/5";
     iconClass = "text-t-accent";
     answerClass = "text-t-dim font-mono";
   } else if (isEditorial) {
-    btnClass = "font-archivo text-sm text-e-text border border-e-border hover:border-e-accent/50";
+    btnClass =
+      "font-archivo text-sm text-e-text border border-e-border hover:border-e-accent/50";
     openClass = "border-e-accent bg-e-accent/5";
     iconClass = "text-e-accent";
     answerClass = "text-e-dim font-archivo";
   } else {
-    btnClass = "text-sm font-semibold text-b-ink bg-white border-[1.5px] border-[#E4E0F5] hover:border-b-accent/30 hover:shadow-sm";
+    btnClass =
+      "text-sm font-semibold text-b-ink bg-white border-[1.5px] border-[#E4E0F5] hover:border-b-accent/30 hover:shadow-sm";
     openClass = "border-b-accent bg-b-accent/5";
     iconClass = "text-b-accent";
     answerClass = "text-b-sub";
@@ -121,7 +128,9 @@ function FaqItem({
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p className={`px-4 pb-4 pt-2 text-sm leading-relaxed ${answerClass}`}>
+            <p
+              className={`px-4 pb-4 pt-2 text-sm leading-relaxed ${answerClass}`}
+            >
               {answer}
             </p>
           </motion.div>
@@ -185,13 +194,26 @@ export default function Contact() {
         {/* ---- heading ---- */}
         <ScrollReveal variant="fadeUp">
           <SectionTag>
-            {isTerminal ? "$ mail --compose" : isEditorial ? "04" : "Let's connect"}
+            {isTerminal
+              ? "$ mail --compose"
+              : isEditorial
+                ? "04"
+                : "Let's connect"}
           </SectionTag>
-          <h2
-            className={`text-2xl md:text-4xl font-extrabold mt-3 leading-tight ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em]" : "font-sora"}`}
-          >
-            {isTerminal ? "Drop me a line" : isEditorial ? "Say hello — I don't bite" : "Say hello — I don't bite"}
-          </h2>
+          {isEditorial ? (
+            <h2 className="font-fraunces font-semibold text-[clamp(44px,6vw,80px)] leading-[1.02] tracking-[-0.03em] text-e-text mt-3">
+              <KineticHeadline
+                text="Say hello — I don't bite."
+                emphasize={["Say", "hello"]}
+              />
+            </h2>
+          ) : (
+            <h2
+              className={`text-2xl md:text-4xl font-extrabold mt-3 leading-tight ${isTerminal ? "font-mono" : "font-sora"}`}
+            >
+              {isTerminal ? "Drop me a line" : "Say hello — I don't bite"}
+            </h2>
+          )}
           {isTerminal ? (
             <p className="mt-3 text-sm leading-relaxed max-w-xl min-h-[3em] text-t-green font-mono">
               {typedCatch}
@@ -241,9 +263,13 @@ export default function Contact() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                    <label className={labelCls}>
-                      {isTerminal ? "--name" : isEditorial ? "Full name" : "Full name"}
-                    </label>
+                      <label className={labelCls}>
+                        {isTerminal
+                          ? "--name"
+                          : isEditorial
+                            ? "Full name"
+                            : "Full name"}
+                      </label>
                       <input
                         required
                         value={form.name}
@@ -254,9 +280,9 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                    <label className={labelCls}>
-                      {isTerminal ? "--email" : "Email"}
-                    </label>
+                      <label className={labelCls}>
+                        {isTerminal ? "--email" : "Email"}
+                      </label>
                       <input
                         required
                         value={form.email}
@@ -314,11 +340,11 @@ export default function Contact() {
                               : "text-b-accent font-semibold"
                           }`}
                         >
-                        {isTerminal
-                          ? "✓ message queued"
-                          : isEditorial
-                            ? "✓ Opening your mail app..."
-                            : "✓ Opening your mail app..."}
+                          {isTerminal
+                            ? "✓ message queued"
+                            : isEditorial
+                              ? "✓ Opening your mail app..."
+                              : "✓ Opening your mail app..."}
                         </motion.span>
                       )}
                     </AnimatePresence>
@@ -340,7 +366,11 @@ export default function Contact() {
               >
                 <span
                   className={`text-xs font-bold uppercase tracking-wider ${
-                    isTerminal ? "text-t-dim font-mono" : isEditorial ? "text-e-dim font-archivo" : "text-b-sub"
+                    isTerminal
+                      ? "text-t-dim font-mono"
+                      : isEditorial
+                        ? "text-e-dim font-archivo"
+                        : "text-b-sub"
                   }`}
                 >
                   {isTerminal ? "# ping me on" : "Find me on"}
@@ -439,7 +469,11 @@ export default function Contact() {
         <ScrollReveal variant="fadeUp" delay={0.35}>
           <div
             className={`mt-12 text-center text-xs ${
-              isTerminal ? "text-t-dim font-mono" : isEditorial ? "text-e-dim font-archivo" : "text-b-sub"
+              isTerminal
+                ? "text-t-dim font-mono"
+                : isEditorial
+                  ? "text-e-dim font-archivo"
+                  : "text-b-sub"
             }`}
           >
             {isTerminal

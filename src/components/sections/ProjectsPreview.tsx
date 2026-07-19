@@ -12,6 +12,7 @@ import ScrollReveal, {
   ScrollRevealItem,
 } from "../ui/ScrollReveal";
 import type { ProjectType } from "../../types";
+import KineticHeadline from "../editorial/KineticHeadline";
 
 const FILTERS: { label: string; value: ProjectType | "all" }[] = [
   { label: "All", value: "all" },
@@ -39,13 +40,23 @@ export default function ProjectsPreview() {
       <div className="max-w-[1180px] mx-auto w-full">
         <ScrollReveal variant="fadeUp">
           <SectionTag>
-            {isTerminal ? "$ ls ./projects" : isEditorial ? "03" : "Latest projects"}
+            {isTerminal
+              ? "$ ls ./projects"
+              : isEditorial
+                ? "03"
+                : "Latest projects"}
           </SectionTag>
-          <h2
-            className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em]" : "font-sora"}`}
-          >
-            {isTerminal ? "Selected work" : isEditorial ? "Selected Work" : "Selected Work"}
-          </h2>
+          {isEditorial ? (
+            <h2 className="font-fraunces font-semibold text-[clamp(44px,6vw,80px)] leading-[1.02] tracking-[-0.03em] text-e-text mt-3">
+              <KineticHeadline text="Selected Works." emphasize={["Works"]} />
+            </h2>
+          ) : (
+            <h2
+              className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : "font-sora"}`}
+            >
+              {isTerminal ? "Selected work" : "Selected Work"}
+            </h2>
+          )}
           <p
             className={`text-sm mt-2 ${isTerminal ? "text-t-dim font-mono" : isEditorial ? "text-e-dim font-archivo" : "text-b-sub"}`}
           >
@@ -115,7 +126,9 @@ export default function ProjectsPreview() {
               ))
             ) : (
               <div className="text-center py-12">
-                <p className="text-sm text-e-dim font-archivo">No projects match this filter</p>
+                <p className="text-sm text-e-dim font-archivo">
+                  No projects match this filter
+                </p>
               </div>
             )}
           </div>
@@ -154,7 +167,9 @@ export default function ProjectsPreview() {
         </ScrollReveal>
       </div>
       {!isTerminal && !isEditorial && <WaveDivider fill="#FFFFFF" />}
-      {isEditorial && <div className="absolute bottom-0 left-0 right-0 border-t border-e-border" />}
+      {isEditorial && (
+        <div className="absolute bottom-0 left-0 right-0 border-t border-e-border" />
+      )}
     </section>
   );
 }

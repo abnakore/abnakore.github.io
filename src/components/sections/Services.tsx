@@ -8,6 +8,7 @@ import ScrollReveal, {
   ScrollRevealContainer,
   ScrollRevealItem,
 } from "../ui/ScrollReveal";
+import KineticHeadline from "../editorial/KineticHeadline";
 
 export default function Services() {
   const { mode } = useMode();
@@ -27,13 +28,26 @@ export default function Services() {
       <div className="max-w-[1180px] mx-auto w-full">
         <ScrollReveal variant="fadeUp">
           <SectionTag>
-            {isTerminal ? "$ services --list" : isEditorial ? "02" : "My services"}
+            {isTerminal
+              ? "$ services --list"
+              : isEditorial
+                ? "02"
+                : "My services"}
           </SectionTag>
-          <h2
-            className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : isEditorial ? "font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em]" : "font-sora"}`}
-          >
-            {isTerminal ? "What I can build" : isEditorial ? "Where I add value" : "Where I add value"}
-          </h2>
+          {isEditorial ? (
+            <h2 className="font-fraunces font-semibold text-[clamp(44px,6vw,80px)] leading-[1.02] tracking-[-0.03em] text-e-text mt-3">
+              <KineticHeadline
+                text="Where I add value."
+                emphasize={["value"]}
+              />
+            </h2>
+          ) : (
+            <h2
+              className={`text-2xl md:text-4xl font-extrabold mt-3 ${isTerminal ? "font-mono" : "font-sora"}`}
+            >
+              {isTerminal ? "What I can build" : "Where I add value"}
+            </h2>
+          )}
         </ScrollReveal>
 
         <ScrollRevealContainer
@@ -58,9 +72,15 @@ export default function Services() {
             ) : isEditorial ? (
               <ScrollRevealItem key={s.title}>
                 <div className="border-t border-e-border pt-5 transition-[padding] duration-300 hover:pl-2">
-                  <div className="font-fraunces text-e-accent text-sm mb-2">{String(i + 1).padStart(2, "0")}</div>
-                  <h4 className="font-fraunces font-semibold text-lg text-e-text mb-1.5">{s.title}</h4>
-                  <p className="font-archivo text-[13px] text-e-dim leading-relaxed">{s.description}</p>
+                  <div className="font-fraunces text-e-accent text-sm mb-2">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <h4 className="font-fraunces font-semibold text-lg text-e-text mb-1.5">
+                    {s.title}
+                  </h4>
+                  <p className="font-archivo text-[13px] text-e-dim leading-relaxed">
+                    {s.description}
+                  </p>
                 </div>
               </ScrollRevealItem>
             ) : (
@@ -80,7 +100,9 @@ export default function Services() {
         </ScrollRevealContainer>
       </div>
       {!isTerminal && !isEditorial && <WaveDivider fill="#F3F1FB" />}
-      {isEditorial && <div className="absolute bottom-0 left-0 right-0 border-t border-e-border" />}
+      {isEditorial && (
+        <div className="absolute bottom-0 left-0 right-0 border-t border-e-border" />
+      )}
     </section>
   );
 }

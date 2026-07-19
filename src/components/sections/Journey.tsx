@@ -4,6 +4,7 @@ import { journey } from "../../data/journey";
 import SectionTag from "../ui/SectionTag";
 import ScrollReveal from "../ui/ScrollReveal";
 import WaveDivider from "../layout/WaveDivider";
+import KineticHeadline from "../editorial/KineticHeadline";
 
 /* Terminal Roadmap Item */
 function TerminalRoadmapItem({
@@ -116,10 +117,14 @@ function EditorialRoadmapItem({
 
       {/* Numbered dot */}
       <div className="absolute left-0 md:left-2 top-1.5 z-10 flex items-center justify-center">
-        <div className={`w-3.5 h-3.5 flex items-center justify-center font-fraunces text-[10px] font-semibold ${
-          isActive ? "text-e-bg bg-e-accent" : "text-e-dim bg-e-panel border border-e-border"
-        }`}>
-          {String(index + 1).padStart(2, '0')}
+        <div
+          className={`w-3.5 h-3.5 flex items-center justify-center font-fraunces text-[10px] font-semibold ${
+            isActive
+              ? "text-e-bg bg-e-accent"
+              : "text-e-dim bg-e-panel border border-e-border"
+          }`}
+        >
+          {String(index + 1).padStart(2, "0")}
         </div>
       </div>
 
@@ -138,7 +143,7 @@ function EditorialRoadmapItem({
         </div>
 
         {/* Content */}
-        <h3 className="font-fraunces font-semibold text-xl md:text-2xl text-e-text leading-tight">
+        <h3 className="font-fraunces font-semibold text-xl md:text-3xl text-e-text leading-tight">
           {item.title}
         </h3>
         <p className="font-archivo text-sm text-e-dim italic font-medium">
@@ -272,15 +277,30 @@ export default function Journey() {
       <div className="max-w-[1180px] mx-auto w-full relative z-10">
         <ScrollReveal variant="fadeUp">
           <SectionTag>
-            {isTerminal ? "$ cat journey.log" : isEditorial ? "02" : "My journey"}
+            {isTerminal
+              ? "$ cat journey.log"
+              : isEditorial
+                ? "02"
+                : "My journey"}
           </SectionTag>
-          <h2
-            className={`text-2xl md:text-4xl font-extrabold mt-3 ${
-              isTerminal ? "font-mono text-t-text" : isEditorial ? "font-fraunces font-semibold text-[clamp(36px,5vw,64px)] leading-[1.04] tracking-[-0.02em] text-e-text" : "font-sora text-b-ink"
-            }`}
-          >
-            {isTerminal ? "The Builder's Log" : "The path that brought me here"}
-          </h2>
+          {isEditorial ? (
+            <h2 className="font-fraunces font-semibold text-[clamp(44px,6vw,80px)] leading-[1.02] tracking-[-0.03em] text-e-text mt-3">
+              <KineticHeadline
+                text="The path that brought me here."
+                emphasize={["path"]}
+              />
+            </h2>
+          ) : (
+            <h2
+              className={`text-2xl md:text-4xl font-extrabold mt-3 ${
+                isTerminal ? "font-mono text-t-text" : "font-sora text-b-ink"
+              }`}
+            >
+              {isTerminal
+                ? "The Builder's Log"
+                : "The path that brought me here"}
+            </h2>
+          )}
           <p
             className={`leading-relaxed max-w-2xl mt-4 ${
               isTerminal
