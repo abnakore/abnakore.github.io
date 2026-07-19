@@ -167,7 +167,7 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 260, damping: 28 }}
-            className={`fixed top-0 right-0 z-40 h-screen w-3/4 max-w-xs flex flex-col pt-24 px-4 gap-1 shadow-2xl md:hidden ${mobilePanelStyle}`}
+            className={`fixed top-0 right-0 z-40 h-dvh w-3/4 max-w-xs flex flex-col pt-24 px-4 gap-1 shadow-2xl md:hidden ${mobilePanelStyle}`}
           >
             {/* Terminal mode decoration window dots */}
             {(isTerminal || isEditorial) && (
